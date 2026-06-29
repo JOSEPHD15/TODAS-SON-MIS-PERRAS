@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     return res.status(500).send('Missing YAHOO_CLIENT_ID or YAHOO_REDIRECT_URI');
   }
 
-  const scope = 'openid profile email fspt-r';
+  const scope = 'openid profile email';
 
   const authUrl =
     'https://api.login.yahoo.com/oauth2/request_auth' +
