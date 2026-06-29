@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DiamondIQ · Two-Start Pitchers & Matchups</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0A0E1A;
+    --bg2:#0F1626;
+    --card:#151D30;
+    --card2:#1B2540;
+    --line:#26314F;
+    --gold:#FFC629;
+    --gold-soft:rgba(255,198,41,.14);
+    --green:#2ECC71;
+    --green-soft:rgba(46,204,113,.13);
+    --yellow:#F4C145;
+    --yellow-soft:rgba(244,193,69,.13);
+    --red:#FF5757;
+    --red-soft:rgba(255,87,87,.13);
+    --text:#EAF0FB;
+    --muted:#7C89A8;
+    --muted2:#56627E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(255,198,41,.05), transparent 60%),
+      radial-gradient(900px 500px at 0% 0%, rgba(46,204,113,.04), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Header */
+  .top{
+    max-width:1180px;margin:0 auto;padding:28px 24px 8px;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .brand{display:flex;flex-direction:column;gap:2px}
+  .brand h1{
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;line-height:.95;
+    letter-spacing:.5px;color:#fff;text-transform:uppercase;
+  }
+  .brand h1 span{color:var(--gold)}
+  .brand .sub{color:var(--muted);font-size:13px;font-weight:500;letter-spacing:.2px}
+  .week-pill{
+    display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+    padding:8px 14px;border-radius:10px;font-size:13px;color:var(--muted);
+  }
+  .week-pill b{color:var(--text);font-weight:600}
+
+  /* Legend */
+  .legend{
+    max-width:1180px;margin:14px auto 0;padding:0 24px;
+    display:flex;gap:18px;flex-wrap:wrap;align-items:center;
+  }
+  .legend .lg{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+  .swatch{width:11px;height:11px;border-radius:3px}
+  .sw-green{background:var(--green)} .sw-yellow{background:var(--yellow)} .sw-red{background:var(--red)}
+  .badge2{
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;
+    background:var(--gold);color:#0A0E1A;padding:1px 7px;border-radius:5px;letter-spacing:.5px;
+  }
+
+  /* Tabs */
+  .tabs{
+    max-width:1180px;margin:22px auto 0;padding:0 24px;
+    display:flex;gap:8px;border-bottom:1px solid var(--line);
+  }
+  .tab{
+    background:none;border:none;color:var(--muted);font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;font-size:17px;letter-spacing:.4px;text-transform:uppercase;
+    padding:12px 16px;cursor:pointer;position:relative;transition:color .15s;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--gold)}
+  .tab.active::after{
+    content:'';position:absolute;left:12px;right:12px;bottom:-1px;height:3px;
+    background:var(--gold);border-radius:3px 3px 0 0;
+  }
+
+  /* Content */
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 24px 80px}
+
+  /* State messages */
+  .state{
+    text-align:center;padding:80px 20px;color:var(--muted);
+  }
+  .state .spin{
+    width:38px;height:38px;border:3px solid var(--line);border-top-color:var(--gold);
+    border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 18px;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .state h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;color:var(--text);font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+  .state p{font-size:14px;max-width:420px;margin:0 auto;line-height:1.6}
+  .state button{
+    margin-top:18px;background:var(--gold);color:#0A0E1A;border:none;font-weight:700;
+    font-size:14px;padding:10px 22px;border-radius:9px;cursor:pointer;
+  }
+
+  /* Section title */
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:6px 0 18px}
+  .sec-head h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.5px}
+  .sec-head .count{color:var(--muted);font-size:14px}
+  .sec-note{color:var(--muted);font-size:13px;margin:-8px 0 20px;line-height:1.5}
+
+  /* Two-start grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+
+  .pcard{
+    background:linear-gradient(160deg,var(--card2),var(--card));
+    border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;
+    position:relative;overflow:hidden;transition:transform .12s,border-color .12s;
+  }
+  .pcard:hover{transform:translateY(-2px);border-color:#3A476E}
+  .pcard .rail{position:absolute;left:0;top:0;bottom:0;width:4px}
+  .rail-green{background:var(--green)} .rail-yellow{background:var(--yellow)} .rail-red{background:var(--red)}
+
+  .pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;padding-left:6px}
+  .pc-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;line-height:1;letter-spacing:.3px}
+  .pc-team{color:var(--muted);font-size:12.5px;margin-top:3px;font-weight:500}
+  .twostar{
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.5px;
+    background:var(--gold);color:#0A0E1A;padding:3px 9px;border-radius:6px;white-space:nowrap;
+    box-shadow:0 0 0 3px var(--gold-soft);
+  }
+
+  .starts{display:flex;flex-direction:column;gap:8px;padding-left:6px}
+  .start{
+    display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.18);
+    border:1px solid var(--line);border-radius:9px;padding:9px 11px;
+  }
+  .start .day{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--muted);width:38px;flex-shrink:0;text-transform:uppercase}
+  .start .opp{flex:1;font-size:13.5px;font-weight:600}
+  .start .opp small{color:var(--muted2);font-weight:500;font-size:11.5px;display:block;margin-top:1px}
+  .rating{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.4px;
+    padding:3px 9px;border-radius:20px;white-space:nowrap;text-transform:uppercase;
+  }
+  .r-green{background:var(--green-soft);color:var(--green)}
+  .r-yellow{background:var(--yellow-soft);color:var(--yellow)}
+  .r-red{background:var(--red-soft);color:var(--red)}
+
+  .pc-foot{
+    margin-top:12px;padding-top:11px;padding-left:6px;border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .verdict{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.3px;text-transform:uppercase}
+  .v-green{color:var(--green)} .v-yellow{color:var(--yellow)} .v-red{color:var(--red)}
+
+  /* Day matchup tab */
+  .daygroup{margin-bottom:26px}
+  .dayhdr{
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;text-transform:uppercase;
+    letter-spacing:.5px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px;
+  }
+  .dayhdr .line{flex:1;height:1px;background:var(--line)}
+  .matchrow{
+    display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+    border-radius:11px;padding:11px 14px;margin-bottom:7px;
+  }
+  .matchrow .away,.matchrow .home{flex:1;display:flex;flex-direction:column;gap:2px}
+  .matchrow .home{text-align:right;align-items:flex-end}
+  .tm{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px}
+  .pp{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px}
+  .matchrow .at{color:var(--muted2);font-size:12px;font-weight:600;flex-shrink:0}
+  .mini-rate{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
+
+  footer{max-width:1180px;margin:0 auto;padding:20px 24px 40px;color:var(--muted2);font-size:12px;text-align:center;line-height:1.6}
+
+  @media(max-width:600px){
+    .brand h1{font-size:30px}
+    .grid{grid-template-columns:1fr}
+    .tab{font-size:15px;padding:11px 11px}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">
+    <h1>DIAMOND<span>IQ</span></h1>
+    <div class="sub">Two-start pitchers y matchups de la semana · Datos en vivo de MLB</div>
+  </div>
+  <div class="week-pill" id="weekPill">Semana: <b id="weekRange">cargando…</b></div>
+</div>
+
+<div class="legend">
+  <span class="badge2">2X</span><span style="color:var(--muted);font-size:12.5px">Lanza 2 veces esta semana</span>
+  <div class="lg"><span class="swatch sw-green"></span>Matchup favorable</div>
+  <div class="lg"><span class="swatch sw-yellow"></span>Parejo</div>
+  <div class="lg"><span class="swatch sw-red"></span>Difícil</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-two" onclick="showTab('two')">⚾ Two-Start Pitchers</button>
+  <button class="tab" id="tab-match" onclick="showTab('match')">📅 Matchups por día</button>
+</div>
+
+<div class="wrap">
+  <div id="panel-two">
+    <div class="state" id="twoState">
+      <div class="spin"></div>
+      <h3>Cargando lanzadores</h3>
+      <p>Buscando el calendario de la semana y los probables de cada equipo.</p>
+    </div>
+    <div id="twoContent" style="display:none">
+      <div class="sec-head"><h2>Lanzan 2 veces</h2><span class="count" id="twoCount"></span></div>
+      <p class="sec-note">Los abridores con dos aperturas dan el doble de oportunidades de ponches y victorias. El color indica qué tan favorables son sus dos rivales combinados.</p>
+      <div class="grid" id="twoGrid"></div>
+    </div>
+  </div>
+
+  <div id="panel-match" style="display:none">
+    <div class="state" id="matchState">
+      <div class="spin"></div>
+      <h3>Cargando partidos</h3>
+      <p>Organizando los enfrentamientos día por día.</p>
+    </div>
+    <div id="matchContent" style="display:none"></div>
+  </div>
+</div>
+
+<footer>
+  Datos del calendario y probables vía MLB Stats API (pública, oficial). El rating de matchup se calcula con el récord de bateo del equipo rival.<br>
+  DiamondIQ no está afiliado con MLB. Solo para uso informativo de fantasy.
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────
+// MLB Stats API — pública, sin auth, sin CORS
+const API = 'https://statsapi.mlb.com/api/v1';
+
+const DAYS_ES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+let teamRecords = {}; // teamId -> { winPct, runsPerGame, rank }
+let weekData = null;
+
+function fmtDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function prettyDate(d){ return `${d.getDate()} ${MONTHS_ES[d.getMonth()]}`; }
+
+// Get the current fantasy week: Monday→Sunday containing today
+function getWeekRange(){
+  const now = new Date();
+  const day = now.getDay(); // 0 Sun .. 6 Sat
+  const diffToMon = (day === 0 ? -6 : 1 - day);
+  const mon = new Date(now); mon.setDate(now.getDate() + diffToMon); mon.setHours(0,0,0,0);
+  const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+  return { start: mon, end: sun };
+}
+
+async function fetchJSON(url){
+  const r = await fetch(url);
+  if(!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+// Load standings to rate offenses (higher runs/game = tougher matchup for a pitcher)
+async function loadOffenseStrength(season){
+  try{
+    const data = await fetchJSON(`${API}/teams/stats?stats=season&group=hitting&season=${season}&sportId=1`);
+    const splits = data.stats?.[0]?.splits || [];
+    const runsArr = [];
+    splits.forEach(s=>{
+      const id = s.team?.id;
+      const games = parseFloat(s.stat?.gamesPlayed) || 1;
+      const runs = parseFloat(s.stat?.runs) || 0;
+      const rpg = runs / games;
+      if(id) { teamRecords[id] = { rpg, name: s.team?.name }; runsArr.push(rpg); }
+    });
+    // compute percentile thresholds
+    runsArr.sort((a,b)=>a-b);
+    const q = p => runsArr[Math.floor(p*(runsArr.length-1))] || 0;
+    window._rpgLow = q(0.40);   // below = weak offense = good for pitcher
+    window._rpgHigh = q(0.70);  // above = strong offense = tough
+  }catch(e){
+    console.warn('No se pudo cargar ofensiva, usando neutral', e);
+    window._rpgLow = 4.2; window._rpgHigh = 4.8;
+  }
+}
+
+// rate a matchup from the pitcher's POV vs opponent team id
+function rateMatchup(oppId){
+  const rec = teamRecords[oppId];
+  if(!rec) return { key:'yellow', label:'Parejo', word:'Neutral' };
+  if(rec.rpg <= window._rpgLow)  return { key:'green',  label:'Favorable', word:'Favorable' };
+  if(rec.rpg >= window._rpgHigh) return { key:'red',    label:'Difícil',   word:'Difícil' };
+  return { key:'yellow', label:'Parejo', word:'Parejo' };
+}
+
+async function loadWeek(){
+  const { start, end } = getWeekRange();
+  document.getElementById('weekRange').textContent = `${prettyDate(start)} – ${prettyDate(end)}`;
+  const season = start.getFullYear();
+
+  await loadOffenseStrength(season);
+
+  const url = `${API}/schedule?sportId=1&startDate=${fmtDate(start)}&endDate=${fmtDate(end)}&hydrate=probablePitcher,team`;
+  const data = await fetchJSON(url);
+
+  // Build: pitcher -> list of starts
+  const pitchers = {}; // id -> { name, teamId, teamName, starts:[{date, oppId, oppName, home}] }
+  const byDay = {};    // dateStr -> [ games ]
+
+  (data.dates||[]).forEach(dateObj=>{
+    const dStr = dateObj.date;
+    byDay[dStr] = byDay[dStr] || [];
+    (dateObj.games||[]).forEach(g=>{
+      if(g.gameType !== 'R') return; // regular season only
+      const home = g.teams?.home, away = g.teams?.away;
+      const homePP = home?.probablePitcher, awayPP = away?.probablePitcher;
+      const gameDate = new Date(g.gameDate);
+
+      byDay[dStr].push({
+        date: gameDate,
+        awayName: away?.team?.name, awayId: away?.team?.id, awayPP: awayPP?.fullName,
+        homeName: home?.team?.name, homeId: home?.team?.id, homePP: homePP?.fullName,
+      });
+
+      // home pitcher faces away offense
+      if(homePP?.id){
+        pitchers[homePP.id] = pitchers[homePP.id] || { name:homePP.fullName, teamId:home.team.id, teamName:home.team.name, starts:[] };
+        pitchers[homePP.id].starts.push({ date:gameDate, dStr, oppId:away.team.id, oppName:away.team.name, home:true });
+      }
+      if(awayPP?.id){
+        pitchers[awayPP.id] = pitchers[awayPP.id] || { name:awayPP.fullName, teamId:away.team.id, teamName:away.team.name, starts:[] };
+        pitchers[awayPP.id].starts.push({ date:gameDate, dStr, oppId:home.team.id, oppName:home.team.name, home:false });
+      }
+    });
+  });
+
+  weekData = { pitchers, byDay };
+  renderTwoStart();
+  renderMatchups();
+}
+
+function combinedVerdict(starts){
+  // average matchup difficulty: green=+1, yellow=0, red=-1
+  let score = 0;
+  starts.forEach(s=>{ const r = rateMatchup(s.oppId); score += r.key==='green'?1:r.key==='red'?-1:0; });
+  if(score > 0)  return { key:'green',  word:'Semana favorable' };
+  if(score < 0)  return { key:'red',    word:'Semana difícil' };
+  return { key:'yellow', word:'Semana pareja' };
+}
+
+function renderTwoStart(){
+  const grid = document.getElementById('twoGrid');
+  const twoStarters = Object.values(weekData.pitchers)
+    .filter(p => p.starts.length >= 2)
+    .sort((a,b)=>{
+      const va = combinedVerdict(a.starts).key, vb = combinedVerdict(b.starts).key;
+      const order = { green:0, yellow:1, red:2 };
+      return order[va]-order[vb];
+    });
+
+  document.getElementById('twoState').style.display='none';
+  document.getElementById('twoContent').style.display='block';
+  document.getElementById('twoCount').textContent = `${twoStarters.length} lanzadores`;
+
+  if(!twoStarters.length){
+    grid.innerHTML = `<div class="state" style="grid-column:1/-1"><h3>Aún no hay confirmados</h3><p>Los probables de la semana todavía no están publicados por MLB. Suelen confirmarse 2–4 días antes de cada juego. Vuelve a revisar pronto.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = twoStarters.map(p=>{
+    const v = combinedVerdict(p.starts);
+    const startsHtml = p.starts.sort((a,b)=>a.date-b.date).map(s=>{
+      const r = rateMatchup(s.oppId);
+      const day = DAYS_ES[s.date.getDay()];
+      return `<div class="start">
+        <span class="day">${day}</span>
+        <span class="opp">${s.home?'vs':'@'} ${s.oppName}<small>${s.home?'En casa':'De visita'}</small></span>
+        <span class="rating r-${r.key}">${r.label}</span>
+      </div>`;
+    }).join('');
+    return `<div class="pcard">
+      <div class="rail rail-${v.key}"></div>
+      <div class="pc-top">
+        <div><div class="pc-name">${p.name}</div><div class="pc-team">${p.teamName}</div></div>
+        <span class="twostar">2X · 2 SALIDAS</span>
+      </div>
+      <div class="starts">${startsHtml}</div>
+      <div class="pc-foot"><span class="verdict v-${v.key}">${v.word}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderMatchups(){
+  const cont = document.getElementById('matchContent');
+  document.getElementById('matchState').style.display='none';
+  cont.style.display='block';
+
+  const days = Object.keys(weekData.byDay).sort();
+  let html = '';
+  days.forEach(dStr=>{
+    const games = weekData.byDay[dStr];
+    if(!games.length) return;
+    const d = new Date(dStr+'T12:00:00');
+    html += `<div class="daygroup"><div class="dayhdr">${DAYS_ES[d.getDay()]} ${prettyDate(d)}<span class="line"></span></div>`;
+    games.forEach(g=>{
+      const awayR = rateMatchup(g.homeId); // away pitcher faces home... handled per side
+      const ratePP = (ppName, oppId) => {
+        if(!ppName) return '<span class="mini-rate" style="background:var(--muted2)"></span><span style="color:var(--muted2)">Por confirmar</span>';
+        const r = rateMatchup(oppId);
+        const col = r.key==='green'?'var(--green)':r.key==='red'?'var(--red)':'var(--yellow)';
+        return `<span class="mini-rate" style="background:${col}"></span>${ppName}`;
+      };
+      html += `<div class="matchrow">
+        <div class="away"><span class="tm">${g.awayName||''}</span><span class="pp">${ratePP(g.awayPP, g.homeId)}</span></div>
+        <span class="at">@</span>
+        <div class="home"><span class="tm">${g.homeName||''}</span><span class="pp">${ratePP(g.homePP, g.awayId)}</span></div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  cont.innerHTML = html || `<div class="state"><h3>Sin juegos esta semana</h3><p>No se encontraron partidos de temporada regular en este rango.</p></div>`;
+}
+
+function showTab(which){
+  document.getElementById('tab-two').classList.toggle('active', which==='two');
+  document.getElementById('tab-match').classList.toggle('active', which==='match');
+  document.getElementById('panel-two').style.display = which==='two'?'block':'none';
+  document.getElementById('panel-match').style.display = which==='match'?'block':'none';
+}
+
+function showError(msg){
+  document.getElementById('twoState').innerHTML =
+    `<h3>No se pudieron cargar los datos</h3><p>${msg}</p><button onclick="location.reload()">Reintentar</button>`;
+}
+
+loadWeek().catch(e=>{ console.error(e); showError('Revisa tu conexión a internet y vuelve a intentar. Los datos vienen directo de MLB.'); });
+</script>
+</body>
+</html>
