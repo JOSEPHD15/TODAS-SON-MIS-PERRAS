@@ -1,221 +1,759 @@
-index.html
-
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DiamondIQ · Two-Start Pitchers & Matchups</title>
+<title>DiamondIQ · Two-Start Pitchers</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
 
-  :root{
-    --bg:#0A0E1A;
-    --bg2:#0F1626;
-    --card:#151D30;
-    --card2:#1B2540;
-    --line:#26314F;
-    --gold:#FFC629;
-    --gold-soft:rgba(255,198,41,.14);
-    --green:#2ECC71;
-    --green-soft:rgba(46,204,113,.13);
-    --yellow:#F4C145;
-    --yellow-soft:rgba(244,193,69,.13);
-    --red:#FF5757;
-    --red-soft:rgba(255,87,87,.13);
-    --text:#EAF0FB;
-    --muted:#7C89A8;
-    --muted2:#56627E;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(255,198,41,.05), transparent 60%),
-      radial-gradient(900px 500px at 0% 0%, rgba(46,204,113,.04), transparent 55%),
-      var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
+:root{
+  --bg:#070B14;
+  --bg2:#0D1322;
+  --card:#141D31;
+  --card2:#1B2540;
+  --card3:#101827;
+  --line:#273552;
+  --line2:#354569;
 
-  /* Header */
-  .top{
-    max-width:1180px;margin:0 auto;padding:28px 24px 8px;
-    display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  }
-  .brand{display:flex;flex-direction:column;gap:2px}
+  --gold:#FFC629;
+  --gold2:#FFDA6A;
+  --gold-soft:rgba(255,198,41,.14);
+
+  --green:#2ECC71;
+  --green-soft:rgba(46,204,113,.13);
+
+  --yellow:#F4C145;
+  --yellow-soft:rgba(244,193,69,.13);
+
+  --red:#FF5757;
+  --red-soft:rgba(255,87,87,.13);
+
+  --blue:#4DA3FF;
+  --blue-soft:rgba(77,163,255,.13);
+
+  --text:#EAF0FB;
+  --muted:#8B97B5;
+  --muted2:#5E6B8B;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(1100px 600px at 85% -10%, rgba(255,198,41,.06), transparent 60%),
+    radial-gradient(900px 500px at 0% 0%, rgba(77,163,255,.05), transparent 55%),
+    radial-gradient(700px 380px at 50% 10%, rgba(46,204,113,.035), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+button,
+textarea,
+input{
+  font-family:inherit;
+}
+
+.top{
+  max-width:1220px;
+  margin:0 auto;
+  padding:28px 22px 8px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.brand h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:42px;
+  line-height:.9;
+  letter-spacing:.6px;
+  color:#fff;
+  text-transform:uppercase;
+}
+
+.brand h1 span{
+  color:var(--gold);
+}
+
+.brand .sub{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.2px;
+  line-height:1.45;
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.week-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(20,29,49,.82);
+  border:1px solid var(--line);
+  padding:9px 14px;
+  border-radius:11px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.week-pill b{
+  color:var(--text);
+  font-weight:700;
+}
+
+.navbtn{
+  background:var(--card);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:9px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  transition:.12s;
+}
+
+.navbtn:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+  transform:translateY(-1px);
+}
+
+.navbtn.gold{
+  background:var(--gold);
+  color:#08101F;
+  border-color:var(--gold);
+}
+
+.legend{
+  max-width:1220px;
+  margin:14px auto 0;
+  padding:0 22px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.legend .lg{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+
+.swatch{
+  width:11px;
+  height:11px;
+  border-radius:3px;
+}
+
+.sw-green{background:var(--green)}
+.sw-yellow{background:var(--yellow)}
+.sw-red{background:var(--red)}
+.sw-blue{background:var(--blue)}
+.sw-gold{background:var(--gold)}
+
+.badge2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:12px;
+  background:var(--gold);
+  color:#0A0E1A;
+  padding:2px 8px;
+  border-radius:6px;
+  letter-spacing:.6px;
+}
+
+.tabs{
+  max-width:1220px;
+  margin:22px auto 0;
+  padding:0 22px;
+  display:flex;
+  gap:8px;
+  border-bottom:1px solid var(--line);
+  overflow-x:auto;
+}
+
+.tab{
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:17px;
+  letter-spacing:.45px;
+  text-transform:uppercase;
+  padding:13px 16px;
+  cursor:pointer;
+  position:relative;
+  white-space:nowrap;
+}
+
+.tab:hover{
+  color:var(--text);
+}
+
+.tab.active{
+  color:var(--gold);
+}
+
+.tab.active::after{
+  content:'';
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:-1px;
+  height:3px;
+  background:var(--gold);
+  border-radius:3px 3px 0 0;
+}
+
+.wrap{
+  max-width:1220px;
+  margin:0 auto;
+  padding:26px 22px 80px;
+}
+
+.state{
+  text-align:center;
+  padding:72px 20px;
+  color:var(--muted);
+}
+
+.state .spin{
+  width:38px;
+  height:38px;
+  border:3px solid var(--line);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 18px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.state h3{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:24px;
+  color:var(--text);
+  font-weight:800;
+  margin-bottom:7px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.state p{
+  font-size:14px;
+  max-width:520px;
+  margin:0 auto;
+  line-height:1.65;
+}
+
+.state button{
+  margin-top:18px;
+  background:var(--gold);
+  color:#0A0E1A;
+  border:none;
+  font-weight:800;
+  font-size:14px;
+  padding:10px 22px;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+.sec-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  margin:6px 0 18px;
+  flex-wrap:wrap;
+}
+
+.sec-title{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.sec-head h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:28px;
+  text-transform:uppercase;
+  letter-spacing:.55px;
+}
+
+.sec-head .count{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.sec-note{
+  color:var(--muted);
+  font-size:13px;
+  margin:-8px 0 20px;
+  line-height:1.6;
+}
+
+.tools{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.toolbtn{
+  background:var(--card);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:12.5px;
+  font-weight:800;
+}
+
+.toolbtn:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:14px;
+}
+
+.pcard{
+  background:linear-gradient(160deg,var(--card2),var(--card));
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:16px 16px 14px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .12s,border-color .12s;
+}
+
+.pcard:hover{
+  transform:translateY(-2px);
+  border-color:#405174;
+}
+
+.pcard .rail{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+}
+
+.rail-green{background:var(--green)}
+.rail-yellow{background:var(--yellow)}
+.rail-red{background:var(--red)}
+.rail-blue{background:var(--blue)}
+
+.pc-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+  padding-left:6px;
+}
+
+.pc-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:24px;
+  line-height:1;
+  letter-spacing:.35px;
+}
+
+.pc-team{
+  color:var(--muted);
+  font-size:12.5px;
+  margin-top:4px;
+  font-weight:600;
+}
+
+.badges{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.twostar,
+.ownedbadge{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:12.5px;
+  letter-spacing:.45px;
+  padding:4px 8px;
+  border-radius:7px;
+  white-space:nowrap;
+}
+
+.twostar{
+  background:var(--gold);
+  color:#0A0E1A;
+  box-shadow:0 0 0 3px var(--gold-soft);
+}
+
+.twostar.confirmed{
+  background:var(--green);
+  box-shadow:0 0 0 3px var(--green-soft);
+}
+
+.ownedbadge{
+  background:var(--blue-soft);
+  color:var(--blue);
+  border:1px solid rgba(77,163,255,.28);
+}
+
+.starts{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding-left:6px;
+}
+
+.start{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(0,0,0,.18);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 11px;
+}
+
+.start .day{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  color:var(--muted);
+  width:40px;
+  flex-shrink:0;
+  text-transform:uppercase;
+}
+
+.start .opp{
+  flex:1;
+  font-size:13.5px;
+  font-weight:800;
+  line-height:1.25;
+}
+
+.start .opp small{
+  color:var(--muted2);
+  font-weight:700;
+  font-size:11.5px;
+  display:block;
+  margin-top:3px;
+}
+
+.rating{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:11.5px;
+  letter-spacing:.45px;
+  padding:4px 9px;
+  border-radius:20px;
+  white-space:nowrap;
+  text-transform:uppercase;
+}
+
+.r-green{background:var(--green-soft);color:var(--green)}
+.r-yellow{background:var(--yellow-soft);color:var(--yellow)}
+.r-red{background:var(--red-soft);color:var(--red)}
+
+.pc-foot{
+  margin-top:12px;
+  padding-top:11px;
+  padding-left:6px;
+  border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.verdict{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:.35px;
+  text-transform:uppercase;
+}
+
+.v-green{color:var(--green)}
+.v-yellow{color:var(--yellow)}
+.v-red{color:var(--red)}
+
+.confline{
+  color:var(--muted);
+  font-size:11.5px;
+  font-weight:700;
+  text-align:right;
+}
+
+.daygroup{
+  margin-bottom:26px;
+}
+
+.dayhdr{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:19px;
+  text-transform:uppercase;
+  letter-spacing:.55px;
+  color:var(--gold);
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.dayhdr .line{
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+
+.matchrow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:8px;
+}
+
+.matchrow .away,
+.matchrow .home{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.matchrow .home{
+  text-align:right;
+  align-items:flex-end;
+}
+
+.tm{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:17px;
+}
+
+.pp{
+  font-size:11.8px;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.matchrow .home .pp{
+  justify-content:flex-end;
+}
+
+.matchrow .at{
+  color:var(--muted2);
+  font-size:12px;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+.mini-rate{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  display:inline-block;
+  flex-shrink:0;
+}
+
+.panelbox{
+  background:linear-gradient(160deg,var(--card2),var(--card));
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:16px;
+}
+
+.panelbox h3{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:23px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:8px;
+}
+
+.panelbox p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:12px;
+}
+
+.ownedArea{
+  width:100%;
+  min-height:170px;
+  background:#08101F;
+  border:1px solid var(--line);
+  color:var(--text);
+  border-radius:12px;
+  padding:12px;
+  resize:vertical;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.smallnote{
+  color:var(--muted2);
+  font-size:12px;
+  line-height:1.55;
+  margin-top:10px;
+}
+
+footer{
+  max-width:1220px;
+  margin:0 auto;
+  padding:20px 22px 40px;
+  color:var(--muted2);
+  font-size:12px;
+  text-align:center;
+  line-height:1.65;
+}
+
+@media(max-width:680px){
   .brand h1{
-    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;line-height:.95;
-    letter-spacing:.5px;color:#fff;text-transform:uppercase;
-  }
-  .brand h1 span{color:var(--gold)}
-  .brand .sub{color:var(--muted);font-size:13px;font-weight:500;letter-spacing:.2px}
-  .week-pill{
-    display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
-    padding:8px 14px;border-radius:10px;font-size:13px;color:var(--muted);
-  }
-  .week-pill b{color:var(--text);font-weight:600}
-
-  /* Legend */
-  .legend{
-    max-width:1180px;margin:14px auto 0;padding:0 24px;
-    display:flex;gap:18px;flex-wrap:wrap;align-items:center;
-  }
-  .legend .lg{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
-  .swatch{width:11px;height:11px;border-radius:3px}
-  .sw-green{background:var(--green)} .sw-yellow{background:var(--yellow)} .sw-red{background:var(--red)}
-  .badge2{
-    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;
-    background:var(--gold);color:#0A0E1A;padding:1px 7px;border-radius:5px;letter-spacing:.5px;
+    font-size:34px;
   }
 
-  /* Tabs */
-  .tabs{
-    max-width:1180px;margin:22px auto 0;padding:0 24px;
-    display:flex;gap:8px;border-bottom:1px solid var(--line);
+  .grid{
+    grid-template-columns:1fr;
   }
+
   .tab{
-    background:none;border:none;color:var(--muted);font-family:'Barlow Condensed',sans-serif;
-    font-weight:700;font-size:17px;letter-spacing:.4px;text-transform:uppercase;
-    padding:12px 16px;cursor:pointer;position:relative;transition:color .15s;
-  }
-  .tab:hover{color:var(--text)}
-  .tab.active{color:var(--gold)}
-  .tab.active::after{
-    content:'';position:absolute;left:12px;right:12px;bottom:-1px;height:3px;
-    background:var(--gold);border-radius:3px 3px 0 0;
+    font-size:15px;
+    padding:11px 11px;
   }
 
-  /* Content */
-  .wrap{max-width:1180px;margin:0 auto;padding:26px 24px 80px}
-
-  /* State messages */
-  .state{
-    text-align:center;padding:80px 20px;color:var(--muted);
-  }
-  .state .spin{
-    width:38px;height:38px;border:3px solid var(--line);border-top-color:var(--gold);
-    border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 18px;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .state h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;color:var(--text);font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-  .state p{font-size:14px;max-width:420px;margin:0 auto;line-height:1.6}
-  .state button{
-    margin-top:18px;background:var(--gold);color:#0A0E1A;border:none;font-weight:700;
-    font-size:14px;padding:10px 22px;border-radius:9px;cursor:pointer;
-  }
-
-  /* Section title */
-  .sec-head{display:flex;align-items:baseline;gap:12px;margin:6px 0 18px}
-  .sec-head h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.5px}
-  .sec-head .count{color:var(--muted);font-size:14px}
-  .sec-note{color:var(--muted);font-size:13px;margin:-8px 0 20px;line-height:1.5}
-
-  /* Two-start grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
-
-  .pcard{
-    background:linear-gradient(160deg,var(--card2),var(--card));
-    border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;
-    position:relative;overflow:hidden;transition:transform .12s,border-color .12s;
-  }
-  .pcard:hover{transform:translateY(-2px);border-color:#3A476E}
-  .pcard .rail{position:absolute;left:0;top:0;bottom:0;width:4px}
-  .rail-green{background:var(--green)} .rail-yellow{background:var(--yellow)} .rail-red{background:var(--red)}
-
-  .pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;padding-left:6px}
-  .pc-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;line-height:1;letter-spacing:.3px}
-  .pc-team{color:var(--muted);font-size:12.5px;margin-top:3px;font-weight:500}
-  .twostar{
-    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.5px;
-    background:var(--gold);color:#0A0E1A;padding:3px 9px;border-radius:6px;white-space:nowrap;
-    box-shadow:0 0 0 3px var(--gold-soft);
-  }
-
-  .starts{display:flex;flex-direction:column;gap:8px;padding-left:6px}
-  .start{
-    display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.18);
-    border:1px solid var(--line);border-radius:9px;padding:9px 11px;
-  }
-  .start .day{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--muted);width:38px;flex-shrink:0;text-transform:uppercase}
-  .start .opp{flex:1;font-size:13.5px;font-weight:600}
-  .start .opp small{color:var(--muted2);font-weight:500;font-size:11.5px;display:block;margin-top:1px}
-  .rating{
-    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.4px;
-    padding:3px 9px;border-radius:20px;white-space:nowrap;text-transform:uppercase;
-  }
-  .r-green{background:var(--green-soft);color:var(--green)}
-  .r-yellow{background:var(--yellow-soft);color:var(--yellow)}
-  .r-red{background:var(--red-soft);color:var(--red)}
-
-  .pc-foot{
-    margin-top:12px;padding-top:11px;padding-left:6px;border-top:1px solid var(--line);
-    display:flex;align-items:center;justify-content:space-between;
-  }
-  .verdict{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.3px;text-transform:uppercase}
-  .v-green{color:var(--green)} .v-yellow{color:var(--yellow)} .v-red{color:var(--red)}
-
-  /* Day matchup tab */
-  .daygroup{margin-bottom:26px}
-  .dayhdr{
-    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;text-transform:uppercase;
-    letter-spacing:.5px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px;
-  }
-  .dayhdr .line{flex:1;height:1px;background:var(--line)}
   .matchrow{
-    display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
-    border-radius:11px;padding:11px 14px;margin-bottom:7px;
+    align-items:flex-start;
   }
-  .matchrow .away,.matchrow .home{flex:1;display:flex;flex-direction:column;gap:2px}
-  .matchrow .home{text-align:right;align-items:flex-end}
-  .tm{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px}
-  .pp{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px}
-  .matchrow .at{color:var(--muted2);font-size:12px;font-weight:600;flex-shrink:0}
-  .mini-rate{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
 
-  footer{max-width:1180px;margin:0 auto;padding:20px 24px 40px;color:var(--muted2);font-size:12px;text-align:center;line-height:1.6}
-
-  @media(max-width:600px){
-    .brand h1{font-size:30px}
-    .grid{grid-template-columns:1fr}
-    .tab{font-size:15px;padding:11px 11px}
+  .pc-top{
+    flex-direction:column;
   }
+
+  .badges{
+    justify-content:flex-start;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="top">
   <div class="brand">
     <h1>DIAMOND<span>IQ</span></h1>
-    <div class="sub">Two-start pitchers y matchups de la semana · Datos en vivo de MLB</div>
+    <div class="sub">
+      Two-start pitchers y matchups de la semana · Confirmed Starters + Projected Rotation Logic
+    </div>
   </div>
-  <div class="week-pill" id="weekPill">Semana: <b id="weekRange">cargando…</b></div>
+
+  <div class="controls">
+    <button class="navbtn" onclick="changeWeek(-1)">← Semana anterior</button>
+    <button class="navbtn gold" onclick="goCurrentWeek()">Semana actual</button>
+    <button class="navbtn" onclick="changeWeek(1)">Semana siguiente →</button>
+    <div class="week-pill">Semana: <b id="weekRange">cargando…</b></div>
+  </div>
 </div>
 
 <div class="legend">
-  <span class="badge2">2X</span><span style="color:var(--muted);font-size:12.5px">Lanza 2 veces esta semana</span>
-  <div class="lg"><span class="swatch sw-green"></span>Matchup favorable</div>
-  <div class="lg"><span class="swatch sw-yellow"></span>Parejo</div>
-  <div class="lg"><span class="swatch sw-red"></span>Difícil</div>
+  <span class="badge2">2X</span>
+  <span style="color:var(--muted);font-size:12.5px">Lanza 2 veces esta semana</span>
+  <div class="lg"><span class="swatch sw-green"></span>Confirmado / favorable</div>
+  <div class="lg"><span class="swatch sw-gold"></span>Projected Rotation Logic</div>
+  <div class="lg"><span class="swatch sw-yellow"></span>Matchup parejo</div>
+  <div class="lg"><span class="swatch sw-red"></span>Matchup difícil</div>
+  <div class="lg"><span class="swatch sw-blue"></span>% Owned manual Yahoo</div>
 </div>
 
 <div class="tabs">
   <button class="tab active" id="tab-two" onclick="showTab('two')">⚾ Two-Start Pitchers</button>
   <button class="tab" id="tab-match" onclick="showTab('match')">📅 Matchups por día</button>
+  <button class="tab" id="tab-owned" onclick="showTab('owned')">📊 Yahoo Owned</button>
 </div>
 
 <div class="wrap">
+
   <div id="panel-two">
     <div class="state" id="twoState">
       <div class="spin"></div>
       <h3>Cargando lanzadores</h3>
-      <p>Buscando el calendario de la semana y los probables de cada equipo.</p>
+      <p>Buscando calendario, probables confirmados y proyecciones por rotación reciente.</p>
     </div>
+
     <div id="twoContent" style="display:none">
-      <div class="sec-head"><h2>Lanzan 2 veces</h2><span class="count" id="twoCount"></span></div>
-      <p class="sec-note">Los abridores con dos aperturas dan el doble de oportunidades de ponches y victorias. El color indica qué tan favorables son sus dos rivales combinados.</p>
+      <div class="sec-head">
+        <div class="sec-title">
+          <h2>Lanzan 2 veces</h2>
+          <span class="count" id="twoCount"></span>
+        </div>
+
+        <div class="tools">
+          <button class="toolbtn" onclick="reloadWeek()">Actualizar data</button>
+        </div>
+      </div>
+
+      <p class="sec-note">
+        CONFIRMED significa que MLB publicó el probable pitcher. PROJECTED significa que DiamondIQ lo infiere usando rotación reciente,
+        días de descanso y calendario semanal. No es confirmación oficial.
+      </p>
+
       <div class="grid" id="twoGrid"></div>
     </div>
   </div>
@@ -224,21 +762,46 @@ index.html
     <div class="state" id="matchState">
       <div class="spin"></div>
       <h3>Cargando partidos</h3>
-      <p>Organizando los enfrentamientos día por día.</p>
+      <p>Organizando enfrentamientos día por día con pitchers confirmados y proyectados.</p>
     </div>
+
     <div id="matchContent" style="display:none"></div>
   </div>
+
+  <div id="panel-owned" style="display:none">
+    <div class="panelbox">
+      <h3>Yahoo Owned %</h3>
+      <p>
+        GitHub Pages no puede conectarse directo a Yahoo Fantasy sin OAuth. Pega aquí una lista manual desde Yahoo o tu propia data.
+        Formato recomendado: <b>Nombre Pitcher, Owned%</b>.
+      </p>
+
+      <textarea class="ownedArea" id="ownedInput" placeholder="Ejemplo:
+Zack Wheeler, 99
+Tarik Skubal, 98
+Nick Lodolo, 72
+Shane Baz, 43
+"></textarea>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="navbtn gold" onclick="saveOwned()">Guardar Yahoo Owned</button>
+        <button class="navbtn" onclick="clearOwned()">Borrar</button>
+      </div>
+
+      <div class="smallnote">
+        Tip: el matching usa el nombre exacto del pitcher. Si no aparece el %, revisa spelling o pega el nombre igual como sale en la tarjeta.
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <footer>
-  Datos del calendario y probables vía MLB Stats API (pública, oficial). El rating de matchup se calcula con el récord de bateo del equipo rival.<br>
-  DiamondIQ no está afiliado con MLB. Solo para uso informativo de fantasy.
+  Datos de calendario y probables vía MLB Stats API pública. Las proyecciones usan lógica de rotación reciente, días de descanso y calendario semanal.
+  No son confirmaciones oficiales. DiamondIQ no está afiliado con MLB ni con Yahoo Fantasy. Solo para uso informativo de fantasy.
 </footer>
-<script>
-// ─────────────────────────────────────────────────────────────────────────
-// DiamondIQ — Confirmed + Projected Two-Start Pitchers
-// Usa MLB Stats API. Si no hay probable pitcher confirmado, proyecta usando rotación reciente.
 
+<script>
 const API = 'https://statsapi.mlb.com/api/v1';
 
 const DAYS_ES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
@@ -246,6 +809,17 @@ const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','
 
 let teamRecords = {};
 let weekData = null;
+let weekOffset = 0;
+let ownedMap = loadOwnedMap();
+
+function h(value){
+  return String(value ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
 
 function fmtDate(d){
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -255,7 +829,25 @@ function prettyDate(d){
   return `${d.getDate()} ${MONTHS_ES[d.getMonth()]}`;
 }
 
-function getWeekRange(){
+function addDays(date, days){
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function addWeeks(date, weeks){
+  return addDays(date, weeks * 7);
+}
+
+function daysBetween(a,b){
+  const d1 = new Date(a);
+  const d2 = new Date(b);
+  d1.setHours(0,0,0,0);
+  d2.setHours(0,0,0,0);
+  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+}
+
+function getWeekRange(offset = 0){
   const now = new Date();
   const day = now.getDay();
   const diffToMon = (day === 0 ? -6 : 1 - day);
@@ -264,25 +856,13 @@ function getWeekRange(){
   mon.setDate(now.getDate() + diffToMon);
   mon.setHours(0,0,0,0);
 
-  const sun = new Date(mon);
-  sun.setDate(mon.getDate() + 6);
-  sun.setHours(23,59,59,999);
+  const start = addWeeks(mon, offset);
+  start.setHours(0,0,0,0);
 
-  return { start: mon, end: sun };
-}
+  const end = addDays(start, 6);
+  end.setHours(23,59,59,999);
 
-function addDays(date, days){
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
-}
-
-function daysBetween(a, b){
-  const d1 = new Date(a);
-  const d2 = new Date(b);
-  d1.setHours(0,0,0,0);
-  d2.setHours(0,0,0,0);
-  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+  return { start, end };
 }
 
 async function fetchJSON(url){
@@ -291,9 +871,49 @@ async function fetchJSON(url){
   return r.json();
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Rating ofensivo del rival
+function resetLoading(){
+  document.getElementById('twoState').style.display = 'block';
+  document.getElementById('twoState').innerHTML = `
+    <div class="spin"></div>
+    <h3>Cargando lanzadores</h3>
+    <p>Buscando calendario, probables confirmados y proyecciones por rotación reciente.</p>
+  `;
+
+  document.getElementById('twoContent').style.display = 'none';
+
+  document.getElementById('matchState').style.display = 'block';
+  document.getElementById('matchState').innerHTML = `
+    <div class="spin"></div>
+    <h3>Cargando partidos</h3>
+    <p>Organizando enfrentamientos día por día con pitchers confirmados y proyectados.</p>
+  `;
+
+  document.getElementById('matchContent').style.display = 'none';
+  document.getElementById('matchContent').innerHTML = '';
+  document.getElementById('twoGrid').innerHTML = '';
+}
+
+async function reloadWeek(){
+  resetLoading();
+  await loadWeek().catch(e=>{
+    console.error(e);
+    showError('No se pudieron cargar los datos. Revisa conexión o espera unos segundos y vuelve a intentar.');
+  });
+}
+
+function changeWeek(delta){
+  weekOffset += delta;
+  reloadWeek();
+}
+
+function goCurrentWeek(){
+  weekOffset = 0;
+  reloadWeek();
+}
+
 async function loadOffenseStrength(season){
+  teamRecords = {};
+
   try{
     const data = await fetchJSON(`${API}/teams/stats?stats=season&group=hitting&season=${season}&sportId=1`);
     const splits = data.stats?.[0]?.splits || [];
@@ -306,20 +926,23 @@ async function loadOffenseStrength(season){
       const rpg = runs / games;
 
       if(id){
-        teamRecords[id] = { rpg, name: s.team?.name };
+        teamRecords[id] = {
+          rpg,
+          name:s.team?.name
+        };
         runsArr.push(rpg);
       }
     });
 
     runsArr.sort((a,b)=>a-b);
 
-    const q = p => runsArr[Math.floor(p*(runsArr.length-1))] || 0;
+    const q = p => runsArr[Math.floor(p * (runsArr.length - 1))] || 0;
 
     window._rpgLow = q(0.40);
     window._rpgHigh = q(0.70);
 
   }catch(e){
-    console.warn('No se pudo cargar ofensiva, usando neutral', e);
+    console.warn('No se pudo cargar ofensiva. Usando thresholds default.', e);
     window._rpgLow = 4.2;
     window._rpgHigh = 4.8;
   }
@@ -328,24 +951,40 @@ async function loadOffenseStrength(season){
 function rateMatchup(oppId){
   const rec = teamRecords[oppId];
 
-  if(!rec) return { key:'yellow', label:'Parejo', word:'Neutral' };
+  if(!rec){
+    return {
+      key:'yellow',
+      label:'Parejo',
+      word:'Neutral'
+    };
+  }
 
   if(rec.rpg <= window._rpgLow){
-    return { key:'green', label:'Favorable', word:'Favorable' };
+    return {
+      key:'green',
+      label:'Favorable',
+      word:'Favorable'
+    };
   }
 
   if(rec.rpg >= window._rpgHigh){
-    return { key:'red', label:'Difícil', word:'Difícil' };
+    return {
+      key:'red',
+      label:'Difícil',
+      word:'Difícil'
+    };
   }
 
-  return { key:'yellow', label:'Parejo', word:'Parejo' };
+  return {
+    key:'yellow',
+    label:'Parejo',
+    word:'Parejo'
+  };
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Cargar rotaciones recientes para hacer proyecciones
 async function loadRecentRotations(weekStart){
   const histEnd = addDays(weekStart, -1);
-  const histStart = addDays(weekStart, -28);
+  const histStart = addDays(weekStart, -35);
 
   const url = `${API}/schedule?sportId=1&startDate=${fmtDate(histStart)}&endDate=${fmtDate(histEnd)}&hydrate=probablePitcher,team`;
   const data = await fetchJSON(url);
@@ -367,25 +1006,27 @@ async function loadRecentRotations(weekStart){
 
       if(home?.team?.id && homePP?.id){
         const teamId = home.team.id;
+
         teamStarts[teamId] = teamStarts[teamId] || [];
         teamStarts[teamId].push({
-          pitcherId: homePP.id,
-          name: homePP.fullName,
+          pitcherId:homePP.id,
+          name:homePP.fullName,
           teamId,
-          teamName: home.team.name,
-          date: gameDate
+          teamName:home.team.name,
+          date:gameDate
         });
       }
 
       if(away?.team?.id && awayPP?.id){
         const teamId = away.team.id;
+
         teamStarts[teamId] = teamStarts[teamId] || [];
         teamStarts[teamId].push({
-          pitcherId: awayPP.id,
-          name: awayPP.fullName,
+          pitcherId:awayPP.id,
+          name:awayPP.fullName,
           teamId,
-          teamName: away.team.name,
-          date: gameDate
+          teamName:away.team.name,
+          date:gameDate
         });
       }
     });
@@ -402,64 +1043,86 @@ async function loadRecentRotations(weekStart){
       if(!seen.has(s.pitcherId)){
         seen.add(s.pitcherId);
         rotation.push({
-          pitcherId: s.pitcherId,
-          name: s.name,
-          teamId: s.teamId,
-          teamName: s.teamName,
-          lastStart: s.date
+          pitcherId:s.pitcherId,
+          name:s.name,
+          teamId:s.teamId,
+          teamName:s.teamName,
+          lastStart:s.date
         });
       }
     });
 
-    // Tomamos 6 por si hay rotación de 6 hombres, lesiones o doubleheaders
     rotations[teamId] = rotation.slice(0, 6);
   });
 
   return rotations;
 }
 
-// Elige pitcher proyectado del equipo usando más descanso reciente
 function projectStarterForTeam(teamId, gameDate, rotations){
   const rotation = rotations[teamId] || [];
 
   if(!rotation.length) return null;
 
   let best = null;
-  let bestRest = -999;
+  let bestScore = -9999;
 
   rotation.forEach(p=>{
     const rest = daysBetween(p.lastStart, gameDate);
 
-    // Evita proyectar pitchers con muy poco descanso
-    // Normal: 4+ días. Permitimos 3 si no hay mejor opción.
-    if(rest > bestRest){
-      bestRest = rest;
+    let score = rest;
+
+    if(rest < 3) score -= 20;
+    if(rest === 4) score += 2;
+    if(rest === 5) score += 3;
+    if(rest >= 6) score += 1;
+
+    if(score > bestScore){
+      bestScore = score;
       best = p;
     }
   });
 
   if(!best) return null;
 
-  const confidence =
-    bestRest >= 5 ? 'Alta' :
-    bestRest === 4 ? 'Media' :
-    'Baja';
+  const restDays = daysBetween(best.lastStart, gameDate);
+
+  let confidence = 'Baja';
+
+  if(restDays >= 5 && restDays <= 7){
+    confidence = 'Alta';
+  }else if(restDays === 4 || restDays === 8){
+    confidence = 'Media';
+  }
+
+  if(weekOffset > 0 && confidence === 'Alta'){
+    confidence = 'Media';
+  }else if(weekOffset > 1){
+    confidence = 'Baja';
+  }
 
   return {
-    id: best.pitcherId,
-    name: best.name,
-    teamId: best.teamId,
-    teamName: best.teamName,
-    projected: true,
+    id:best.pitcherId,
+    name:best.name,
+    teamId:best.teamId,
+    teamName:best.teamName,
+    projected:true,
     confidence,
-    restDays: bestRest
+    restDays
   };
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Cargar semana + confirmed + projected
+function markRotationStart(teamId, pitcherId, gameDate, rotations){
+  if(!rotations[teamId]) return;
+
+  const found = rotations[teamId].find(p => p.pitcherId === pitcherId);
+
+  if(found){
+    found.lastStart = gameDate;
+  }
+}
+
 async function loadWeek(){
-  const { start, end } = getWeekRange();
+  const { start, end } = getWeekRange(weekOffset);
 
   document.getElementById('weekRange').textContent = `${prettyDate(start)} – ${prettyDate(end)}`;
 
@@ -487,6 +1150,7 @@ async function loadWeek(){
       if(g.gameType !== 'R') return;
 
       const gameDate = new Date(g.gameDate);
+
       const home = g.teams?.home;
       const away = g.teams?.away;
 
@@ -494,26 +1158,25 @@ async function loadWeek(){
       const awayTeamId = away?.team?.id;
 
       let homePP = home?.probablePitcher?.id ? {
-        id: home.probablePitcher.id,
-        name: home.probablePitcher.fullName,
-        teamId: homeTeamId,
-        teamName: home.team.name,
-        projected: false,
-        confidence: 'Confirmado',
-        restDays: null
+        id:home.probablePitcher.id,
+        name:home.probablePitcher.fullName,
+        teamId:homeTeamId,
+        teamName:home.team.name,
+        projected:false,
+        confidence:'Confirmado',
+        restDays:null
       } : null;
 
       let awayPP = away?.probablePitcher?.id ? {
-        id: away.probablePitcher.id,
-        name: away.probablePitcher.fullName,
-        teamId: awayTeamId,
-        teamName: away.team.name,
-        projected: false,
-        confidence: 'Confirmado',
-        restDays: null
+        id:away.probablePitcher.id,
+        name:away.probablePitcher.fullName,
+        teamId:awayTeamId,
+        teamName:away.team.name,
+        projected:false,
+        confidence:'Confirmado',
+        restDays:null
       } : null;
 
-      // Si no hay confirmado, proyectamos
       if(!homePP && homeTeamId){
         homePP = projectStarterForTeam(homeTeamId, gameDate, rotations);
       }
@@ -522,84 +1185,79 @@ async function loadWeek(){
         awayPP = projectStarterForTeam(awayTeamId, gameDate, rotations);
       }
 
-      // Guardar para tab de matchups
       byDay[dStr].push({
-        date: gameDate,
-        awayName: away?.team?.name,
-        awayId: awayTeamId,
-        awayPP: awayPP?.name || null,
-        awayProjected: awayPP?.projected || false,
-        awayConfidence: awayPP?.confidence || null,
-        homeName: home?.team?.name,
-        homeId: homeTeamId,
-        homePP: homePP?.name || null,
-        homeProjected: homePP?.projected || false,
-        homeConfidence: homePP?.confidence || null
+        date:gameDate,
+
+        awayName:away?.team?.name,
+        awayId:awayTeamId,
+        awayPP:awayPP?.name || null,
+        awayProjected:awayPP?.projected || false,
+        awayConfidence:awayPP?.confidence || null,
+        awayRest:awayPP?.restDays ?? null,
+
+        homeName:home?.team?.name,
+        homeId:homeTeamId,
+        homePP:homePP?.name || null,
+        homeProjected:homePP?.projected || false,
+        homeConfidence:homePP?.confidence || null,
+        homeRest:homePP?.restDays ?? null
       });
 
-      // Home pitcher faces away offense
       if(homePP?.id){
         pitchers[homePP.id] = pitchers[homePP.id] || {
-          name: homePP.name,
-          teamId: homePP.teamId,
-          teamName: homePP.teamName,
-          starts: []
+          name:homePP.name,
+          teamId:homePP.teamId,
+          teamName:homePP.teamName,
+          starts:[]
         };
 
         pitchers[homePP.id].starts.push({
-          date: gameDate,
+          date:gameDate,
           dStr,
-          oppId: awayTeamId,
-          oppName: away?.team?.name,
-          home: true,
-          projected: homePP.projected,
-          confidence: homePP.confidence,
-          restDays: homePP.restDays
+          oppId:awayTeamId,
+          oppName:away?.team?.name,
+          home:true,
+          projected:homePP.projected,
+          confidence:homePP.confidence,
+          restDays:homePP.restDays
         });
 
-        // Actualizamos lastStart para que no reproyecte el mismo pitcher demasiado seguido
-        if(rotations[homeTeamId]){
-          const found = rotations[homeTeamId].find(p => p.pitcherId === homePP.id);
-          if(found) found.lastStart = gameDate;
-        }
+        markRotationStart(homeTeamId, homePP.id, gameDate, rotations);
       }
 
-      // Away pitcher faces home offense
       if(awayPP?.id){
         pitchers[awayPP.id] = pitchers[awayPP.id] || {
-          name: awayPP.name,
-          teamId: awayPP.teamId,
-          teamName: awayPP.teamName,
-          starts: []
+          name:awayPP.name,
+          teamId:awayPP.teamId,
+          teamName:awayPP.teamName,
+          starts:[]
         };
 
         pitchers[awayPP.id].starts.push({
-          date: gameDate,
+          date:gameDate,
           dStr,
-          oppId: homeTeamId,
-          oppName: home?.team?.name,
-          home: false,
-          projected: awayPP.projected,
-          confidence: awayPP.confidence,
-          restDays: awayPP.restDays
+          oppId:homeTeamId,
+          oppName:home?.team?.name,
+          home:false,
+          projected:awayPP.projected,
+          confidence:awayPP.confidence,
+          restDays:awayPP.restDays
         });
 
-        if(rotations[awayTeamId]){
-          const found = rotations[awayTeamId].find(p => p.pitcherId === awayPP.id);
-          if(found) found.lastStart = gameDate;
-        }
+        markRotationStart(awayTeamId, awayPP.id, gameDate, rotations);
       }
     });
   });
 
-  weekData = { pitchers, byDay };
+  weekData = {
+    pitchers,
+    byDay
+  };
 
   renderTwoStart();
   renderMatchups();
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Render Two-Start
 function combinedVerdict(starts){
   let score = 0;
 
@@ -608,12 +1266,43 @@ function combinedVerdict(starts){
 
     if(r.key === 'green') score += 1;
     if(r.key === 'red') score -= 1;
+
+    if(s.projected && s.confidence === 'Baja') score -= .25;
   });
 
-  if(score > 0) return { key:'green', word:'Semana favorable' };
-  if(score < 0) return { key:'red', word:'Semana difícil' };
+  if(score > 0){
+    return {
+      key:'green',
+      word:'Semana favorable'
+    };
+  }
 
-  return { key:'yellow', word:'Semana pareja' };
+  if(score < 0){
+    return {
+      key:'red',
+      word:'Semana difícil'
+    };
+  }
+
+  return {
+    key:'yellow',
+    word:'Semana pareja'
+  };
+}
+
+function ownedFor(name){
+  const key = normalizeName(name);
+  return ownedMap[key] ?? null;
+}
+
+function normalizeName(name){
+  return String(name || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9 ]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
 }
 
 function renderTwoStart(){
@@ -622,10 +1311,16 @@ function renderTwoStart(){
   const twoStarters = Object.values(weekData.pitchers)
     .filter(p => p.starts.length >= 2)
     .sort((a,b)=>{
+      const ownA = parseFloat(ownedFor(a.name) ?? -1);
+      const ownB = parseFloat(ownedFor(b.name) ?? -1);
+
       const va = combinedVerdict(a.starts).key;
       const vb = combinedVerdict(b.starts).key;
       const order = { green:0, yellow:1, red:2 };
-      return order[va] - order[vb];
+
+      if(order[va] !== order[vb]) return order[va] - order[vb];
+
+      return ownA - ownB;
     });
 
   document.getElementById('twoState').style.display = 'none';
@@ -636,7 +1331,10 @@ function renderTwoStart(){
     grid.innerHTML = `
       <div class="state" style="grid-column:1/-1">
         <h3>No hay two-start pitchers detectados</h3>
-        <p>No hay pitchers confirmados o proyectados con 2 aperturas esta semana. Revisa más tarde porque MLB actualiza probables cerca del juego.</p>
+        <p>
+          Para esta semana no se detectaron pitchers con dos aperturas usando confirmados y proyecciones.
+          Si estás viendo una semana muy futura, la proyección puede depender de que existan starts recientes disponibles.
+        </p>
       </div>
     `;
     return;
@@ -644,53 +1342,60 @@ function renderTwoStart(){
 
   grid.innerHTML = twoStarters.map(p=>{
     const v = combinedVerdict(p.starts);
+    const hasProjected = p.starts.some(s => s.projected);
+    const own = ownedFor(p.name);
 
     const startsHtml = p.starts.sort((a,b)=>a.date-b.date).map(s=>{
       const r = rateMatchup(s.oppId);
       const day = DAYS_ES[s.date.getDay()];
+
       const tag = s.projected
-        ? `<small style="color:var(--gold)">PROJECTED · Confianza ${s.confidence}${s.restDays !== null ? ` · ${s.restDays} días descanso` : ''}</small>`
-        : `<small style="color:var(--green)">CONFIRMADO</small>`;
+        ? `<small style="color:var(--gold)">PROJECTED · Confianza ${h(s.confidence)}${s.restDays !== null ? ` · ${h(s.restDays)} días descanso` : ''}</small>`
+        : `<small style="color:var(--green)">CONFIRMED</small>`;
 
       return `
         <div class="start">
-          <span class="day">${day}</span>
+          <span class="day">${h(day)}</span>
           <span class="opp">
-            ${s.home ? 'vs' : '@'} ${s.oppName}
+            ${s.home ? 'vs' : '@'} ${h(s.oppName)}
             ${tag}
           </span>
-          <span class="rating r-${r.key}">${r.label}</span>
+          <span class="rating r-${h(r.key)}">${h(r.label)}</span>
         </div>
       `;
     }).join('');
 
-    const hasProjected = p.starts.some(s => s.projected);
+    const confBadges = p.starts
+      .map(s => s.projected ? s.confidence : 'Confirmado')
+      .join(' / ');
 
     return `
       <div class="pcard">
-        <div class="rail rail-${v.key}"></div>
+        <div class="rail rail-${h(v.key)}"></div>
 
         <div class="pc-top">
           <div>
-            <div class="pc-name">${p.name}</div>
-            <div class="pc-team">${p.teamName}</div>
+            <div class="pc-name">${h(p.name)}</div>
+            <div class="pc-team">${h(p.teamName)}</div>
           </div>
 
-          <span class="twostar">${hasProjected ? '2X · PROJ' : '2X · CONF'}</span>
+          <div class="badges">
+            <span class="twostar ${hasProjected ? '' : 'confirmed'}">${hasProjected ? '2X · PROJECTED' : '2X · CONFIRMED'}</span>
+            ${own !== null ? `<span class="ownedbadge">Yahoo ${h(own)}%</span>` : ''}
+          </div>
         </div>
 
         <div class="starts">${startsHtml}</div>
 
         <div class="pc-foot">
-          <span class="verdict v-${v.key}">${v.word}</span>
+          <span class="verdict v-${h(v.key)}">${h(v.word)}</span>
+          <span class="confline">${h(confBadges)}</span>
         </div>
       </div>
     `;
   }).join('');
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Render Matchups
 function renderMatchups(){
   const cont = document.getElementById('matchContent');
 
@@ -711,13 +1416,13 @@ function renderMatchups(){
     html += `
       <div class="daygroup">
         <div class="dayhdr">
-          ${DAYS_ES[d.getDay()]} ${prettyDate(d)}
+          ${h(DAYS_ES[d.getDay()])} ${h(prettyDate(d))}
           <span class="line"></span>
         </div>
     `;
 
     games.forEach(g=>{
-      const ratePP = (ppName, oppId, projected, confidence) => {
+      const ratePP = (ppName, oppId, projected, confidence, rest) => {
         if(!ppName){
           return `
             <span class="mini-rate" style="background:var(--muted2)"></span>
@@ -727,27 +1432,33 @@ function renderMatchups(){
 
         const r = rateMatchup(oppId);
         const col = r.key === 'green' ? 'var(--green)' : r.key === 'red' ? 'var(--red)' : 'var(--yellow)';
-        const label = projected ? ` · PROJECTED ${confidence ? '(' + confidence + ')' : ''}` : ' · CONFIRMADO';
+        const status = projected
+          ? `PROJECTED ${confidence ? '(' + h(confidence) + ')' : ''}${rest !== null ? ' · ' + h(rest) + 'd' : ''}`
+          : 'CONFIRMED';
+
+        const statusColor = projected ? 'var(--gold)' : 'var(--green)';
+        const own = ownedFor(ppName);
 
         return `
           <span class="mini-rate" style="background:${col}"></span>
-          ${ppName}
-          <span style="color:${projected ? 'var(--gold)' : 'var(--green)'}">${label}</span>
+          ${h(ppName)}
+          <span style="color:${statusColor};font-weight:800">· ${status}</span>
+          ${own !== null ? `<span style="color:var(--blue);font-weight:800">· Yahoo ${h(own)}%</span>` : ''}
         `;
       };
 
       html += `
         <div class="matchrow">
           <div class="away">
-            <span class="tm">${g.awayName || ''}</span>
-            <span class="pp">${ratePP(g.awayPP, g.homeId, g.awayProjected, g.awayConfidence)}</span>
+            <span class="tm">${h(g.awayName || '')}</span>
+            <span class="pp">${ratePP(g.awayPP, g.homeId, g.awayProjected, g.awayConfidence, g.awayRest)}</span>
           </div>
 
           <span class="at">@</span>
 
           <div class="home">
-            <span class="tm">${g.homeName || ''}</span>
-            <span class="pp">${ratePP(g.homePP, g.awayId, g.homeProjected, g.homeConfidence)}</span>
+            <span class="tm">${h(g.homeName || '')}</span>
+            <span class="pp">${ratePP(g.homePP, g.awayId, g.homeProjected, g.homeConfidence, g.homeRest)}</span>
           </div>
         </div>
       `;
@@ -764,27 +1475,88 @@ function renderMatchups(){
   `;
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Tabs
 function showTab(which){
   document.getElementById('tab-two').classList.toggle('active', which === 'two');
   document.getElementById('tab-match').classList.toggle('active', which === 'match');
+  document.getElementById('tab-owned').classList.toggle('active', which === 'owned');
 
   document.getElementById('panel-two').style.display = which === 'two' ? 'block' : 'none';
   document.getElementById('panel-match').style.display = which === 'match' ? 'block' : 'none';
+  document.getElementById('panel-owned').style.display = which === 'owned' ? 'block' : 'none';
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// Error
 function showError(msg){
+  document.getElementById('twoState').style.display = 'block';
   document.getElementById('twoState').innerHTML = `
     <h3>No se pudieron cargar los datos</h3>
-    <p>${msg}</p>
-    <button onclick="location.reload()">Reintentar</button>
+    <p>${h(msg)}</p>
+    <button onclick="reloadWeek()">Reintentar</button>
   `;
 }
 
-// Start app
+function loadOwnedMap(){
+  try{
+    const raw = localStorage.getItem('diamondiq_yahoo_owned') || '{}';
+    return JSON.parse(raw);
+  }catch(e){
+    return {};
+  }
+}
+
+function saveOwned(){
+  const text = document.getElementById('ownedInput').value;
+  const map = {};
+
+  text.split('\n').forEach(line=>{
+    const clean = line.trim();
+    if(!clean) return;
+
+    const parts = clean.split(',');
+
+    if(parts.length < 2) return;
+
+    const name = parts[0].trim();
+    const owned = parts[1].replace('%','').trim();
+
+    if(!name || owned === '') return;
+
+    const num = parseFloat(owned);
+
+    if(Number.isNaN(num)) return;
+
+    map[normalizeName(name)] = num;
+  });
+
+  ownedMap = map;
+  localStorage.setItem('diamondiq_yahoo_owned', JSON.stringify(map));
+  alert('Yahoo Owned guardado ✅');
+
+  if(weekData){
+    renderTwoStart();
+    renderMatchups();
+  }
+}
+
+function clearOwned(){
+  localStorage.removeItem('diamondiq_yahoo_owned');
+  ownedMap = {};
+  document.getElementById('ownedInput').value = '';
+  alert('Yahoo Owned borrado');
+
+  if(weekData){
+    renderTwoStart();
+    renderMatchups();
+  }
+}
+
+function hydrateOwnedTextArea(){
+  const map = loadOwnedMap();
+  const lines = Object.entries(map).map(([name, owned]) => `${name}, ${owned}`);
+  document.getElementById('ownedInput').value = lines.join('\n');
+}
+
+hydrateOwnedTextArea();
+
 loadWeek().catch(e=>{
   console.error(e);
   showError('Revisa tu conexión a internet y vuelve a intentar. Los datos vienen directo de MLB.');
@@ -793,9 +1565,3 @@ loadWeek().catch(e=>{
 
 </body>
 </html>
-
-<!-- update -->
-
-
-
-
