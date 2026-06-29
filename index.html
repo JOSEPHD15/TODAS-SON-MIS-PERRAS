@@ -3,39 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TODAS SON MIS PERRAS · Two-Start Pitchers</title>
+<title>DiamondIQ Pro · Two-Start Pitchers</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --bg:#070B14;
-  --bg2:#0D1322;
-  --card:#141D31;
-  --card2:#1B2540;
-  --card3:#101827;
-  --line:#273552;
-  --line2:#354569;
+  --bg:#05070D;
+  --bg2:#090E1A;
+  --panel:#0F1728;
+  --card:#131D33;
+  --card2:#18233E;
+  --line:#263653;
+  --line2:#365074;
+
+  --text:#F2F6FF;
+  --muted:#91A0BE;
+  --muted2:#657391;
 
   --gold:#FFC629;
-  --gold2:#FFDA6A;
-  --gold-soft:rgba(255,198,41,.14);
+  --gold2:#FFE08A;
+  --green:#2DFF88;
+  --yellow:#FFD166;
+  --red:#FF5C7A;
+  --blue:#5EB1FF;
+  --purple:#A78BFA;
 
-  --green:#2ECC71;
-  --green-soft:rgba(46,204,113,.13);
-
-  --yellow:#F4C145;
-  --yellow-soft:rgba(244,193,69,.13);
-
-  --red:#FF5757;
-  --red-soft:rgba(255,87,87,.13);
-
-  --blue:#4DA3FF;
-  --blue-soft:rgba(77,163,255,.13);
-
-  --text:#EAF0FB;
-  --muted:#8B97B5;
-  --muted2:#5E6B8B;
+  --greenSoft:rgba(45,255,136,.13);
+  --yellowSoft:rgba(255,209,102,.13);
+  --redSoft:rgba(255,92,122,.13);
+  --blueSoft:rgba(94,177,255,.13);
+  --goldSoft:rgba(255,198,41,.14);
+  --purpleSoft:rgba(167,139,250,.14);
 }
 
 *{
@@ -49,155 +48,196 @@ html{
 }
 
 body{
-  background:
-    radial-gradient(1100px 600px at 85% -10%, rgba(255,198,41,.06), transparent 60%),
-    radial-gradient(900px 500px at 0% 0%, rgba(77,163,255,.05), transparent 55%),
-    radial-gradient(700px 380px at 50% 10%, rgba(46,204,113,.035), transparent 55%),
-    var(--bg);
+  min-height:100vh;
   color:var(--text);
   font-family:'Inter',sans-serif;
-  min-height:100vh;
+  background:
+    radial-gradient(1000px 520px at 85% -10%, rgba(255,198,41,.11), transparent 60%),
+    radial-gradient(800px 460px at 0% 0%, rgba(94,177,255,.10), transparent 55%),
+    radial-gradient(650px 350px at 50% 20%, rgba(45,255,136,.055), transparent 60%),
+    linear-gradient(180deg,#05070D 0%,#0A1020 45%,#05070D 100%);
   -webkit-font-smoothing:antialiased;
 }
 
 button,
+input,
 textarea,
-input{
+select{
   font-family:inherit;
 }
 
-.top{
-  max-width:1220px;
+.app{
+  max-width:1240px;
   margin:0 auto;
-  padding:28px 22px 8px;
+  padding:26px 22px 60px;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  background:
+    linear-gradient(135deg, rgba(255,198,41,.12), transparent 28%),
+    linear-gradient(160deg, rgba(94,177,255,.10), transparent 34%),
+    linear-gradient(180deg, rgba(19,29,51,.92), rgba(10,15,28,.92));
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 24px 80px rgba(0,0,0,.28);
+}
+
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:auto -120px -150px auto;
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle, rgba(255,198,41,.16), transparent 65%);
+  pointer-events:none;
+}
+
+.heroTop{
   display:flex;
-  align-items:flex-end;
   justify-content:space-between;
+  align-items:flex-start;
   gap:18px;
   flex-wrap:wrap;
 }
 
-.brand{
+.brandBlock{
   display:flex;
   flex-direction:column;
-  gap:4px;
+  gap:8px;
 }
 
-.brand h1{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:42px;
-  line-height:.9;
-  letter-spacing:.6px;
-  color:#fff;
+.kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  width:max-content;
+  color:var(--gold2);
+  background:rgba(255,198,41,.10);
+  border:1px solid rgba(255,198,41,.26);
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.45px;
   text-transform:uppercase;
 }
 
-.brand h1 span{
+.brand{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:48px;
+  font-weight:900;
+  line-height:.88;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+
+.brand span{
   color:var(--gold);
+  text-shadow:0 0 28px rgba(255,198,41,.35);
 }
 
-.brand .sub{
+.subtitle{
+  max-width:760px;
   color:var(--muted);
-  font-size:13px;
-  font-weight:500;
-  letter-spacing:.2px;
-  line-height:1.45;
+  font-size:14px;
+  line-height:1.65;
 }
 
-.controls{
+.heroActions{
   display:flex;
   align-items:center;
+  justify-content:flex-end;
   gap:8px;
   flex-wrap:wrap;
 }
 
-.week-pill{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(20,29,49,.82);
+.btn{
   border:1px solid var(--line);
-  padding:9px 14px;
-  border-radius:11px;
-  font-size:13px;
-  color:var(--muted);
-}
-
-.week-pill b{
+  background:rgba(15,23,40,.82);
   color:var(--text);
-  font-weight:700;
-}
-
-.navbtn{
-  background:var(--card);
-  border:1px solid var(--line);
-  color:var(--text);
-  padding:9px 12px;
-  border-radius:10px;
+  padding:10px 13px;
+  border-radius:12px;
   cursor:pointer;
   font-size:13px;
-  font-weight:700;
-  transition:.12s;
+  font-weight:800;
+  transition:.15s;
 }
 
-.navbtn:hover{
+.btn:hover{
+  transform:translateY(-1px);
   border-color:var(--gold);
   color:var(--gold);
-  transform:translateY(-1px);
 }
 
-.navbtn.gold{
-  background:var(--gold);
-  color:#08101F;
-  border-color:var(--gold);
+.btn.gold{
+  background:linear-gradient(180deg,var(--gold2),var(--gold));
+  color:#07101F;
+  border-color:rgba(255,198,41,.75);
 }
 
-.legend{
-  max-width:1220px;
-  margin:14px auto 0;
-  padding:0 22px;
+.weekBox{
+  margin-top:18px;
   display:flex;
-  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
   flex-wrap:wrap;
-  align-items:center;
 }
 
-.legend .lg{
+.weekPill{
   display:flex;
   align-items:center;
-  gap:7px;
-  font-size:12.5px;
+  gap:8px;
   color:var(--muted);
+  border:1px solid var(--line);
+  background:rgba(5,7,13,.30);
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:13px;
 }
 
-.swatch{
-  width:11px;
-  height:11px;
-  border-radius:3px;
+.weekPill b{
+  color:var(--text);
 }
 
-.sw-green{background:var(--green)}
-.sw-yellow{background:var(--yellow)}
-.sw-red{background:var(--red)}
-.sw-blue{background:var(--blue)}
-.sw-gold{background:var(--gold)}
+/* KPI */
+.kpis{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
 
-.badge2{
+.kpi{
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(5,7,13,.33);
+  border-radius:18px;
+  padding:15px;
+}
+
+.kpi .num{
   font-family:'Barlow Condensed',sans-serif;
+  font-size:32px;
   font-weight:900;
-  font-size:12px;
-  background:var(--gold);
-  color:#0A0E1A;
-  padding:2px 8px;
-  border-radius:6px;
-  letter-spacing:.6px;
+  line-height:1;
 }
 
+.kpi .label{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.45px;
+}
+
+/* NAV */
 .tabs{
-  max-width:1220px;
-  margin:22px auto 0;
-  padding:0 22px;
+  margin-top:22px;
   display:flex;
   gap:8px;
   border-bottom:1px solid var(--line);
@@ -205,22 +245,18 @@ input{
 }
 
 .tab{
+  position:relative;
   background:none;
   border:none;
   color:var(--muted);
+  padding:14px 16px;
+  cursor:pointer;
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:17px;
+  font-size:18px;
+  font-weight:900;
   letter-spacing:.45px;
   text-transform:uppercase;
-  padding:13px 16px;
-  cursor:pointer;
-  position:relative;
   white-space:nowrap;
-}
-
-.tab:hover{
-  color:var(--text);
 }
 
 .tab.active{
@@ -238,25 +274,69 @@ input{
   border-radius:3px 3px 0 0;
 }
 
-.wrap{
-  max-width:1220px;
-  margin:0 auto;
-  padding:26px 22px 80px;
+/* FILTERS */
+.toolbar{
+  margin:22px 0 16px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
+.search{
+  flex:1;
+  min-width:240px;
+  border:1px solid var(--line);
+  background:rgba(15,23,40,.82);
+  color:var(--text);
+  padding:12px 14px;
+  border-radius:14px;
+  outline:none;
+  font-size:14px;
+}
+
+.search:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(255,198,41,.12);
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.filter{
+  border:1px solid var(--line);
+  background:rgba(15,23,40,.82);
+  color:var(--muted);
+  padding:10px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:900;
+}
+
+.filter.active{
+  background:var(--gold);
+  color:#07101F;
+  border-color:var(--gold);
+}
+
+/* STATES */
 .state{
   text-align:center;
-  padding:72px 20px;
+  padding:70px 20px;
   color:var(--muted);
 }
 
-.state .spin{
-  width:38px;
-  height:38px;
+.spin{
+  width:40px;
+  height:40px;
   border:3px solid var(--line);
   border-top-color:var(--gold);
   border-radius:50%;
-  animation:spin .8s linear infinite;
+  animation:spin .85s linear infinite;
   margin:0 auto 18px;
 }
 
@@ -266,471 +346,475 @@ input{
 
 .state h3{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:24px;
+  font-size:26px;
   color:var(--text);
-  font-weight:800;
-  margin-bottom:7px;
   text-transform:uppercase;
   letter-spacing:.5px;
+  margin-bottom:6px;
 }
 
 .state p{
-  font-size:14px;
-  max-width:520px;
+  max-width:560px;
   margin:0 auto;
+  font-size:14px;
   line-height:1.65;
 }
 
-.state button{
-  margin-top:18px;
-  background:var(--gold);
-  color:#0A0E1A;
-  border:none;
-  font-weight:800;
-  font-size:14px;
-  padding:10px 22px;
-  border-radius:9px;
-  cursor:pointer;
-}
-
-.sec-head{
+/* SECTIONS */
+.sectionHead{
   display:flex;
-  align-items:baseline;
+  align-items:flex-end;
   justify-content:space-between;
-  gap:12px;
-  margin:6px 0 18px;
+  gap:14px;
   flex-wrap:wrap;
+  margin-top:12px;
+  margin-bottom:14px;
 }
 
-.sec-title{
-  display:flex;
-  align-items:baseline;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.sec-head h2{
+.sectionHead h2{
   font-family:'Barlow Condensed',sans-serif;
+  font-size:30px;
   font-weight:900;
-  font-size:28px;
-  text-transform:uppercase;
   letter-spacing:.55px;
+  text-transform:uppercase;
 }
 
-.sec-head .count{
-  color:var(--muted);
-  font-size:14px;
-}
-
-.sec-note{
+.sectionHead p{
   color:var(--muted);
   font-size:13px;
-  margin:-8px 0 20px;
-  line-height:1.6;
-}
-
-.tools{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.toolbtn{
-  background:var(--card);
-  border:1px solid var(--line);
-  color:var(--text);
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:12.5px;
-  font-weight:800;
-}
-
-.toolbtn:hover{
-  border-color:var(--gold);
-  color:var(--gold);
+  margin-top:4px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
   gap:14px;
 }
 
-.pcard{
-  background:linear-gradient(160deg,var(--card2),var(--card));
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:16px 16px 14px;
+/* PLAYER CARD */
+.card{
   position:relative;
   overflow:hidden;
-  transition:transform .12s,border-color .12s;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  background:
+    linear-gradient(160deg, rgba(24,35,62,.98), rgba(13,19,34,.98));
+  padding:16px;
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
+  transition:.15s;
 }
 
-.pcard:hover{
-  transform:translateY(-2px);
-  border-color:#405174;
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(255,198,41,.36);
 }
 
-.pcard .rail{
+.card::before{
+  content:'';
   position:absolute;
   left:0;
   top:0;
   bottom:0;
   width:4px;
+  background:var(--yellow);
 }
 
-.rail-green{background:var(--green)}
-.rail-yellow{background:var(--yellow)}
-.rail-red{background:var(--red)}
-.rail-blue{background:var(--blue)}
+.card.green::before{background:var(--green)}
+.card.yellow::before{background:var(--yellow)}
+.card.red::before{background:var(--red)}
 
-.pc-top{
+.cardTop{
   display:flex;
-  align-items:flex-start;
   justify-content:space-between;
-  gap:10px;
-  margin-bottom:12px;
-  padding-left:6px;
+  gap:12px;
+  align-items:flex-start;
+  margin-bottom:14px;
 }
 
-.pc-name{
+.rank{
+  color:var(--gold);
   font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;
   font-weight:900;
-  font-size:24px;
+  letter-spacing:.4px;
+}
+
+.name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:27px;
+  font-weight:900;
   line-height:1;
   letter-spacing:.35px;
+  margin-top:2px;
 }
 
-.pc-team{
+.team{
   color:var(--muted);
   font-size:12.5px;
+  margin-top:5px;
+  font-weight:700;
+}
+
+.scoreBox{
+  text-align:right;
+  min-width:76px;
+}
+
+.score{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:34px;
+  font-weight:900;
+  line-height:.9;
+}
+
+.scoreText{
+  color:var(--muted);
+  font-size:10.5px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.45px;
   margin-top:4px;
-  font-weight:600;
 }
 
 .badges{
   display:flex;
-  gap:6px;
+  gap:7px;
   flex-wrap:wrap;
-  justify-content:flex-end;
+  margin-bottom:12px;
 }
 
-.twostar,
-.ownedbadge{
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:999px;
+  padding:5px 9px;
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
   font-size:12.5px;
+  font-weight:900;
   letter-spacing:.45px;
-  padding:4px 8px;
-  border-radius:7px;
-  white-space:nowrap;
+  text-transform:uppercase;
 }
 
-.twostar{
-  background:var(--gold);
-  color:#0A0E1A;
-  box-shadow:0 0 0 3px var(--gold-soft);
-}
-
-.twostar.confirmed{
-  background:var(--green);
-  box-shadow:0 0 0 3px var(--green-soft);
-}
-
-.ownedbadge{
-  background:var(--blue-soft);
-  color:var(--blue);
-  border:1px solid rgba(77,163,255,.28);
-}
+.bGreen{color:var(--green);background:var(--greenSoft);border:1px solid rgba(45,255,136,.22)}
+.bGold{color:var(--gold);background:var(--goldSoft);border:1px solid rgba(255,198,41,.24)}
+.bBlue{color:var(--blue);background:var(--blueSoft);border:1px solid rgba(94,177,255,.24)}
+.bRed{color:var(--red);background:var(--redSoft);border:1px solid rgba(255,92,122,.24)}
+.bPurple{color:var(--purple);background:var(--purpleSoft);border:1px solid rgba(167,139,250,.24)}
 
 .starts{
   display:flex;
   flex-direction:column;
   gap:8px;
-  padding-left:6px;
 }
 
 .start{
   display:flex;
   align-items:center;
   gap:10px;
-  background:rgba(0,0,0,.18);
   border:1px solid var(--line);
-  border-radius:10px;
-  padding:10px 11px;
+  background:rgba(5,7,13,.34);
+  border-radius:13px;
+  padding:10px;
 }
 
-.start .day{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:14px;
-  color:var(--muted);
-  width:40px;
+.day{
+  width:42px;
   flex-shrink:0;
+  color:var(--muted);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;
+  font-weight:900;
   text-transform:uppercase;
 }
 
-.start .opp{
+.opp{
   flex:1;
   font-size:13.5px;
   font-weight:800;
-  line-height:1.25;
+  line-height:1.3;
 }
 
-.start .opp small{
-  color:var(--muted2);
-  font-weight:700;
-  font-size:11.5px;
+.opp small{
   display:block;
   margin-top:3px;
+  color:var(--muted2);
+  font-size:11.5px;
+  font-weight:700;
 }
 
 .rating{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:11.5px;
-  letter-spacing:.45px;
+  flex-shrink:0;
+  border-radius:999px;
   padding:4px 9px;
-  border-radius:20px;
-  white-space:nowrap;
-  text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11.5px;
+  font-weight:900;
+  letter-spacing:.4px;
 }
 
-.r-green{background:var(--green-soft);color:var(--green)}
-.r-yellow{background:var(--yellow-soft);color:var(--yellow)}
-.r-red{background:var(--red-soft);color:var(--red)}
+.rGreen{color:var(--green);background:var(--greenSoft)}
+.rYellow{color:var(--yellow);background:var(--yellowSoft)}
+.rRed{color:var(--red);background:var(--redSoft)}
 
-.pc-foot{
-  margin-top:12px;
-  padding-top:11px;
-  padding-left:6px;
+.cardFoot{
+  margin-top:13px;
+  padding-top:12px;
   border-top:1px solid var(--line);
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:12px;
+  gap:10px;
+  align-items:center;
 }
 
-.verdict{
+.take{
   font-family:'Barlow Condensed',sans-serif;
+  font-size:18px;
   font-weight:900;
-  font-size:14px;
-  letter-spacing:.35px;
+  letter-spacing:.45px;
   text-transform:uppercase;
 }
 
-.v-green{color:var(--green)}
-.v-yellow{color:var(--yellow)}
-.v-red{color:var(--red)}
+.take.START{color:var(--green)}
+.take.STREAM{color:var(--blue)}
+.take.WATCHLIST{color:var(--yellow)}
+.take.AVOID{color:var(--red)}
 
-.confline{
+.reason{
   color:var(--muted);
   font-size:11.5px;
   font-weight:700;
   text-align:right;
 }
 
-.daygroup{
+/* MATCHUPS */
+.dayGroup{
   margin-bottom:26px;
 }
 
-.dayhdr{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:19px;
-  text-transform:uppercase;
-  letter-spacing:.55px;
-  color:var(--gold);
-  margin-bottom:10px;
+.dayTitle{
   display:flex;
   align-items:center;
   gap:10px;
+  margin-bottom:10px;
+  color:var(--gold);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:.5px;
+  text-transform:uppercase;
 }
 
-.dayhdr .line{
+.dayTitle span{
   flex:1;
   height:1px;
   background:var(--line);
 }
 
-.matchrow{
+.match{
   display:flex;
   align-items:center;
   gap:12px;
-  background:var(--card);
   border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px 14px;
+  background:rgba(15,23,40,.86);
+  border-radius:16px;
+  padding:13px 14px;
   margin-bottom:8px;
 }
 
-.matchrow .away,
-.matchrow .home{
+.side{
   flex:1;
   display:flex;
   flex-direction:column;
   gap:4px;
 }
 
-.matchrow .home{
+.side.home{
   text-align:right;
   align-items:flex-end;
 }
 
 .tm{
   font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:17px;
+  font-size:18px;
+  font-weight:900;
 }
 
 .pp{
-  font-size:11.8px;
   color:var(--muted);
+  font-size:12px;
+  font-weight:700;
   display:flex;
   align-items:center;
-  gap:5px;
   flex-wrap:wrap;
+  gap:5px;
 }
 
-.matchrow .home .pp{
+.home .pp{
   justify-content:flex-end;
 }
 
-.matchrow .at{
+.at{
   color:var(--muted2);
+  font-weight:900;
   font-size:12px;
-  font-weight:800;
-  flex-shrink:0;
 }
 
-.mini-rate{
+.dot{
   width:9px;
   height:9px;
   border-radius:50%;
   display:inline-block;
-  flex-shrink:0;
 }
 
-.panelbox{
-  background:linear-gradient(160deg,var(--card2),var(--card));
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:16px;
-  margin-bottom:16px;
+/* OWNED */
+.panel{
+  border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(160deg, rgba(24,35,62,.98), rgba(13,19,34,.98));
+  border-radius:20px;
+  padding:18px;
+  margin-top:22px;
 }
 
-.panelbox h3{
+.panel h2{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:23px;
+  font-size:28px;
+  font-weight:900;
   text-transform:uppercase;
-  letter-spacing:.5px;
   margin-bottom:8px;
 }
 
-.panelbox p{
+.panel p{
   color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
+  font-size:13.5px;
+  line-height:1.65;
   margin-bottom:12px;
 }
 
-.ownedArea{
+textarea{
   width:100%;
-  min-height:170px;
-  background:#08101F;
-  border:1px solid var(--line);
-  color:var(--text);
-  border-radius:12px;
-  padding:12px;
+  min-height:190px;
   resize:vertical;
+  border:1px solid var(--line);
+  background:#07101F;
+  color:var(--text);
+  border-radius:15px;
+  padding:13px;
+  outline:none;
   font-size:13px;
   line-height:1.5;
 }
 
-.smallnote{
+textarea:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(255,198,41,.12);
+}
+
+.note{
+  margin-top:12px;
   color:var(--muted2);
   font-size:12px;
-  line-height:1.55;
-  margin-top:10px;
+  line-height:1.6;
 }
 
 footer{
-  max-width:1220px;
-  margin:0 auto;
-  padding:20px 22px 40px;
+  max-width:1240px;
+  margin:20px auto 0;
+  padding:20px 22px 36px;
   color:var(--muted2);
-  font-size:12px;
   text-align:center;
+  font-size:12px;
   line-height:1.65;
 }
 
-@media(max-width:680px){
-  .brand h1{
-    font-size:34px;
-  }
+@media(max-width:780px){
+  .brand{font-size:38px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+  .cardTop{flex-direction:column}
+  .scoreBox{text-align:left}
+  .match{align-items:flex-start}
+}
 
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .tab{
-    font-size:15px;
-    padding:11px 11px;
-  }
-
-  .matchrow{
-    align-items:flex-start;
-  }
-
-  .pc-top{
-    flex-direction:column;
-  }
-
-  .badges{
-    justify-content:flex-start;
-  }
+@media(max-width:500px){
+  .kpis{grid-template-columns:1fr}
+  .hero{padding:18px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">
-  <div class="brand">
-    <h1>DIAMOND<span>IQ</span></h1>
-    <div class="sub">
-      Two-start pitchers y matchups de la semana · Confirmed Starters + Projected Rotation Logic
+<div class="app">
+
+  <section class="hero">
+    <div class="heroTop">
+      <div class="brandBlock">
+        <div class="kicker">⚾ Fantasy Pitcher Intelligence</div>
+
+        <!-- CAMBIA EL NOMBRE AQUÍ -->
+        <div class="brand">DIAMOND<span>IQ</span> PRO</div>
+
+        <div class="subtitle">
+          Two-start pitchers, matchups, streaming targets y proyecciones de rotación.
+          Combina probables confirmados de MLB con lógica proyectada basada en rotación reciente, días de descanso y calendario semanal.
+        </div>
+      </div>
+
+      <div class="heroActions">
+        <button class="btn" onclick="changeWeek(-1)">← Semana anterior</button>
+        <button class="btn gold" onclick="goCurrentWeek()">Semana actual</button>
+        <button class="btn" onclick="changeWeek(1)">Semana siguiente →</button>
+      </div>
     </div>
+
+    <div class="weekBox">
+      <div class="weekPill">Semana analizada: <b id="weekRange">cargando…</b></div>
+      <button class="btn" onclick="reloadWeek()">Actualizar data</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="num" id="kpiTwo">--</div>
+        <div class="label">Two-start pitchers</div>
+      </div>
+
+      <div class="kpi">
+        <div class="num" id="kpiConfirmed">--</div>
+        <div class="label">Confirmados</div>
+      </div>
+
+      <div class="kpi">
+        <div class="num" id="kpiProjected">--</div>
+        <div class="label">Proyectados</div>
+      </div>
+
+      <div class="kpi">
+        <div class="num" id="kpiStream">--</div>
+        <div class="label">Stream targets</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-two" onclick="showTab('two')">🔥 Two-Start</button>
+    <button class="tab" id="tab-match" onclick="showTab('match')">📅 Matchups</button>
+    <button class="tab" id="tab-owned" onclick="showTab('owned')">📊 Yahoo Owned</button>
   </div>
-
-  <div class="controls">
-    <button class="navbtn" onclick="changeWeek(-1)">← Semana anterior</button>
-    <button class="navbtn gold" onclick="goCurrentWeek()">Semana actual</button>
-    <button class="navbtn" onclick="changeWeek(1)">Semana siguiente →</button>
-    <div class="week-pill">Semana: <b id="weekRange">cargando…</b></div>
-  </div>
-</div>
-
-<div class="legend">
-  <span class="badge2">2X</span>
-  <span style="color:var(--muted);font-size:12.5px">Lanza 2 veces esta semana</span>
-  <div class="lg"><span class="swatch sw-green"></span>Confirmado / favorable</div>
-  <div class="lg"><span class="swatch sw-gold"></span>Projected Rotation Logic</div>
-  <div class="lg"><span class="swatch sw-yellow"></span>Matchup parejo</div>
-  <div class="lg"><span class="swatch sw-red"></span>Matchup difícil</div>
-  <div class="lg"><span class="swatch sw-blue"></span>% Owned manual Yahoo</div>
-</div>
-
-<div class="tabs">
-  <button class="tab active" id="tab-two" onclick="showTab('two')">⚾ Two-Start Pitchers</button>
-  <button class="tab" id="tab-match" onclick="showTab('match')">📅 Matchups por día</button>
-  <button class="tab" id="tab-owned" onclick="showTab('owned')">📊 Yahoo Owned</button>
-</div>
-
-<div class="wrap">
 
   <div id="panel-two">
+    <div class="toolbar">
+      <input class="search" id="searchInput" placeholder="Buscar pitcher..." oninput="renderTwoStart()">
+
+      <div class="filters">
+        <button class="filter active" onclick="setOwnedFilter('all', this)">All</button>
+        <button class="filter" onclick="setOwnedFilter(80, this)">Under 80%</button>
+        <button class="filter" onclick="setOwnedFilter(60, this)">Under 60%</button>
+        <button class="filter" onclick="setOwnedFilter(40, this)">Under 40%</button>
+        <button class="filter" onclick="setOwnedFilter(20, this)">Under 20%</button>
+      </div>
+    </div>
+
     <div class="state" id="twoState">
       <div class="spin"></div>
       <h3>Cargando lanzadores</h3>
@@ -738,21 +822,12 @@ footer{
     </div>
 
     <div id="twoContent" style="display:none">
-      <div class="sec-head">
-        <div class="sec-title">
-          <h2>Lanzan 2 veces</h2>
-          <span class="count" id="twoCount"></span>
-        </div>
-
-        <div class="tools">
-          <button class="toolbtn" onclick="reloadWeek()">Actualizar data</button>
+      <div class="sectionHead">
+        <div>
+          <h2>Ranking de two-start pitchers</h2>
+          <p>Ordenado por DiamondIQ Score, matchups, confianza y disponibilidad fantasy.</p>
         </div>
       </div>
-
-      <p class="sec-note">
-        CONFIRMED significa que MLB publicó el probable pitcher. PROJECTED significa que DiamondIQ lo infiere usando rotación reciente,
-        días de descanso y calendario semanal. No es confirmación oficial.
-      </p>
 
       <div class="grid" id="twoGrid"></div>
     </div>
@@ -761,35 +836,35 @@ footer{
   <div id="panel-match" style="display:none">
     <div class="state" id="matchState">
       <div class="spin"></div>
-      <h3>Cargando partidos</h3>
-      <p>Organizando enfrentamientos día por día con pitchers confirmados y proyectados.</p>
+      <h3>Cargando matchups</h3>
+      <p>Organizando partidos día por día con pitchers confirmados y proyectados.</p>
     </div>
 
     <div id="matchContent" style="display:none"></div>
   </div>
 
   <div id="panel-owned" style="display:none">
-    <div class="panelbox">
-      <h3>Yahoo Owned %</h3>
+    <div class="panel">
+      <h2>Yahoo Owned %</h2>
       <p>
-        GitHub Pages no puede conectarse directo a Yahoo Fantasy sin OAuth. Pega aquí una lista manual desde Yahoo o tu propia data.
-        Formato recomendado: <b>Nombre Pitcher, Owned%</b>.
+        Yahoo Fantasy no se puede conectar directo desde GitHub Pages sin OAuth/backend.
+        Pega aquí tu lista manual en formato: <b>Nombre Pitcher, Owned%</b>.
       </p>
 
-      <textarea class="ownedArea" id="ownedInput" placeholder="Ejemplo:
-Zack Wheeler, 99
-Tarik Skubal, 98
+      <textarea id="ownedInput" placeholder="Ejemplo:
 Nick Lodolo, 72
 Shane Baz, 43
+Jose Soriano, 38
+Brayan Bello, 55
 "></textarea>
 
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button class="navbtn gold" onclick="saveOwned()">Guardar Yahoo Owned</button>
-        <button class="navbtn" onclick="clearOwned()">Borrar</button>
+        <button class="btn gold" onclick="saveOwned()">Guardar Yahoo Owned</button>
+        <button class="btn" onclick="clearOwned()">Borrar</button>
       </div>
 
-      <div class="smallnote">
-        Tip: el matching usa el nombre exacto del pitcher. Si no aparece el %, revisa spelling o pega el nombre igual como sale en la tarjeta.
+      <div class="note">
+        Tip: usa el nombre igual como aparece en MLB. Si un pitcher no muestra %, revisa el spelling.
       </div>
     </div>
   </div>
@@ -797,8 +872,8 @@ Shane Baz, 43
 </div>
 
 <footer>
-  Datos de calendario y probables vía MLB Stats API pública. Las proyecciones usan lógica de rotación reciente, días de descanso y calendario semanal.
-  No son confirmaciones oficiales. DiamondIQ no está afiliado con MLB ni con Yahoo Fantasy. Solo para uso informativo de fantasy.
+  Datos de calendario y probables vía MLB Stats API pública. Las proyecciones usan rotación reciente, días de descanso y calendario semanal.
+  No son confirmaciones oficiales. Siempre confirma antes del lineup lock. DiamondIQ no está afiliado con MLB ni Yahoo Fantasy.
 </footer>
 
 <script>
@@ -810,6 +885,7 @@ const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','
 let teamRecords = {};
 let weekData = null;
 let weekOffset = 0;
+let ownedFilter = 'all';
 let ownedMap = loadOwnedMap();
 
 function h(value){
@@ -835,10 +911,6 @@ function addDays(date, days){
   return d;
 }
 
-function addWeeks(date, weeks){
-  return addDays(date, weeks * 7);
-}
-
 function daysBetween(a,b){
   const d1 = new Date(a);
   const d2 = new Date(b);
@@ -847,28 +919,102 @@ function daysBetween(a,b){
   return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
 }
 
-function getWeekRange(offset = 0){
+function getWeekRange(offset=0){
   const now = new Date();
   const day = now.getDay();
-  const diffToMon = (day === 0 ? -6 : 1 - day);
+  const diffToMon = day === 0 ? -6 : 1 - day;
 
   const mon = new Date(now);
-  mon.setDate(now.getDate() + diffToMon);
+  mon.setDate(now.getDate() + diffToMon + offset * 7);
   mon.setHours(0,0,0,0);
 
-  const start = addWeeks(mon, offset);
-  start.setHours(0,0,0,0);
+  const sun = addDays(mon, 6);
+  sun.setHours(23,59,59,999);
 
-  const end = addDays(start, 6);
-  end.setHours(23,59,59,999);
-
-  return { start, end };
+  return { start:mon, end:sun };
 }
 
 async function fetchJSON(url){
   const r = await fetch(url);
   if(!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
+}
+
+function normalizeName(name){
+  return String(name || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9 ]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+function loadOwnedMap(){
+  try{
+    return JSON.parse(localStorage.getItem('diamondiq_owned') || '{}');
+  }catch(e){
+    return {};
+  }
+}
+
+function ownedFor(name){
+  return ownedMap[normalizeName(name)] ?? null;
+}
+
+function saveOwned(){
+  const text = document.getElementById('ownedInput').value;
+  const map = {};
+
+  text.split('\n').forEach(line=>{
+    const clean = line.trim();
+    if(!clean) return;
+
+    const parts = clean.split(',');
+    if(parts.length < 2) return;
+
+    const name = parts[0].trim();
+    const owned = parseFloat(parts[1].replace('%','').trim());
+
+    if(name && !Number.isNaN(owned)){
+      map[normalizeName(name)] = owned;
+    }
+  });
+
+  ownedMap = map;
+  localStorage.setItem('diamondiq_owned', JSON.stringify(map));
+  alert('Yahoo Owned guardado ✅');
+
+  if(weekData){
+    renderTwoStart();
+    renderMatchups();
+  }
+}
+
+function clearOwned(){
+  ownedMap = {};
+  localStorage.removeItem('diamondiq_owned');
+  document.getElementById('ownedInput').value = '';
+  alert('Yahoo Owned borrado');
+
+  if(weekData){
+    renderTwoStart();
+    renderMatchups();
+  }
+}
+
+function hydrateOwnedBox(){
+  const lines = Object.entries(ownedMap).map(([name, owned]) => `${name}, ${owned}`);
+  document.getElementById('ownedInput').value = lines.join('\n');
+}
+
+function setOwnedFilter(value, btn){
+  ownedFilter = value;
+
+  document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+
+  renderTwoStart();
 }
 
 function resetLoading(){
@@ -884,20 +1030,21 @@ function resetLoading(){
   document.getElementById('matchState').style.display = 'block';
   document.getElementById('matchState').innerHTML = `
     <div class="spin"></div>
-    <h3>Cargando partidos</h3>
-    <p>Organizando enfrentamientos día por día con pitchers confirmados y proyectados.</p>
+    <h3>Cargando matchups</h3>
+    <p>Organizando partidos día por día con pitchers confirmados y proyectados.</p>
   `;
 
   document.getElementById('matchContent').style.display = 'none';
-  document.getElementById('matchContent').innerHTML = '';
   document.getElementById('twoGrid').innerHTML = '';
+
+  updateKpis([]);
 }
 
 async function reloadWeek(){
   resetLoading();
   await loadWeek().catch(e=>{
     console.error(e);
-    showError('No se pudieron cargar los datos. Revisa conexión o espera unos segundos y vuelve a intentar.');
+    showError('No se pudieron cargar los datos. Revisa conexión o intenta otra vez.');
   });
 }
 
@@ -926,10 +1073,7 @@ async function loadOffenseStrength(season){
       const rpg = runs / games;
 
       if(id){
-        teamRecords[id] = {
-          rpg,
-          name:s.team?.name
-        };
+        teamRecords[id] = { rpg, name:s.team?.name };
         runsArr.push(rpg);
       }
     });
@@ -942,7 +1086,6 @@ async function loadOffenseStrength(season){
     window._rpgHigh = q(0.70);
 
   }catch(e){
-    console.warn('No se pudo cargar ofensiva. Usando thresholds default.', e);
     window._rpgLow = 4.2;
     window._rpgHigh = 4.8;
   }
@@ -952,39 +1095,23 @@ function rateMatchup(oppId){
   const rec = teamRecords[oppId];
 
   if(!rec){
-    return {
-      key:'yellow',
-      label:'Parejo',
-      word:'Neutral'
-    };
+    return { key:'yellow', label:'Parejo', score:0 };
   }
 
   if(rec.rpg <= window._rpgLow){
-    return {
-      key:'green',
-      label:'Favorable',
-      word:'Favorable'
-    };
+    return { key:'green', label:'Favorable', score:8 };
   }
 
   if(rec.rpg >= window._rpgHigh){
-    return {
-      key:'red',
-      label:'Difícil',
-      word:'Difícil'
-    };
+    return { key:'red', label:'Difícil', score:-8 };
   }
 
-  return {
-    key:'yellow',
-    label:'Parejo',
-    word:'Parejo'
-  };
+  return { key:'yellow', label:'Parejo', score:0 };
 }
 
 async function loadRecentRotations(weekStart){
-  const histEnd = addDays(weekStart, -1);
   const histStart = addDays(weekStart, -35);
+  const histEnd = addDays(weekStart, -1);
 
   const url = `${API}/schedule?sportId=1&startDate=${fmtDate(histStart)}&endDate=${fmtDate(histEnd)}&hydrate=probablePitcher,team`;
   const data = await fetchJSON(url);
@@ -1006,7 +1133,6 @@ async function loadRecentRotations(weekStart){
 
       if(home?.team?.id && homePP?.id){
         const teamId = home.team.id;
-
         teamStarts[teamId] = teamStarts[teamId] || [];
         teamStarts[teamId].push({
           pitcherId:homePP.id,
@@ -1019,7 +1145,6 @@ async function loadRecentRotations(weekStart){
 
       if(away?.team?.id && awayPP?.id){
         const teamId = away.team.id;
-
         teamStarts[teamId] = teamStarts[teamId] || [];
         teamStarts[teamId].push({
           pitcherId:awayPP.id,
@@ -1060,21 +1185,19 @@ async function loadRecentRotations(weekStart){
 
 function projectStarterForTeam(teamId, gameDate, rotations){
   const rotation = rotations[teamId] || [];
-
   if(!rotation.length) return null;
 
   let best = null;
-  let bestScore = -9999;
+  let bestScore = -999;
 
   rotation.forEach(p=>{
     const rest = daysBetween(p.lastStart, gameDate);
-
     let score = rest;
 
     if(rest < 3) score -= 20;
     if(rest === 4) score += 2;
-    if(rest === 5) score += 3;
-    if(rest >= 6) score += 1;
+    if(rest === 5) score += 4;
+    if(rest >= 6 && rest <= 8) score += 2;
 
     if(score > bestScore){
       bestScore = score;
@@ -1087,18 +1210,11 @@ function projectStarterForTeam(teamId, gameDate, rotations){
   const restDays = daysBetween(best.lastStart, gameDate);
 
   let confidence = 'Baja';
+  if(restDays >= 5 && restDays <= 7) confidence = 'Alta';
+  else if(restDays === 4 || restDays === 8) confidence = 'Media';
 
-  if(restDays >= 5 && restDays <= 7){
-    confidence = 'Alta';
-  }else if(restDays === 4 || restDays === 8){
-    confidence = 'Media';
-  }
-
-  if(weekOffset > 0 && confidence === 'Alta'){
-    confidence = 'Media';
-  }else if(weekOffset > 1){
-    confidence = 'Baja';
-  }
+  if(weekOffset > 0 && confidence === 'Alta') confidence = 'Media';
+  if(weekOffset > 1) confidence = 'Baja';
 
   return {
     id:best.pitcherId,
@@ -1112,13 +1228,8 @@ function projectStarterForTeam(teamId, gameDate, rotations){
 }
 
 function markRotationStart(teamId, pitcherId, gameDate, rotations){
-  if(!rotations[teamId]) return;
-
-  const found = rotations[teamId].find(p => p.pitcherId === pitcherId);
-
-  if(found){
-    found.lastStart = gameDate;
-  }
+  const found = rotations[teamId]?.find(p=>p.pitcherId === pitcherId);
+  if(found) found.lastStart = gameDate;
 }
 
 async function loadWeek(){
@@ -1150,7 +1261,6 @@ async function loadWeek(){
       if(g.gameType !== 'R') return;
 
       const gameDate = new Date(g.gameDate);
-
       const home = g.teams?.home;
       const away = g.teams?.away;
 
@@ -1213,7 +1323,6 @@ async function loadWeek(){
 
         pitchers[homePP.id].starts.push({
           date:gameDate,
-          dStr,
           oppId:awayTeamId,
           oppName:away?.team?.name,
           home:true,
@@ -1235,7 +1344,6 @@ async function loadWeek(){
 
         pitchers[awayPP.id].starts.push({
           date:gameDate,
-          dStr,
           oppId:homeTeamId,
           oppName:home?.team?.name,
           home:false,
@@ -1249,147 +1357,187 @@ async function loadWeek(){
     });
   });
 
-  weekData = {
-    pitchers,
-    byDay
-  };
+  weekData = { pitchers, byDay };
 
   renderTwoStart();
   renderMatchups();
 }
 
-function combinedVerdict(starts){
-  let score = 0;
+function calculateScore(p){
+  let score = 70;
 
-  starts.forEach(s=>{
+  p.starts.forEach(s=>{
     const r = rateMatchup(s.oppId);
+    score += r.score;
 
-    if(r.key === 'green') score += 1;
-    if(r.key === 'red') score -= 1;
+    if(s.home) score += 2;
+    else score -= 1;
 
-    if(s.projected && s.confidence === 'Baja') score -= .25;
+    if(s.projected){
+      if(s.confidence === 'Alta') score -= 3;
+      else if(s.confidence === 'Media') score -= 7;
+      else score -= 12;
+    }else{
+      score += 5;
+    }
+
+    if(s.restDays !== null){
+      if(s.restDays >= 5 && s.restDays <= 7) score += 3;
+      if(s.restDays < 4) score -= 10;
+    }
   });
 
-  if(score > 0){
-    return {
-      key:'green',
-      word:'Semana favorable'
-    };
+  const own = ownedFor(p.name);
+
+  if(own !== null){
+    if(own < 40) score += 4;
+    if(own > 85) score += 2;
   }
 
-  if(score < 0){
-    return {
-      key:'red',
-      word:'Semana difícil'
-    };
+  return Math.max(1, Math.min(99, Math.round(score)));
+}
+
+function actionFor(p, score){
+  const own = ownedFor(p.name);
+  const projectedLow = p.starts.some(s=>s.projected && s.confidence === 'Baja');
+
+  if(score >= 84) return { action:'START', cls:'START', reason:'Alta prioridad' };
+
+  if(score >= 74 && own !== null && own <= 60){
+    return { action:'STREAM', cls:'STREAM', reason:'Buen waiver target' };
   }
 
-  return {
-    key:'yellow',
-    word:'Semana pareja'
-  };
+  if(score >= 68 && !projectedLow){
+    return { action:'WATCHLIST', cls:'WATCHLIST', reason:'Monitorear confirmación' };
+  }
+
+  return { action:'AVOID', cls:'AVOID', reason:'Riesgo alto' };
 }
 
-function ownedFor(name){
-  const key = normalizeName(name);
-  return ownedMap[key] ?? null;
+function overallColor(p){
+  const score = calculateScore(p);
+  if(score >= 80) return 'green';
+  if(score >= 68) return 'yellow';
+  return 'red';
 }
 
-function normalizeName(name){
-  return String(name || '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9 ]/g,'')
-    .replace(/\s+/g,' ')
-    .trim();
+function updateKpis(twoStarters){
+  const confirmed = twoStarters.filter(p=>p.starts.every(s=>!s.projected)).length;
+  const projected = twoStarters.filter(p=>p.starts.some(s=>s.projected)).length;
+  const streams = twoStarters.filter(p=>{
+    const own = ownedFor(p.name);
+    const score = calculateScore(p);
+    return own !== null && own <= 60 && score >= 70;
+  }).length;
+
+  document.getElementById('kpiTwo').textContent = twoStarters.length || '--';
+  document.getElementById('kpiConfirmed').textContent = confirmed || '--';
+  document.getElementById('kpiProjected').textContent = projected || '--';
+  document.getElementById('kpiStream').textContent = streams || '--';
 }
 
 function renderTwoStart(){
+  if(!weekData) return;
+
   const grid = document.getElementById('twoGrid');
+  const search = normalizeName(document.getElementById('searchInput')?.value || '');
 
-  const twoStarters = Object.values(weekData.pitchers)
-    .filter(p => p.starts.length >= 2)
-    .sort((a,b)=>{
-      const ownA = parseFloat(ownedFor(a.name) ?? -1);
-      const ownB = parseFloat(ownedFor(b.name) ?? -1);
+  let twoStarters = Object.values(weekData.pitchers)
+    .filter(p=>p.starts.length >= 2);
 
-      const va = combinedVerdict(a.starts).key;
-      const vb = combinedVerdict(b.starts).key;
-      const order = { green:0, yellow:1, red:2 };
+  updateKpis(twoStarters);
 
-      if(order[va] !== order[vb]) return order[va] - order[vb];
+  twoStarters = twoStarters
+    .filter(p=>{
+      if(search && !normalizeName(p.name).includes(search)) return false;
 
-      return ownA - ownB;
-    });
+      if(ownedFilter !== 'all'){
+        const own = ownedFor(p.name);
+        if(own === null) return false;
+        if(own > Number(ownedFilter)) return false;
+      }
+
+      return true;
+    })
+    .sort((a,b)=>calculateScore(b) - calculateScore(a));
 
   document.getElementById('twoState').style.display = 'none';
   document.getElementById('twoContent').style.display = 'block';
-  document.getElementById('twoCount').textContent = `${twoStarters.length} lanzadores`;
 
   if(!twoStarters.length){
     grid.innerHTML = `
       <div class="state" style="grid-column:1/-1">
-        <h3>No hay two-start pitchers detectados</h3>
-        <p>
-          Para esta semana no se detectaron pitchers con dos aperturas usando confirmados y proyecciones.
-          Si estás viendo una semana muy futura, la proyección puede depender de que existan starts recientes disponibles.
-        </p>
+        <h3>No hay resultados</h3>
+        <p>No hay pitchers que cumplan este filtro. Prueba cambiar el filtro de Yahoo Owned o la semana.</p>
       </div>
     `;
     return;
   }
 
-  grid.innerHTML = twoStarters.map(p=>{
-    const v = combinedVerdict(p.starts);
-    const hasProjected = p.starts.some(s => s.projected);
+  grid.innerHTML = twoStarters.map((p,index)=>{
+    const score = calculateScore(p);
+    const action = actionFor(p, score);
+    const color = overallColor(p);
+    const hasProjected = p.starts.some(s=>s.projected);
     const own = ownedFor(p.name);
 
     const startsHtml = p.starts.sort((a,b)=>a.date-b.date).map(s=>{
       const r = rateMatchup(s.oppId);
       const day = DAYS_ES[s.date.getDay()];
+      const status = s.projected
+        ? `PROJECTED · ${s.confidence}${s.restDays !== null ? ` · ${s.restDays}d rest` : ''}`
+        : 'CONFIRMED';
 
-      const tag = s.projected
-        ? `<small style="color:var(--gold)">PROJECTED · Confianza ${h(s.confidence)}${s.restDays !== null ? ` · ${h(s.restDays)} días descanso` : ''}</small>`
-        : `<small style="color:var(--green)">CONFIRMED</small>`;
+      const statusColor = s.projected ? 'var(--gold)' : 'var(--green)';
 
       return `
         <div class="start">
-          <span class="day">${h(day)}</span>
-          <span class="opp">
-            ${s.home ? 'vs' : '@'} ${h(s.oppName)}
-            ${tag}
-          </span>
-          <span class="rating r-${h(r.key)}">${h(r.label)}</span>
+          <div class="day">${h(day)}</div>
+
+          <div class="opp">
+            ${s.home ? '🏠 vs' : '✈️ @'} ${h(s.oppName)}
+            <small style="color:${statusColor}">${h(status)}</small>
+          </div>
+
+          <div class="rating ${r.key === 'green' ? 'rGreen' : r.key === 'red' ? 'rRed' : 'rYellow'}">
+            ${h(r.label)}
+          </div>
         </div>
       `;
     }).join('');
 
-    const confBadges = p.starts
-      .map(s => s.projected ? s.confidence : 'Confirmado')
-      .join(' / ');
-
     return `
-      <div class="pcard">
-        <div class="rail rail-${h(v.key)}"></div>
-
-        <div class="pc-top">
+      <div class="card ${color}">
+        <div class="cardTop">
           <div>
-            <div class="pc-name">${h(p.name)}</div>
-            <div class="pc-team">${h(p.teamName)}</div>
+            <div class="rank">#${index + 1}</div>
+            <div class="name">${h(p.name)}</div>
+            <div class="team">${h(p.teamName)}</div>
           </div>
 
-          <div class="badges">
-            <span class="twostar ${hasProjected ? '' : 'confirmed'}">${hasProjected ? '2X · PROJECTED' : '2X · CONFIRMED'}</span>
-            ${own !== null ? `<span class="ownedbadge">Yahoo ${h(own)}%</span>` : ''}
+          <div class="scoreBox">
+            <div class="score">${score}</div>
+            <div class="scoreText">DIQ Score</div>
           </div>
+        </div>
+
+        <div class="badges">
+          <span class="badge ${hasProjected ? 'bGold' : 'bGreen'}">
+            ${hasProjected ? '2X · PROJECTED' : '2X · CONFIRMED'}
+          </span>
+
+          <span class="badge ${action.cls === 'START' ? 'bGreen' : action.cls === 'STREAM' ? 'bBlue' : action.cls === 'AVOID' ? 'bRed' : 'bGold'}">
+            ${h(action.action)}
+          </span>
+
+          ${own !== null ? `<span class="badge bBlue">Yahoo ${h(own)}%</span>` : ''}
         </div>
 
         <div class="starts">${startsHtml}</div>
 
-        <div class="pc-foot">
-          <span class="verdict v-${h(v.key)}">${h(v.word)}</span>
-          <span class="confline">${h(confBadges)}</span>
+        <div class="cardFoot">
+          <div class="take ${h(action.cls)}">${h(action.action)}</div>
+          <div class="reason">${h(action.reason)}</div>
         </div>
       </div>
     `;
@@ -1397,68 +1545,58 @@ function renderTwoStart(){
 }
 
 function renderMatchups(){
+  if(!weekData) return;
+
   const cont = document.getElementById('matchContent');
 
   document.getElementById('matchState').style.display = 'none';
   cont.style.display = 'block';
 
   const days = Object.keys(weekData.byDay).sort();
-
   let html = '';
 
   days.forEach(dStr=>{
     const games = weekData.byDay[dStr];
-
     if(!games.length) return;
 
     const d = new Date(dStr + 'T12:00:00');
 
     html += `
-      <div class="daygroup">
-        <div class="dayhdr">
-          ${h(DAYS_ES[d.getDay()])} ${h(prettyDate(d))}
-          <span class="line"></span>
-        </div>
+      <div class="dayGroup">
+        <div class="dayTitle">${h(DAYS_ES[d.getDay()])} ${h(prettyDate(d))}<span></span></div>
     `;
 
     games.forEach(g=>{
-      const ratePP = (ppName, oppId, projected, confidence, rest) => {
-        if(!ppName){
-          return `
-            <span class="mini-rate" style="background:var(--muted2)"></span>
-            <span style="color:var(--muted2)">Por confirmar</span>
-          `;
+      const ppHtml = (name, oppId, projected, confidence, rest) => {
+        if(!name){
+          return `<span class="dot" style="background:var(--muted2)"></span> Por confirmar`;
         }
 
         const r = rateMatchup(oppId);
         const col = r.key === 'green' ? 'var(--green)' : r.key === 'red' ? 'var(--red)' : 'var(--yellow)';
-        const status = projected
-          ? `PROJECTED ${confidence ? '(' + h(confidence) + ')' : ''}${rest !== null ? ' · ' + h(rest) + 'd' : ''}`
-          : 'CONFIRMED';
-
-        const statusColor = projected ? 'var(--gold)' : 'var(--green)';
-        const own = ownedFor(ppName);
+        const status = projected ? `PROJECTED ${confidence ? '(' + confidence + ')' : ''}${rest !== null ? ' · ' + rest + 'd' : ''}` : 'CONFIRMED';
+        const own = ownedFor(name);
 
         return `
-          <span class="mini-rate" style="background:${col}"></span>
-          ${h(ppName)}
-          <span style="color:${statusColor};font-weight:800">· ${status}</span>
-          ${own !== null ? `<span style="color:var(--blue);font-weight:800">· Yahoo ${h(own)}%</span>` : ''}
+          <span class="dot" style="background:${col}"></span>
+          ${h(name)}
+          <span style="color:${projected ? 'var(--gold)' : 'var(--green)'};font-weight:900">· ${h(status)}</span>
+          ${own !== null ? `<span style="color:var(--blue);font-weight:900">· Yahoo ${h(own)}%</span>` : ''}
         `;
       };
 
       html += `
-        <div class="matchrow">
-          <div class="away">
-            <span class="tm">${h(g.awayName || '')}</span>
-            <span class="pp">${ratePP(g.awayPP, g.homeId, g.awayProjected, g.awayConfidence, g.awayRest)}</span>
+        <div class="match">
+          <div class="side">
+            <div class="tm">${h(g.awayName || '')}</div>
+            <div class="pp">${ppHtml(g.awayPP, g.homeId, g.awayProjected, g.awayConfidence, g.awayRest)}</div>
           </div>
 
-          <span class="at">@</span>
+          <div class="at">@</div>
 
-          <div class="home">
-            <span class="tm">${h(g.homeName || '')}</span>
-            <span class="pp">${ratePP(g.homePP, g.awayId, g.homeProjected, g.homeConfidence, g.homeRest)}</span>
+          <div class="side home">
+            <div class="tm">${h(g.homeName || '')}</div>
+            <div class="pp">${ppHtml(g.homePP, g.awayId, g.homeProjected, g.homeConfidence, g.homeRest)}</div>
           </div>
         </div>
       `;
@@ -1469,7 +1607,7 @@ function renderMatchups(){
 
   cont.innerHTML = html || `
     <div class="state">
-      <h3>Sin juegos esta semana</h3>
+      <h3>Sin juegos</h3>
       <p>No se encontraron partidos de temporada regular en este rango.</p>
     </div>
   `;
@@ -1490,76 +1628,15 @@ function showError(msg){
   document.getElementById('twoState').innerHTML = `
     <h3>No se pudieron cargar los datos</h3>
     <p>${h(msg)}</p>
-    <button onclick="reloadWeek()">Reintentar</button>
+    <button class="btn gold" onclick="reloadWeek()">Reintentar</button>
   `;
 }
 
-function loadOwnedMap(){
-  try{
-    const raw = localStorage.getItem('diamondiq_yahoo_owned') || '{}';
-    return JSON.parse(raw);
-  }catch(e){
-    return {};
-  }
-}
-
-function saveOwned(){
-  const text = document.getElementById('ownedInput').value;
-  const map = {};
-
-  text.split('\n').forEach(line=>{
-    const clean = line.trim();
-    if(!clean) return;
-
-    const parts = clean.split(',');
-
-    if(parts.length < 2) return;
-
-    const name = parts[0].trim();
-    const owned = parts[1].replace('%','').trim();
-
-    if(!name || owned === '') return;
-
-    const num = parseFloat(owned);
-
-    if(Number.isNaN(num)) return;
-
-    map[normalizeName(name)] = num;
-  });
-
-  ownedMap = map;
-  localStorage.setItem('diamondiq_yahoo_owned', JSON.stringify(map));
-  alert('Yahoo Owned guardado ✅');
-
-  if(weekData){
-    renderTwoStart();
-    renderMatchups();
-  }
-}
-
-function clearOwned(){
-  localStorage.removeItem('diamondiq_yahoo_owned');
-  ownedMap = {};
-  document.getElementById('ownedInput').value = '';
-  alert('Yahoo Owned borrado');
-
-  if(weekData){
-    renderTwoStart();
-    renderMatchups();
-  }
-}
-
-function hydrateOwnedTextArea(){
-  const map = loadOwnedMap();
-  const lines = Object.entries(map).map(([name, owned]) => `${name}, ${owned}`);
-  document.getElementById('ownedInput').value = lines.join('\n');
-}
-
-hydrateOwnedTextArea();
+hydrateOwnedBox();
 
 loadWeek().catch(e=>{
   console.error(e);
-  showError('Revisa tu conexión a internet y vuelve a intentar. Los datos vienen directo de MLB.');
+  showError('Revisa conexión o espera unos segundos. Los datos vienen directo de MLB.');
 });
 </script>
 
