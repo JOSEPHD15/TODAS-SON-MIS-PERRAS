@@ -234,29 +234,55 @@ index.html
   Datos del calendario y probables vía MLB Stats API (pública, oficial). El rating de matchup se calcula con el récord de bateo del equipo rival.<br>
   DiamondIQ no está afiliado con MLB. Solo para uso informativo de fantasy.
 </footer>
-
 <script>
 // ─────────────────────────────────────────────────────────────────────────
-// MLB Stats API — pública, sin auth, sin CORS
+// DiamondIQ — Confirmed + Projected Two-Start Pitchers
+// Usa MLB Stats API. Si no hay probable pitcher confirmado, proyecta usando rotación reciente.
+
 const API = 'https://statsapi.mlb.com/api/v1';
 
 const DAYS_ES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
 const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
-let teamRecords = {}; // teamId -> { winPct, runsPerGame, rank }
+let teamRecords = {};
 let weekData = null;
 
-function fmtDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function prettyDate(d){ return `${d.getDate()} ${MONTHS_ES[d.getMonth()]}`; }
+function fmtDate(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 
-// Get the current fantasy week: Monday→Sunday containing today
+function prettyDate(d){
+  return `${d.getDate()} ${MONTHS_ES[d.getMonth()]}`;
+}
+
 function getWeekRange(){
   const now = new Date();
-  const day = now.getDay(); // 0 Sun .. 6 Sat
+  const day = now.getDay();
   const diffToMon = (day === 0 ? -6 : 1 - day);
-  const mon = new Date(now); mon.setDate(now.getDate() + diffToMon); mon.setHours(0,0,0,0);
-  const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+
+  const mon = new Date(now);
+  mon.setDate(now.getDate() + diffToMon);
+  mon.setHours(0,0,0,0);
+
+  const sun = new Date(mon);
+  sun.setDate(mon.getDate() + 6);
+  sun.setHours(23,59,59,999);
+
   return { start: mon, end: sun };
+}
+
+function addDays(date, days){
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function daysBetween(a, b){
+  const d1 = new Date(a);
+  const d2 = new Date(b);
+  d1.setHours(0,0,0,0);
+  d2.setHours(0,0,0,0);
+  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
 }
 
 async function fetchJSON(url){
@@ -265,181 +291,506 @@ async function fetchJSON(url){
   return r.json();
 }
 
-// Load standings to rate offenses (higher runs/game = tougher matchup for a pitcher)
+// ─────────────────────────────────────────────────────────────────────────
+// Rating ofensivo del rival
 async function loadOffenseStrength(season){
   try{
     const data = await fetchJSON(`${API}/teams/stats?stats=season&group=hitting&season=${season}&sportId=1`);
     const splits = data.stats?.[0]?.splits || [];
     const runsArr = [];
+
     splits.forEach(s=>{
       const id = s.team?.id;
       const games = parseFloat(s.stat?.gamesPlayed) || 1;
       const runs = parseFloat(s.stat?.runs) || 0;
       const rpg = runs / games;
-      if(id) { teamRecords[id] = { rpg, name: s.team?.name }; runsArr.push(rpg); }
+
+      if(id){
+        teamRecords[id] = { rpg, name: s.team?.name };
+        runsArr.push(rpg);
+      }
     });
-    // compute percentile thresholds
+
     runsArr.sort((a,b)=>a-b);
+
     const q = p => runsArr[Math.floor(p*(runsArr.length-1))] || 0;
-    window._rpgLow = q(0.40);   // below = weak offense = good for pitcher
-    window._rpgHigh = q(0.70);  // above = strong offense = tough
+
+    window._rpgLow = q(0.40);
+    window._rpgHigh = q(0.70);
+
   }catch(e){
     console.warn('No se pudo cargar ofensiva, usando neutral', e);
-    window._rpgLow = 4.2; window._rpgHigh = 4.8;
+    window._rpgLow = 4.2;
+    window._rpgHigh = 4.8;
   }
 }
 
-// rate a matchup from the pitcher's POV vs opponent team id
 function rateMatchup(oppId){
   const rec = teamRecords[oppId];
+
   if(!rec) return { key:'yellow', label:'Parejo', word:'Neutral' };
-  if(rec.rpg <= window._rpgLow)  return { key:'green',  label:'Favorable', word:'Favorable' };
-  if(rec.rpg >= window._rpgHigh) return { key:'red',    label:'Difícil',   word:'Difícil' };
+
+  if(rec.rpg <= window._rpgLow){
+    return { key:'green', label:'Favorable', word:'Favorable' };
+  }
+
+  if(rec.rpg >= window._rpgHigh){
+    return { key:'red', label:'Difícil', word:'Difícil' };
+  }
+
   return { key:'yellow', label:'Parejo', word:'Parejo' };
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Cargar rotaciones recientes para hacer proyecciones
+async function loadRecentRotations(weekStart){
+  const histEnd = addDays(weekStart, -1);
+  const histStart = addDays(weekStart, -28);
+
+  const url = `${API}/schedule?sportId=1&startDate=${fmtDate(histStart)}&endDate=${fmtDate(histEnd)}&hydrate=probablePitcher,team`;
+  const data = await fetchJSON(url);
+
+  const teamStarts = {};
+
+  (data.dates || []).forEach(dateObj=>{
+    const dStr = dateObj.date;
+
+    (dateObj.games || []).forEach(g=>{
+      if(g.gameType !== 'R') return;
+
+      const gameDate = new Date(dStr + 'T12:00:00');
+      const home = g.teams?.home;
+      const away = g.teams?.away;
+
+      const homePP = home?.probablePitcher;
+      const awayPP = away?.probablePitcher;
+
+      if(home?.team?.id && homePP?.id){
+        const teamId = home.team.id;
+        teamStarts[teamId] = teamStarts[teamId] || [];
+        teamStarts[teamId].push({
+          pitcherId: homePP.id,
+          name: homePP.fullName,
+          teamId,
+          teamName: home.team.name,
+          date: gameDate
+        });
+      }
+
+      if(away?.team?.id && awayPP?.id){
+        const teamId = away.team.id;
+        teamStarts[teamId] = teamStarts[teamId] || [];
+        teamStarts[teamId].push({
+          pitcherId: awayPP.id,
+          name: awayPP.fullName,
+          teamId,
+          teamName: away.team.name,
+          date: gameDate
+        });
+      }
+    });
+  });
+
+  const rotations = {};
+
+  Object.keys(teamStarts).forEach(teamId=>{
+    const starts = teamStarts[teamId].sort((a,b)=>b.date - a.date);
+    const seen = new Set();
+    const rotation = [];
+
+    starts.forEach(s=>{
+      if(!seen.has(s.pitcherId)){
+        seen.add(s.pitcherId);
+        rotation.push({
+          pitcherId: s.pitcherId,
+          name: s.name,
+          teamId: s.teamId,
+          teamName: s.teamName,
+          lastStart: s.date
+        });
+      }
+    });
+
+    // Tomamos 6 por si hay rotación de 6 hombres, lesiones o doubleheaders
+    rotations[teamId] = rotation.slice(0, 6);
+  });
+
+  return rotations;
+}
+
+// Elige pitcher proyectado del equipo usando más descanso reciente
+function projectStarterForTeam(teamId, gameDate, rotations){
+  const rotation = rotations[teamId] || [];
+
+  if(!rotation.length) return null;
+
+  let best = null;
+  let bestRest = -999;
+
+  rotation.forEach(p=>{
+    const rest = daysBetween(p.lastStart, gameDate);
+
+    // Evita proyectar pitchers con muy poco descanso
+    // Normal: 4+ días. Permitimos 3 si no hay mejor opción.
+    if(rest > bestRest){
+      bestRest = rest;
+      best = p;
+    }
+  });
+
+  if(!best) return null;
+
+  const confidence =
+    bestRest >= 5 ? 'Alta' :
+    bestRest === 4 ? 'Media' :
+    'Baja';
+
+  return {
+    id: best.pitcherId,
+    name: best.name,
+    teamId: best.teamId,
+    teamName: best.teamName,
+    projected: true,
+    confidence,
+    restDays: bestRest
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Cargar semana + confirmed + projected
 async function loadWeek(){
   const { start, end } = getWeekRange();
+
   document.getElementById('weekRange').textContent = `${prettyDate(start)} – ${prettyDate(end)}`;
+
   const season = start.getFullYear();
 
   await loadOffenseStrength(season);
 
+  const rotations = await loadRecentRotations(start);
+
   const url = `${API}/schedule?sportId=1&startDate=${fmtDate(start)}&endDate=${fmtDate(end)}&hydrate=probablePitcher,team`;
   const data = await fetchJSON(url);
 
-  // Build: pitcher -> list of starts
-  const pitchers = {}; // id -> { name, teamId, teamName, starts:[{date, oppId, oppName, home}] }
-  const byDay = {};    // dateStr -> [ games ]
+  const pitchers = {};
+  const byDay = {};
 
-  (data.dates||[]).forEach(dateObj=>{
+  const sortedDates = (data.dates || []).sort((a,b)=>new Date(a.date) - new Date(b.date));
+
+  sortedDates.forEach(dateObj=>{
     const dStr = dateObj.date;
     byDay[dStr] = byDay[dStr] || [];
-    (dateObj.games||[]).forEach(g=>{
-      if(g.gameType !== 'R') return; // regular season only
-      const home = g.teams?.home, away = g.teams?.away;
-      const homePP = home?.probablePitcher, awayPP = away?.probablePitcher;
-      const gameDate = new Date(g.gameDate);
 
+    const games = (dateObj.games || []).sort((a,b)=>new Date(a.gameDate) - new Date(b.gameDate));
+
+    games.forEach(g=>{
+      if(g.gameType !== 'R') return;
+
+      const gameDate = new Date(g.gameDate);
+      const home = g.teams?.home;
+      const away = g.teams?.away;
+
+      const homeTeamId = home?.team?.id;
+      const awayTeamId = away?.team?.id;
+
+      let homePP = home?.probablePitcher?.id ? {
+        id: home.probablePitcher.id,
+        name: home.probablePitcher.fullName,
+        teamId: homeTeamId,
+        teamName: home.team.name,
+        projected: false,
+        confidence: 'Confirmado',
+        restDays: null
+      } : null;
+
+      let awayPP = away?.probablePitcher?.id ? {
+        id: away.probablePitcher.id,
+        name: away.probablePitcher.fullName,
+        teamId: awayTeamId,
+        teamName: away.team.name,
+        projected: false,
+        confidence: 'Confirmado',
+        restDays: null
+      } : null;
+
+      // Si no hay confirmado, proyectamos
+      if(!homePP && homeTeamId){
+        homePP = projectStarterForTeam(homeTeamId, gameDate, rotations);
+      }
+
+      if(!awayPP && awayTeamId){
+        awayPP = projectStarterForTeam(awayTeamId, gameDate, rotations);
+      }
+
+      // Guardar para tab de matchups
       byDay[dStr].push({
         date: gameDate,
-        awayName: away?.team?.name, awayId: away?.team?.id, awayPP: awayPP?.fullName,
-        homeName: home?.team?.name, homeId: home?.team?.id, homePP: homePP?.fullName,
+        awayName: away?.team?.name,
+        awayId: awayTeamId,
+        awayPP: awayPP?.name || null,
+        awayProjected: awayPP?.projected || false,
+        awayConfidence: awayPP?.confidence || null,
+        homeName: home?.team?.name,
+        homeId: homeTeamId,
+        homePP: homePP?.name || null,
+        homeProjected: homePP?.projected || false,
+        homeConfidence: homePP?.confidence || null
       });
 
-      // home pitcher faces away offense
+      // Home pitcher faces away offense
       if(homePP?.id){
-        pitchers[homePP.id] = pitchers[homePP.id] || { name:homePP.fullName, teamId:home.team.id, teamName:home.team.name, starts:[] };
-        pitchers[homePP.id].starts.push({ date:gameDate, dStr, oppId:away.team.id, oppName:away.team.name, home:true });
+        pitchers[homePP.id] = pitchers[homePP.id] || {
+          name: homePP.name,
+          teamId: homePP.teamId,
+          teamName: homePP.teamName,
+          starts: []
+        };
+
+        pitchers[homePP.id].starts.push({
+          date: gameDate,
+          dStr,
+          oppId: awayTeamId,
+          oppName: away?.team?.name,
+          home: true,
+          projected: homePP.projected,
+          confidence: homePP.confidence,
+          restDays: homePP.restDays
+        });
+
+        // Actualizamos lastStart para que no reproyecte el mismo pitcher demasiado seguido
+        if(rotations[homeTeamId]){
+          const found = rotations[homeTeamId].find(p => p.pitcherId === homePP.id);
+          if(found) found.lastStart = gameDate;
+        }
       }
+
+      // Away pitcher faces home offense
       if(awayPP?.id){
-        pitchers[awayPP.id] = pitchers[awayPP.id] || { name:awayPP.fullName, teamId:away.team.id, teamName:away.team.name, starts:[] };
-        pitchers[awayPP.id].starts.push({ date:gameDate, dStr, oppId:home.team.id, oppName:home.team.name, home:false });
+        pitchers[awayPP.id] = pitchers[awayPP.id] || {
+          name: awayPP.name,
+          teamId: awayPP.teamId,
+          teamName: awayPP.teamName,
+          starts: []
+        };
+
+        pitchers[awayPP.id].starts.push({
+          date: gameDate,
+          dStr,
+          oppId: homeTeamId,
+          oppName: home?.team?.name,
+          home: false,
+          projected: awayPP.projected,
+          confidence: awayPP.confidence,
+          restDays: awayPP.restDays
+        });
+
+        if(rotations[awayTeamId]){
+          const found = rotations[awayTeamId].find(p => p.pitcherId === awayPP.id);
+          if(found) found.lastStart = gameDate;
+        }
       }
     });
   });
 
   weekData = { pitchers, byDay };
+
   renderTwoStart();
   renderMatchups();
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Render Two-Start
 function combinedVerdict(starts){
-  // average matchup difficulty: green=+1, yellow=0, red=-1
   let score = 0;
-  starts.forEach(s=>{ const r = rateMatchup(s.oppId); score += r.key==='green'?1:r.key==='red'?-1:0; });
-  if(score > 0)  return { key:'green',  word:'Semana favorable' };
-  if(score < 0)  return { key:'red',    word:'Semana difícil' };
+
+  starts.forEach(s=>{
+    const r = rateMatchup(s.oppId);
+
+    if(r.key === 'green') score += 1;
+    if(r.key === 'red') score -= 1;
+  });
+
+  if(score > 0) return { key:'green', word:'Semana favorable' };
+  if(score < 0) return { key:'red', word:'Semana difícil' };
+
   return { key:'yellow', word:'Semana pareja' };
 }
 
 function renderTwoStart(){
   const grid = document.getElementById('twoGrid');
+
   const twoStarters = Object.values(weekData.pitchers)
     .filter(p => p.starts.length >= 2)
     .sort((a,b)=>{
-      const va = combinedVerdict(a.starts).key, vb = combinedVerdict(b.starts).key;
+      const va = combinedVerdict(a.starts).key;
+      const vb = combinedVerdict(b.starts).key;
       const order = { green:0, yellow:1, red:2 };
-      return order[va]-order[vb];
+      return order[va] - order[vb];
     });
 
-  document.getElementById('twoState').style.display='none';
-  document.getElementById('twoContent').style.display='block';
+  document.getElementById('twoState').style.display = 'none';
+  document.getElementById('twoContent').style.display = 'block';
   document.getElementById('twoCount').textContent = `${twoStarters.length} lanzadores`;
 
   if(!twoStarters.length){
-    grid.innerHTML = `<div class="state" style="grid-column:1/-1"><h3>Aún no hay confirmados</h3><p>Los probables de la semana todavía no están publicados por MLB. Suelen confirmarse 2–4 días antes de cada juego. Vuelve a revisar pronto.</p></div>`;
+    grid.innerHTML = `
+      <div class="state" style="grid-column:1/-1">
+        <h3>No hay two-start pitchers detectados</h3>
+        <p>No hay pitchers confirmados o proyectados con 2 aperturas esta semana. Revisa más tarde porque MLB actualiza probables cerca del juego.</p>
+      </div>
+    `;
     return;
   }
 
   grid.innerHTML = twoStarters.map(p=>{
     const v = combinedVerdict(p.starts);
+
     const startsHtml = p.starts.sort((a,b)=>a.date-b.date).map(s=>{
       const r = rateMatchup(s.oppId);
       const day = DAYS_ES[s.date.getDay()];
-      return `<div class="start">
-        <span class="day">${day}</span>
-        <span class="opp">${s.home?'vs':'@'} ${s.oppName}<small>${s.home?'En casa':'De visita'}</small></span>
-        <span class="rating r-${r.key}">${r.label}</span>
-      </div>`;
+      const tag = s.projected
+        ? `<small style="color:var(--gold)">PROJECTED · Confianza ${s.confidence}${s.restDays !== null ? ` · ${s.restDays} días descanso` : ''}</small>`
+        : `<small style="color:var(--green)">CONFIRMADO</small>`;
+
+      return `
+        <div class="start">
+          <span class="day">${day}</span>
+          <span class="opp">
+            ${s.home ? 'vs' : '@'} ${s.oppName}
+            ${tag}
+          </span>
+          <span class="rating r-${r.key}">${r.label}</span>
+        </div>
+      `;
     }).join('');
-    return `<div class="pcard">
-      <div class="rail rail-${v.key}"></div>
-      <div class="pc-top">
-        <div><div class="pc-name">${p.name}</div><div class="pc-team">${p.teamName}</div></div>
-        <span class="twostar">2X · 2 SALIDAS</span>
+
+    const hasProjected = p.starts.some(s => s.projected);
+
+    return `
+      <div class="pcard">
+        <div class="rail rail-${v.key}"></div>
+
+        <div class="pc-top">
+          <div>
+            <div class="pc-name">${p.name}</div>
+            <div class="pc-team">${p.teamName}</div>
+          </div>
+
+          <span class="twostar">${hasProjected ? '2X · PROJ' : '2X · CONF'}</span>
+        </div>
+
+        <div class="starts">${startsHtml}</div>
+
+        <div class="pc-foot">
+          <span class="verdict v-${v.key}">${v.word}</span>
+        </div>
       </div>
-      <div class="starts">${startsHtml}</div>
-      <div class="pc-foot"><span class="verdict v-${v.key}">${v.word}</span></div>
-    </div>`;
+    `;
   }).join('');
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Render Matchups
 function renderMatchups(){
   const cont = document.getElementById('matchContent');
-  document.getElementById('matchState').style.display='none';
-  cont.style.display='block';
+
+  document.getElementById('matchState').style.display = 'none';
+  cont.style.display = 'block';
 
   const days = Object.keys(weekData.byDay).sort();
+
   let html = '';
+
   days.forEach(dStr=>{
     const games = weekData.byDay[dStr];
+
     if(!games.length) return;
-    const d = new Date(dStr+'T12:00:00');
-    html += `<div class="daygroup"><div class="dayhdr">${DAYS_ES[d.getDay()]} ${prettyDate(d)}<span class="line"></span></div>`;
+
+    const d = new Date(dStr + 'T12:00:00');
+
+    html += `
+      <div class="daygroup">
+        <div class="dayhdr">
+          ${DAYS_ES[d.getDay()]} ${prettyDate(d)}
+          <span class="line"></span>
+        </div>
+    `;
+
     games.forEach(g=>{
-      const awayR = rateMatchup(g.homeId); // away pitcher faces home... handled per side
-      const ratePP = (ppName, oppId) => {
-        if(!ppName) return '<span class="mini-rate" style="background:var(--muted2)"></span><span style="color:var(--muted2)">Por confirmar</span>';
+      const ratePP = (ppName, oppId, projected, confidence) => {
+        if(!ppName){
+          return `
+            <span class="mini-rate" style="background:var(--muted2)"></span>
+            <span style="color:var(--muted2)">Por confirmar</span>
+          `;
+        }
+
         const r = rateMatchup(oppId);
-        const col = r.key==='green'?'var(--green)':r.key==='red'?'var(--red)':'var(--yellow)';
-        return `<span class="mini-rate" style="background:${col}"></span>${ppName}`;
+        const col = r.key === 'green' ? 'var(--green)' : r.key === 'red' ? 'var(--red)' : 'var(--yellow)';
+        const label = projected ? ` · PROJECTED ${confidence ? '(' + confidence + ')' : ''}` : ' · CONFIRMADO';
+
+        return `
+          <span class="mini-rate" style="background:${col}"></span>
+          ${ppName}
+          <span style="color:${projected ? 'var(--gold)' : 'var(--green)'}">${label}</span>
+        `;
       };
-      html += `<div class="matchrow">
-        <div class="away"><span class="tm">${g.awayName||''}</span><span class="pp">${ratePP(g.awayPP, g.homeId)}</span></div>
-        <span class="at">@</span>
-        <div class="home"><span class="tm">${g.homeName||''}</span><span class="pp">${ratePP(g.homePP, g.awayId)}</span></div>
-      </div>`;
+
+      html += `
+        <div class="matchrow">
+          <div class="away">
+            <span class="tm">${g.awayName || ''}</span>
+            <span class="pp">${ratePP(g.awayPP, g.homeId, g.awayProjected, g.awayConfidence)}</span>
+          </div>
+
+          <span class="at">@</span>
+
+          <div class="home">
+            <span class="tm">${g.homeName || ''}</span>
+            <span class="pp">${ratePP(g.homePP, g.awayId, g.homeProjected, g.homeConfidence)}</span>
+          </div>
+        </div>
+      `;
     });
+
     html += `</div>`;
   });
-  cont.innerHTML = html || `<div class="state"><h3>Sin juegos esta semana</h3><p>No se encontraron partidos de temporada regular en este rango.</p></div>`;
+
+  cont.innerHTML = html || `
+    <div class="state">
+      <h3>Sin juegos esta semana</h3>
+      <p>No se encontraron partidos de temporada regular en este rango.</p>
+    </div>
+  `;
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Tabs
 function showTab(which){
-  document.getElementById('tab-two').classList.toggle('active', which==='two');
-  document.getElementById('tab-match').classList.toggle('active', which==='match');
-  document.getElementById('panel-two').style.display = which==='two'?'block':'none';
-  document.getElementById('panel-match').style.display = which==='match'?'block':'none';
+  document.getElementById('tab-two').classList.toggle('active', which === 'two');
+  document.getElementById('tab-match').classList.toggle('active', which === 'match');
+
+  document.getElementById('panel-two').style.display = which === 'two' ? 'block' : 'none';
+  document.getElementById('panel-match').style.display = which === 'match' ? 'block' : 'none';
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Error
 function showError(msg){
-  document.getElementById('twoState').innerHTML =
-    `<h3>No se pudieron cargar los datos</h3><p>${msg}</p><button onclick="location.reload()">Reintentar</button>`;
+  document.getElementById('twoState').innerHTML = `
+    <h3>No se pudieron cargar los datos</h3>
+    <p>${msg}</p>
+    <button onclick="location.reload()">Reintentar</button>
+  `;
 }
 
-loadWeek().catch(e=>{ console.error(e); showError('Revisa tu conexión a internet y vuelve a intentar. Los datos vienen directo de MLB.'); });
+// Start app
+loadWeek().catch(e=>{
+  console.error(e);
+  showError('Revisa tu conexión a internet y vuelve a intentar. Los datos vienen directo de MLB.');
+});
 </script>
+
 </body>
 </html>
 
