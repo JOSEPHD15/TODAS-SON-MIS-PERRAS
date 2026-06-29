@@ -1,11 +1,11 @@
 export default async function handler(req, res) {
   const clientId = String(process.env.YAHOO_CLIENT_ID || '').trim();
-  const redirectUri = String(process.env.YAHOO_REDIRECT_URI || '').trim();
 
-  if (!clientId || !redirectUri) {
-    return res.status(500).send('Missing YAHOO_CLIENT_ID or YAHOO_REDIRECT_URI');
+  if (!clientId) {
+    return res.status(500).send('Missing YAHOO_CLIENT_ID');
   }
 
+  const redirectUri = 'oob';
   const scope = 'openid profile email';
 
   const authUrl =
