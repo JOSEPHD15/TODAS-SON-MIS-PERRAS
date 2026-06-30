@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DiamondIQ Pro · Two-Start Pitchers</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DiamondIQ Elite · Pitcher Intelligence</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --bg:#05070D;
-  --bg2:#090E1A;
-  --panel:#0F1728;
-  --card:#131D33;
-  --card2:#18233E;
-  --line:#263653;
-  --line2:#365074;
+  --bg:#050713;
+  --panel:#0B1020;
+  --panel2:#111A2E;
+  --card:#111A2E;
+  --card2:#16213B;
+  --line:rgba(255,255,255,.10);
+  --line2:rgba(255,255,255,.18);
 
-  --text:#F2F6FF;
-  --muted:#91A0BE;
-  --muted2:#657391;
+  --text:#F4F7FF;
+  --muted:#93A4C7;
+  --muted2:#5E6D8E;
 
-  --gold:#FFC629;
-  --gold2:#FFE08A;
+  --gold:#FFD166;
+  --gold2:#FFB703;
   --green:#2DFF88;
-  --yellow:#FFD166;
-  --red:#FF5C7A;
-  --blue:#5EB1FF;
+  --red:#FF4D6D;
+  --blue:#4EA8FF;
+  --cyan:#38E8FF;
   --purple:#A78BFA;
+  --orange:#FB8500;
 
   --greenSoft:rgba(45,255,136,.13);
-  --yellowSoft:rgba(255,209,102,.13);
-  --redSoft:rgba(255,92,122,.13);
-  --blueSoft:rgba(94,177,255,.13);
-  --goldSoft:rgba(255,198,41,.14);
+  --redSoft:rgba(255,77,109,.13);
+  --blueSoft:rgba(78,168,255,.13);
+  --goldSoft:rgba(255,209,102,.14);
   --purpleSoft:rgba(167,139,250,.14);
 }
 
@@ -52,135 +52,151 @@ body{
   color:var(--text);
   font-family:'Inter',sans-serif;
   background:
-    radial-gradient(1000px 520px at 85% -10%, rgba(255,198,41,.11), transparent 60%),
-    radial-gradient(800px 460px at 0% 0%, rgba(94,177,255,.10), transparent 55%),
-    radial-gradient(650px 350px at 50% 20%, rgba(45,255,136,.055), transparent 60%),
-    linear-gradient(180deg,#05070D 0%,#0A1020 45%,#05070D 100%);
+    radial-gradient(900px 500px at 10% -10%, rgba(56,232,255,.14), transparent 60%),
+    radial-gradient(900px 520px at 90% 0%, rgba(255,209,102,.14), transparent 55%),
+    radial-gradient(700px 400px at 50% 20%, rgba(167,139,250,.09), transparent 60%),
+    linear-gradient(180deg,#050713 0%,#060B18 50%,#050713 100%);
+  overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
 
-button,
-input,
-textarea,
-select{
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom, black, transparent 75%);
+}
+
+button,input,textarea{
   font-family:inherit;
 }
 
 .app{
-  max-width:1240px;
+  width:min(1280px,100%);
   margin:0 auto;
-  padding:26px 22px 60px;
+  padding:26px 22px 70px;
 }
 
 /* HERO */
 .hero{
   position:relative;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:26px;
   background:
-    linear-gradient(135deg, rgba(255,198,41,.12), transparent 28%),
-    linear-gradient(160deg, rgba(94,177,255,.10), transparent 34%),
-    linear-gradient(180deg, rgba(19,29,51,.92), rgba(10,15,28,.92));
-  border-radius:24px;
-  padding:24px;
-  box-shadow:0 24px 80px rgba(0,0,0,.28);
+    linear-gradient(135deg, rgba(56,232,255,.13), transparent 28%),
+    linear-gradient(210deg, rgba(255,209,102,.16), transparent 32%),
+    linear-gradient(180deg, rgba(17,26,46,.92), rgba(7,12,25,.94));
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .hero::after{
-  content:'';
+  content:"";
   position:absolute;
-  inset:auto -120px -150px auto;
-  width:340px;
-  height:340px;
-  background:radial-gradient(circle, rgba(255,198,41,.16), transparent 65%);
-  pointer-events:none;
+  width:420px;
+  height:420px;
+  right:-160px;
+  top:-150px;
+  background:radial-gradient(circle, rgba(255,209,102,.26), transparent 68%);
+  filter:blur(2px);
 }
 
 .heroTop{
+  position:relative;
+  z-index:2;
   display:flex;
-  justify-content:space-between;
   align-items:flex-start;
-  gap:18px;
+  justify-content:space-between;
+  gap:20px;
   flex-wrap:wrap;
-}
-
-.brandBlock{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
 }
 
 .kicker{
   display:inline-flex;
   align-items:center;
-  gap:7px;
+  gap:8px;
   width:max-content;
-  color:var(--gold2);
-  background:rgba(255,198,41,.10);
-  border:1px solid rgba(255,198,41,.26);
-  padding:6px 10px;
+  border:1px solid rgba(255,209,102,.35);
+  background:rgba(255,209,102,.10);
+  color:var(--gold);
+  padding:7px 12px;
   border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.45px;
   text-transform:uppercase;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.6px;
+  box-shadow:0 0 25px rgba(255,209,102,.10);
 }
 
 .brand{
+  margin-top:12px;
   font-family:'Barlow Condensed',sans-serif;
-  font-size:48px;
+  font-size:58px;
+  line-height:.86;
   font-weight:900;
-  line-height:.88;
-  letter-spacing:.8px;
+  letter-spacing:1px;
   text-transform:uppercase;
 }
 
 .brand span{
   color:var(--gold);
-  text-shadow:0 0 28px rgba(255,198,41,.35);
+  text-shadow:0 0 38px rgba(255,209,102,.38);
 }
 
 .subtitle{
-  max-width:760px;
+  margin-top:12px;
+  max-width:780px;
   color:var(--muted);
   font-size:14px;
-  line-height:1.65;
+  line-height:1.7;
 }
 
 .heroActions{
   display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:8px;
+  gap:9px;
   flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
 .btn{
   border:1px solid var(--line);
-  background:rgba(15,23,40,.82);
   color:var(--text);
-  padding:10px 13px;
-  border-radius:12px;
+  background:rgba(255,255,255,.045);
+  padding:11px 14px;
+  border-radius:14px;
   cursor:pointer;
+  font-weight:900;
   font-size:13px;
-  font-weight:800;
-  transition:.15s;
+  transition:.16s ease;
+  backdrop-filter:blur(10px);
 }
 
 .btn:hover{
-  transform:translateY(-1px);
-  border-color:var(--gold);
+  transform:translateY(-2px);
+  border-color:rgba(255,209,102,.6);
   color:var(--gold);
+  box-shadow:0 13px 30px rgba(0,0,0,.22);
 }
 
 .btn.gold{
-  background:linear-gradient(180deg,var(--gold2),var(--gold));
-  color:#07101F;
-  border-color:rgba(255,198,41,.75);
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+  color:#08101F;
+  border-color:rgba(255,209,102,.7);
 }
 
-.weekBox{
-  margin-top:18px;
+.weekbar{
+  position:relative;
+  z-index:2;
+  margin-top:24px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -188,24 +204,50 @@ select{
   flex-wrap:wrap;
 }
 
-.weekPill{
+.weekpill{
   display:flex;
-  align-items:center;
   gap:8px;
+  align-items:center;
   color:var(--muted);
-  border:1px solid var(--line);
-  background:rgba(5,7,13,.30);
-  padding:10px 14px;
-  border-radius:14px;
   font-size:13px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:11px 14px;
+  background:rgba(0,0,0,.18);
 }
 
-.weekPill b{
+.weekpill b{
   color:var(--text);
 }
 
-/* KPI */
+.yahooState{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-size:12px;
+  font-weight:900;
+  color:var(--muted);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 12px;
+  background:rgba(0,0,0,.18);
+}
+
+.pulse{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 5px rgba(255,209,102,.12);
+}
+
+.pulse.ok{background:var(--green);box-shadow:0 0 0 5px rgba(45,255,136,.12)}
+.pulse.bad{background:var(--red);box-shadow:0 0 0 5px rgba(255,77,109,.12)}
+
+/* KPIS */
 .kpis{
+  position:relative;
+  z-index:2;
   margin-top:18px;
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -213,35 +255,36 @@ select{
 }
 
 .kpi{
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(5,7,13,.33);
-  border-radius:18px;
-  padding:15px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  background:rgba(0,0,0,.20);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
 }
 
-.kpi .num{
+.kpiNum{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:32px;
-  font-weight:900;
+  font-size:36px;
   line-height:1;
+  font-weight:900;
 }
 
-.kpi .label{
-  margin-top:4px;
-  font-size:12px;
+.kpiLabel{
+  margin-top:5px;
   color:var(--muted);
-  font-weight:700;
+  font-size:11.5px;
+  font-weight:900;
   text-transform:uppercase;
-  letter-spacing:.45px;
+  letter-spacing:.55px;
 }
 
-/* NAV */
+/* TABS */
 .tabs{
-  margin-top:22px;
+  margin-top:24px;
   display:flex;
   gap:8px;
   border-bottom:1px solid var(--line);
-  overflow-x:auto;
+  overflow:auto;
 }
 
 .tab{
@@ -252,10 +295,10 @@ select{
   padding:14px 16px;
   cursor:pointer;
   font-family:'Barlow Condensed',sans-serif;
-  font-size:18px;
+  font-size:19px;
   font-weight:900;
-  letter-spacing:.45px;
   text-transform:uppercase;
+  letter-spacing:.45px;
   white-space:nowrap;
 }
 
@@ -264,40 +307,41 @@ select{
 }
 
 .tab.active::after{
-  content:'';
+  content:"";
   position:absolute;
   left:12px;
   right:12px;
   bottom:-1px;
   height:3px;
-  background:var(--gold);
-  border-radius:3px 3px 0 0;
+  background:linear-gradient(90deg,var(--gold),var(--cyan));
+  border-radius:10px 10px 0 0;
 }
 
-/* FILTERS */
+/* TOOLBAR */
 .toolbar{
   margin:22px 0 16px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
   gap:12px;
   flex-wrap:wrap;
 }
 
 .search{
+  min-width:260px;
   flex:1;
-  min-width:240px;
   border:1px solid var(--line);
-  background:rgba(15,23,40,.82);
+  background:rgba(255,255,255,.045);
   color:var(--text);
-  padding:12px 14px;
-  border-radius:14px;
   outline:none;
+  border-radius:16px;
+  padding:13px 15px;
   font-size:14px;
 }
 
 .search:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(255,198,41,.12);
+  border-color:rgba(255,209,102,.65);
+  box-shadow:0 0 0 4px rgba(255,209,102,.10);
 }
 
 .filters{
@@ -308,36 +352,36 @@ select{
 
 .filter{
   border:1px solid var(--line);
-  background:rgba(15,23,40,.82);
+  background:rgba(255,255,255,.045);
   color:var(--muted);
   padding:10px 12px;
-  border-radius:12px;
+  border-radius:14px;
   cursor:pointer;
   font-size:12px;
   font-weight:900;
 }
 
 .filter.active{
-  background:var(--gold);
-  color:#07101F;
-  border-color:var(--gold);
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+  color:#08101F;
+  border-color:transparent;
 }
 
 /* STATES */
 .state{
   text-align:center;
-  padding:70px 20px;
+  padding:74px 20px;
   color:var(--muted);
 }
 
 .spin{
-  width:40px;
-  height:40px;
-  border:3px solid var(--line);
+  width:42px;
+  height:42px;
+  border:3px solid rgba(255,255,255,.12);
   border-top-color:var(--gold);
   border-radius:50%;
-  animation:spin .85s linear infinite;
   margin:0 auto 18px;
+  animation:spin .85s linear infinite;
 }
 
 @keyframes spin{
@@ -346,34 +390,33 @@ select{
 
 .state h3{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:26px;
-  color:var(--text);
+  font-size:28px;
   text-transform:uppercase;
+  color:var(--text);
   letter-spacing:.5px;
-  margin-bottom:6px;
+  margin-bottom:7px;
 }
 
 .state p{
-  max-width:560px;
+  max-width:590px;
   margin:0 auto;
-  font-size:14px;
   line-height:1.65;
+  font-size:14px;
 }
 
 /* SECTIONS */
 .sectionHead{
   display:flex;
-  align-items:flex-end;
   justify-content:space-between;
+  align-items:flex-end;
   gap:14px;
   flex-wrap:wrap;
-  margin-top:12px;
-  margin-bottom:14px;
+  margin:18px 0 14px;
 }
 
 .sectionHead h2{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:30px;
+  font-size:32px;
   font-weight:900;
   letter-spacing:.55px;
   text-transform:uppercase;
@@ -381,54 +424,55 @@ select{
 
 .sectionHead p{
   color:var(--muted);
-  font-size:13px;
   margin-top:4px;
+  font-size:13px;
+  line-height:1.5;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
-  gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(358px,1fr));
+  gap:15px;
 }
 
-/* PLAYER CARD */
+/* CARD */
 .card{
   position:relative;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:20px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:17px;
   background:
-    linear-gradient(160deg, rgba(24,35,62,.98), rgba(13,19,34,.98));
-  padding:16px;
-  box-shadow:0 18px 50px rgba(0,0,0,.22);
-  transition:.15s;
+    linear-gradient(160deg, rgba(22,33,59,.96), rgba(9,14,30,.98));
+  box-shadow:
+    0 24px 65px rgba(0,0,0,.32),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  transition:.16s ease;
 }
 
 .card:hover{
-  transform:translateY(-3px);
-  border-color:rgba(255,198,41,.36);
+  transform:translateY(-4px);
+  border-color:rgba(255,209,102,.42);
 }
 
 .card::before{
-  content:'';
+  content:"";
   position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:4px;
-  background:var(--yellow);
+  inset:0 auto 0 0;
+  width:5px;
+  background:var(--gold);
 }
 
 .card.green::before{background:var(--green)}
-.card.yellow::before{background:var(--yellow)}
+.card.yellow::before{background:var(--gold)}
 .card.red::before{background:var(--red)}
 
 .cardTop{
   display:flex;
   justify-content:space-between;
-  gap:12px;
+  gap:14px;
   align-items:flex-start;
-  margin-bottom:14px;
+  margin-bottom:13px;
 }
 
 .rank{
@@ -436,50 +480,50 @@ select{
   font-family:'Barlow Condensed',sans-serif;
   font-size:16px;
   font-weight:900;
-  letter-spacing:.4px;
+  letter-spacing:.45px;
 }
 
 .name{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:27px;
-  font-weight:900;
-  line-height:1;
-  letter-spacing:.35px;
   margin-top:2px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:29px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.35px;
 }
 
 .team{
+  margin-top:5px;
   color:var(--muted);
   font-size:12.5px;
-  margin-top:5px;
-  font-weight:700;
+  font-weight:800;
 }
 
 .scoreBox{
   text-align:right;
-  min-width:76px;
+  min-width:82px;
 }
 
 .score{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:34px;
+  font-size:42px;
   font-weight:900;
-  line-height:.9;
+  line-height:.85;
 }
 
-.scoreText{
+.scoreLabel{
+  margin-top:5px;
   color:var(--muted);
   font-size:10.5px;
   font-weight:900;
   text-transform:uppercase;
   letter-spacing:.45px;
-  margin-top:4px;
 }
 
 .badges{
   display:flex;
-  gap:7px;
   flex-wrap:wrap;
+  gap:7px;
   margin-bottom:12px;
 }
 
@@ -488,19 +532,20 @@ select{
   align-items:center;
   gap:5px;
   border-radius:999px;
-  padding:5px 9px;
+  padding:6px 9px;
   font-family:'Barlow Condensed',sans-serif;
   font-size:12.5px;
   font-weight:900;
   letter-spacing:.45px;
   text-transform:uppercase;
+  border:1px solid transparent;
 }
 
-.bGreen{color:var(--green);background:var(--greenSoft);border:1px solid rgba(45,255,136,.22)}
-.bGold{color:var(--gold);background:var(--goldSoft);border:1px solid rgba(255,198,41,.24)}
-.bBlue{color:var(--blue);background:var(--blueSoft);border:1px solid rgba(94,177,255,.24)}
-.bRed{color:var(--red);background:var(--redSoft);border:1px solid rgba(255,92,122,.24)}
-.bPurple{color:var(--purple);background:var(--purpleSoft);border:1px solid rgba(167,139,250,.24)}
+.bGreen{color:var(--green);background:var(--greenSoft);border-color:rgba(45,255,136,.20)}
+.bGold{color:var(--gold);background:var(--goldSoft);border-color:rgba(255,209,102,.25)}
+.bBlue{color:var(--blue);background:var(--blueSoft);border-color:rgba(78,168,255,.25)}
+.bRed{color:var(--red);background:var(--redSoft);border-color:rgba(255,77,109,.25)}
+.bPurple{color:var(--purple);background:var(--purpleSoft);border-color:rgba(167,139,250,.25)}
 
 .starts{
   display:flex;
@@ -513,8 +558,8 @@ select{
   align-items:center;
   gap:10px;
   border:1px solid var(--line);
-  background:rgba(5,7,13,.34);
-  border-radius:13px;
+  background:rgba(0,0,0,.18);
+  border-radius:15px;
   padding:10px;
 }
 
@@ -531,22 +576,22 @@ select{
 .opp{
   flex:1;
   font-size:13.5px;
-  font-weight:800;
+  font-weight:900;
   line-height:1.3;
 }
 
 .opp small{
   display:block;
-  margin-top:3px;
   color:var(--muted2);
+  margin-top:3px;
   font-size:11.5px;
-  font-weight:700;
+  font-weight:800;
 }
 
 .rating{
   flex-shrink:0;
   border-radius:999px;
-  padding:4px 9px;
+  padding:5px 9px;
   font-family:'Barlow Condensed',sans-serif;
   font-size:11.5px;
   font-weight:900;
@@ -554,7 +599,7 @@ select{
 }
 
 .rGreen{color:var(--green);background:var(--greenSoft)}
-.rYellow{color:var(--yellow);background:var(--yellowSoft)}
+.rGold{color:var(--gold);background:var(--goldSoft)}
 .rRed{color:var(--red);background:var(--redSoft)}
 
 .cardFoot{
@@ -562,28 +607,28 @@ select{
   padding-top:12px;
   border-top:1px solid var(--line);
   display:flex;
+  align-items:center;
   justify-content:space-between;
   gap:10px;
-  align-items:center;
 }
 
 .take{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:18px;
+  font-size:19px;
   font-weight:900;
-  letter-spacing:.45px;
   text-transform:uppercase;
+  letter-spacing:.45px;
 }
 
 .take.START{color:var(--green)}
 .take.STREAM{color:var(--blue)}
-.take.WATCHLIST{color:var(--yellow)}
+.take.WATCHLIST{color:var(--gold)}
 .take.AVOID{color:var(--red)}
 
 .reason{
   color:var(--muted);
   font-size:11.5px;
-  font-weight:700;
+  font-weight:800;
   text-align:right;
 }
 
@@ -599,10 +644,10 @@ select{
   margin-bottom:10px;
   color:var(--gold);
   font-family:'Barlow Condensed',sans-serif;
-  font-size:21px;
+  font-size:22px;
   font-weight:900;
-  letter-spacing:.5px;
   text-transform:uppercase;
+  letter-spacing:.5px;
 }
 
 .dayTitle span{
@@ -616,10 +661,11 @@ select{
   align-items:center;
   gap:12px;
   border:1px solid var(--line);
-  background:rgba(15,23,40,.86);
-  border-radius:16px;
+  border-radius:18px;
   padding:13px 14px;
-  margin-bottom:8px;
+  margin-bottom:9px;
+  background:rgba(17,26,46,.82);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .side{
@@ -636,18 +682,18 @@ select{
 
 .tm{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:18px;
+  font-size:19px;
   font-weight:900;
 }
 
 .pp{
   color:var(--muted);
   font-size:12px;
-  font-weight:700;
+  font-weight:800;
   display:flex;
   align-items:center;
-  flex-wrap:wrap;
   gap:5px;
+  flex-wrap:wrap;
 }
 
 .home .pp{
@@ -667,18 +713,20 @@ select{
   display:inline-block;
 }
 
-/* OWNED */
+/* OWNED / NOTES */
 .panel{
-  border:1px solid rgba(255,255,255,.09);
-  background:linear-gradient(160deg, rgba(24,35,62,.98), rgba(13,19,34,.98));
-  border-radius:20px;
-  padding:18px;
   margin-top:22px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
+  background:
+    linear-gradient(160deg,rgba(22,33,59,.95),rgba(9,14,30,.97));
+  box-shadow:0 24px 65px rgba(0,0,0,.32);
 }
 
 .panel h2{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:28px;
+  font-size:31px;
   font-weight:900;
   text-transform:uppercase;
   margin-bottom:8px;
@@ -686,28 +734,28 @@ select{
 
 .panel p{
   color:var(--muted);
-  font-size:13.5px;
   line-height:1.65;
+  font-size:13.5px;
   margin-bottom:12px;
 }
 
 textarea{
   width:100%;
   min-height:190px;
-  resize:vertical;
-  border:1px solid var(--line);
-  background:#07101F;
+  background:#060B18;
   color:var(--text);
-  border-radius:15px;
-  padding:13px;
+  border:1px solid var(--line);
   outline:none;
+  border-radius:16px;
+  padding:14px;
+  resize:vertical;
   font-size:13px;
   line-height:1.5;
 }
 
 textarea:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(255,198,41,.12);
+  border-color:rgba(255,209,102,.62);
+  box-shadow:0 0 0 4px rgba(255,209,102,.10);
 }
 
 .note{
@@ -718,17 +766,18 @@ textarea:focus{
 }
 
 footer{
-  max-width:1240px;
-  margin:20px auto 0;
+  width:min(1280px,100%);
+  margin:18px auto 0;
   padding:20px 22px 36px;
   color:var(--muted2);
   text-align:center;
-  font-size:12px;
   line-height:1.65;
+  font-size:12px;
 }
 
+/* MOBILE */
 @media(max-width:780px){
-  .brand{font-size:38px}
+  .brand{font-size:42px}
   .kpis{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
   .cardTop{flex-direction:column}
@@ -736,9 +785,10 @@ footer{
   .match{align-items:flex-start}
 }
 
-@media(max-width:500px){
+@media(max-width:520px){
+  .app{padding:16px 14px 60px}
+  .hero{padding:18px;border-radius:22px}
   .kpis{grid-template-columns:1fr}
-  .hero{padding:18px}
 }
 </style>
 </head>
@@ -749,15 +799,15 @@ footer{
 
   <section class="hero">
     <div class="heroTop">
-      <div class="brandBlock">
+      <div>
         <div class="kicker">⚾ Fantasy Pitcher Intelligence</div>
 
-        <!-- CAMBIA EL NOMBRE AQUÍ -->
-        <div class="brand">DIAMOND<span>IQ</span> PRO</div>
+        <!-- CAMBIA EL NOMBRE AQUÍ SI QUIERES -->
+        <div class="brand">DIAMOND<span>IQ</span> ELITE</div>
 
         <div class="subtitle">
-          Two-start pitchers, matchups, streaming targets y proyecciones de rotación.
-          Combina probables confirmados de MLB con lógica proyectada basada en rotación reciente, días de descanso y calendario semanal.
+          Plataforma premium para identificar two-start pitchers, streamers, matchups favorables y proyecciones de rotación.
+          Usa probables confirmados de MLB, lógica de rotación reciente y conexión Yahoo cuando el API esté autorizado.
         </div>
       </div>
 
@@ -768,43 +818,52 @@ footer{
       </div>
     </div>
 
-    <div class="weekBox">
-      <div class="weekPill">Semana analizada: <b id="weekRange">cargando…</b></div>
+    <div class="weekbar">
+      <div class="weekpill">
+        Semana analizada:
+        <b id="weekRange">cargando…</b>
+      </div>
+
+      <div class="yahooState" id="yahooState">
+        <span class="pulse"></span>
+        Yahoo: verificando
+      </div>
+
       <button class="btn" onclick="reloadWeek()">Actualizar data</button>
     </div>
 
     <div class="kpis">
       <div class="kpi">
-        <div class="num" id="kpiTwo">--</div>
-        <div class="label">Two-start pitchers</div>
+        <div class="kpiNum" id="kpiTwo">--</div>
+        <div class="kpiLabel">Two-start pitchers</div>
       </div>
 
       <div class="kpi">
-        <div class="num" id="kpiConfirmed">--</div>
-        <div class="label">Confirmados</div>
+        <div class="kpiNum" id="kpiConfirmed">--</div>
+        <div class="kpiLabel">Confirmados</div>
       </div>
 
       <div class="kpi">
-        <div class="num" id="kpiProjected">--</div>
-        <div class="label">Proyectados</div>
+        <div class="kpiNum" id="kpiProjected">--</div>
+        <div class="kpiLabel">Proyectados</div>
       </div>
 
       <div class="kpi">
-        <div class="num" id="kpiStream">--</div>
-        <div class="label">Stream targets</div>
+        <div class="kpiNum" id="kpiStream">--</div>
+        <div class="kpiLabel">Stream targets</div>
       </div>
     </div>
   </section>
 
   <div class="tabs">
-    <button class="tab active" id="tab-two" onclick="showTab('two')">🔥 Two-Start</button>
+    <button class="tab active" id="tab-two" onclick="showTab('two')">🔥 Two-Start Board</button>
     <button class="tab" id="tab-match" onclick="showTab('match')">📅 Matchups</button>
-    <button class="tab" id="tab-owned" onclick="showTab('owned')">📊 Yahoo Owned</button>
+    <button class="tab" id="tab-owned" onclick="showTab('owned')">📊 Manual Yahoo</button>
   </div>
 
   <div id="panel-two">
     <div class="toolbar">
-      <input class="search" id="searchInput" placeholder="Buscar pitcher..." oninput="renderTwoStart()">
+      <input class="search" id="searchInput" placeholder="Buscar pitcher..." oninput="renderTwoStart()" />
 
       <div class="filters">
         <button class="filter active" onclick="setOwnedFilter('all', this)">All</button>
@@ -817,15 +876,15 @@ footer{
 
     <div class="state" id="twoState">
       <div class="spin"></div>
-      <h3>Cargando lanzadores</h3>
-      <p>Buscando calendario, probables confirmados y proyecciones por rotación reciente.</p>
+      <h3>Cargando inteligencia</h3>
+      <p>Buscando calendario MLB, probables confirmados, rotaciones recientes y oportunidades fantasy.</p>
     </div>
 
     <div id="twoContent" style="display:none">
       <div class="sectionHead">
         <div>
-          <h2>Ranking de two-start pitchers</h2>
-          <p>Ordenado por DiamondIQ Score, matchups, confianza y disponibilidad fantasy.</p>
+          <h2>Elite Two-Start Rankings</h2>
+          <p>Ordenado por DiamondIQ Score, calidad de matchup, confianza de proyección y disponibilidad fantasy.</p>
         </div>
       </div>
 
@@ -837,7 +896,7 @@ footer{
     <div class="state" id="matchState">
       <div class="spin"></div>
       <h3>Cargando matchups</h3>
-      <p>Organizando partidos día por día con pitchers confirmados y proyectados.</p>
+      <p>Organizando la semana juego por juego con pitchers confirmados y proyectados.</p>
     </div>
 
     <div id="matchContent" style="display:none"></div>
@@ -845,26 +904,27 @@ footer{
 
   <div id="panel-owned" style="display:none">
     <div class="panel">
-      <h2>Yahoo Owned %</h2>
+      <h2>Manual Yahoo Board</h2>
       <p>
-        Yahoo Fantasy no se puede conectar directo desde GitHub Pages sin OAuth/backend.
-        Pega aquí tu lista manual en formato: <b>Nombre Pitcher, Owned%</b>.
+        Hasta que Yahoo habilite Fantasy Sports API para tu app, puedes pegar aquí disponibilidad manual.
+        Formato recomendado:
+        <b>Nombre, Status, Owned%</b>
       </p>
 
       <textarea id="ownedInput" placeholder="Ejemplo:
-Nick Lodolo, 72
-Shane Baz, 43
-Jose Soriano, 38
-Brayan Bello, 55
-"></textarea>
+Shane Baz, AVAILABLE, 43
+Nick Lodolo, WAIVERS, 72
+Zack Wheeler, OWNED, 99
+Brayan Bello, AVAILABLE, 55"></textarea>
 
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button class="btn gold" onclick="saveOwned()">Guardar Yahoo Owned</button>
-        <button class="btn" onclick="clearOwned()">Borrar</button>
+      <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn gold" onclick="saveManualYahoo()">Guardar</button>
+        <button class="btn" onclick="clearManualYahoo()">Borrar</button>
       </div>
 
       <div class="note">
-        Tip: usa el nombre igual como aparece en MLB. Si un pitcher no muestra %, revisa el spelling.
+        Tip: Cuando Yahoo Fantasy API esté autorizado, el sistema intentará usar datos automáticos. Si Yahoo bloquea permisos,
+        esta tabla manual mantiene el website funcional.
       </div>
     </div>
   </div>
@@ -872,12 +932,13 @@ Brayan Bello, 55
 </div>
 
 <footer>
-  Datos de calendario y probables vía MLB Stats API pública. Las proyecciones usan rotación reciente, días de descanso y calendario semanal.
+  Datos de calendario y probables vía MLB Stats API pública. Proyecciones basadas en rotación reciente y días de descanso.
   No son confirmaciones oficiales. Siempre confirma antes del lineup lock. DiamondIQ no está afiliado con MLB ni Yahoo Fantasy.
 </footer>
 
 <script>
 const API = 'https://statsapi.mlb.com/api/v1';
+const YAHOO_BACKEND_URL = 'https://todas-son-mis-perras.vercel.app';
 
 const DAYS_ES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
 const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -886,7 +947,8 @@ let teamRecords = {};
 let weekData = null;
 let weekOffset = 0;
 let ownedFilter = 'all';
-let ownedMap = loadOwnedMap();
+let manualYahoo = loadManualYahoo();
+let yahooMap = {};
 
 function h(value){
   return String(value ?? '')
@@ -916,7 +978,7 @@ function daysBetween(a,b){
   const d2 = new Date(b);
   d1.setHours(0,0,0,0);
   d2.setHours(0,0,0,0);
-  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+  return Math.round((d2 - d1) / 86400000);
 }
 
 function getWeekRange(offset=0){
@@ -950,19 +1012,16 @@ function normalizeName(name){
     .trim();
 }
 
-function loadOwnedMap(){
+/* MANUAL YAHOO */
+function loadManualYahoo(){
   try{
-    return JSON.parse(localStorage.getItem('diamondiq_owned') || '{}');
+    return JSON.parse(localStorage.getItem('diamondiq_manual_yahoo') || '{}');
   }catch(e){
     return {};
   }
 }
 
-function ownedFor(name){
-  return ownedMap[normalizeName(name)] ?? null;
-}
-
-function saveOwned(){
+function saveManualYahoo(){
   const text = document.getElementById('ownedInput').value;
   const map = {};
 
@@ -970,94 +1029,125 @@ function saveOwned(){
     const clean = line.trim();
     if(!clean) return;
 
-    const parts = clean.split(',');
-    if(parts.length < 2) return;
+    const parts = clean.split(',').map(x=>x.trim());
+    const name = parts[0];
+    const status = (parts[1] || 'UNKNOWN').toUpperCase();
+    const owned = parts[2] ? parseFloat(parts[2].replace('%','')) : null;
 
-    const name = parts[0].trim();
-    const owned = parseFloat(parts[1].replace('%','').trim());
-
-    if(name && !Number.isNaN(owned)){
-      map[normalizeName(name)] = owned;
+    if(name){
+      map[normalizeName(name)] = {
+        status,
+        percentOwned: Number.isNaN(owned) ? null : owned
+      };
     }
   });
 
-  ownedMap = map;
-  localStorage.setItem('diamondiq_owned', JSON.stringify(map));
-  alert('Yahoo Owned guardado ✅');
+  manualYahoo = map;
+  localStorage.setItem('diamondiq_manual_yahoo', JSON.stringify(map));
+  alert('Manual Yahoo guardado ✅');
 
-  if(weekData){
-    renderTwoStart();
-    renderMatchups();
-  }
+  renderTwoStart();
+  renderMatchups();
 }
 
-function clearOwned(){
-  ownedMap = {};
-  localStorage.removeItem('diamondiq_owned');
+function clearManualYahoo(){
+  localStorage.removeItem('diamondiq_manual_yahoo');
+  manualYahoo = {};
   document.getElementById('ownedInput').value = '';
-  alert('Yahoo Owned borrado');
-
-  if(weekData){
-    renderTwoStart();
-    renderMatchups();
-  }
+  alert('Manual Yahoo borrado');
+  renderTwoStart();
+  renderMatchups();
 }
 
-function hydrateOwnedBox(){
-  const lines = Object.entries(ownedMap).map(([name, owned]) => `${name}, ${owned}`);
+function hydrateManualBox(){
+  const lines = Object.entries(manualYahoo).map(([key,val])=>{
+    return `${key}, ${val.status || 'UNKNOWN'}, ${val.percentOwned ?? ''}`;
+  });
   document.getElementById('ownedInput').value = lines.join('\n');
 }
 
-function setOwnedFilter(value, btn){
-  ownedFilter = value;
+function yahooFor(name){
+  const auto = yahooMap[name];
+  if(auto && auto.status && auto.status !== 'ERROR') return auto;
 
-  document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  const manual = manualYahoo[normalizeName(name)];
+  if(manual) return manual;
 
-  renderTwoStart();
+  return null;
 }
 
-function resetLoading(){
-  document.getElementById('twoState').style.display = 'block';
-  document.getElementById('twoState').innerHTML = `
-    <div class="spin"></div>
-    <h3>Cargando lanzadores</h3>
-    <p>Buscando calendario, probables confirmados y proyecciones por rotación reciente.</p>
-  `;
+function yahooBadgeHtml(name){
+  const y = yahooFor(name);
+  if(!y) return '';
 
-  document.getElementById('twoContent').style.display = 'none';
+  const status = String(y.status || 'UNKNOWN').toUpperCase();
 
-  document.getElementById('matchState').style.display = 'block';
-  document.getElementById('matchState').innerHTML = `
-    <div class="spin"></div>
-    <h3>Cargando matchups</h3>
-    <p>Organizando partidos día por día con pitchers confirmados y proyectados.</p>
-  `;
+  if(status === 'AVAILABLE') return `<span class="badge bGreen">AVAILABLE</span>`;
+  if(status === 'WAIVERS') return `<span class="badge bGold">WAIVERS</span>`;
+  if(status === 'OWNED') return `<span class="badge bRed">OWNED</span>`;
+  if(status === 'MY TEAM') return `<span class="badge bPurple">MY TEAM</span>`;
 
-  document.getElementById('matchContent').style.display = 'none';
-  document.getElementById('twoGrid').innerHTML = '';
-
-  updateKpis([]);
+  return `<span class="badge bPurple">UNKNOWN</span>`;
 }
 
-async function reloadWeek(){
-  resetLoading();
-  await loadWeek().catch(e=>{
-    console.error(e);
-    showError('No se pudieron cargar los datos. Revisa conexión o intenta otra vez.');
-  });
+function yahooOwnedHtml(name){
+  const y = yahooFor(name);
+  if(!y || y.percentOwned === null || y.percentOwned === undefined) return '';
+  return `<span class="badge bBlue">Yahoo ${h(y.percentOwned)}%</span>`;
 }
 
-function changeWeek(delta){
-  weekOffset += delta;
-  reloadWeek();
+function ownedFor(name){
+  const y = yahooFor(name);
+  if(!y || y.percentOwned === null || y.percentOwned === undefined) return null;
+  const n = parseFloat(y.percentOwned);
+  return Number.isNaN(n) ? null : n;
 }
 
-function goCurrentWeek(){
-  weekOffset = 0;
-  reloadWeek();
+/* YAHOO AUTO */
+async function loadYahooAvailabilityForWeek(){
+  if(!weekData) return;
+
+  const names = Object.values(weekData.pitchers)
+    .filter(p=>p.starts.length >= 2)
+    .map(p=>p.name);
+
+  if(!names.length){
+    setYahooState('Yahoo: sin pitchers', 'bad');
+    return;
+  }
+
+  try{
+    const res = await fetch(`${YAHOO_BACKEND_URL}/api/yahoo/availability`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ names })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok || data.error){
+      throw new Error(data.error || 'Yahoo unavailable');
+    }
+
+    yahooMap = data;
+    setYahooState('Yahoo: conectado', 'ok');
+
+    renderTwoStart();
+    renderMatchups();
+
+  }catch(e){
+    console.warn('Yahoo auto unavailable:', e.message);
+    setYahooState('Yahoo: manual / pendiente permiso', 'bad');
+  }
 }
 
+function setYahooState(text, mode){
+  const el = document.getElementById('yahooState');
+  const cls = mode === 'ok' ? 'ok' : mode === 'bad' ? 'bad' : '';
+  el.innerHTML = `<span class="pulse ${cls}"></span>${h(text)}`;
+}
+
+/* MLB OFFENSE */
 async function loadOffenseStrength(season){
   teamRecords = {};
 
@@ -1079,7 +1169,6 @@ async function loadOffenseStrength(season){
     });
 
     runsArr.sort((a,b)=>a-b);
-
     const q = p => runsArr[Math.floor(p * (runsArr.length - 1))] || 0;
 
     window._rpgLow = q(0.40);
@@ -1095,7 +1184,7 @@ function rateMatchup(oppId){
   const rec = teamRecords[oppId];
 
   if(!rec){
-    return { key:'yellow', label:'Parejo', score:0 };
+    return { key:'gold', label:'Parejo', score:0 };
   }
 
   if(rec.rpg <= window._rpgLow){
@@ -1106,15 +1195,17 @@ function rateMatchup(oppId){
     return { key:'red', label:'Difícil', score:-8 };
   }
 
-  return { key:'yellow', label:'Parejo', score:0 };
+  return { key:'gold', label:'Parejo', score:0 };
 }
 
+/* ROTATIONS */
 async function loadRecentRotations(weekStart){
   const histStart = addDays(weekStart, -35);
   const histEnd = addDays(weekStart, -1);
 
-  const url = `${API}/schedule?sportId=1&startDate=${fmtDate(histStart)}&endDate=${fmtDate(histEnd)}&hydrate=probablePitcher,team`;
-  const data = await fetchJSON(url);
+  const data = await fetchJSON(
+    `${API}/schedule?sportId=1&startDate=${fmtDate(histStart)}&endDate=${fmtDate(histEnd)}&hydrate=probablePitcher,team`
+  );
 
   const teamStarts = {};
 
@@ -1128,32 +1219,23 @@ async function loadRecentRotations(weekStart){
       const home = g.teams?.home;
       const away = g.teams?.away;
 
-      const homePP = home?.probablePitcher;
-      const awayPP = away?.probablePitcher;
+      const add = (side)=>{
+        const pp = side?.probablePitcher;
+        const team = side?.team;
+        if(!team?.id || !pp?.id) return;
 
-      if(home?.team?.id && homePP?.id){
-        const teamId = home.team.id;
-        teamStarts[teamId] = teamStarts[teamId] || [];
-        teamStarts[teamId].push({
-          pitcherId:homePP.id,
-          name:homePP.fullName,
-          teamId,
-          teamName:home.team.name,
+        teamStarts[team.id] = teamStarts[team.id] || [];
+        teamStarts[team.id].push({
+          pitcherId:pp.id,
+          name:pp.fullName,
+          teamId:team.id,
+          teamName:team.name,
           date:gameDate
         });
-      }
+      };
 
-      if(away?.team?.id && awayPP?.id){
-        const teamId = away.team.id;
-        teamStarts[teamId] = teamStarts[teamId] || [];
-        teamStarts[teamId].push({
-          pitcherId:awayPP.id,
-          name:awayPP.fullName,
-          teamId,
-          teamName:away.team.name,
-          date:gameDate
-        });
-      }
+      add(home);
+      add(away);
     });
   });
 
@@ -1177,7 +1259,7 @@ async function loadRecentRotations(weekStart){
       }
     });
 
-    rotations[teamId] = rotation.slice(0, 6);
+    rotations[teamId] = rotation.slice(0,6);
   });
 
   return rotations;
@@ -1232,19 +1314,20 @@ function markRotationStart(teamId, pitcherId, gameDate, rotations){
   if(found) found.lastStart = gameDate;
 }
 
+/* LOAD WEEK */
 async function loadWeek(){
-  const { start, end } = getWeekRange(weekOffset);
+  setYahooState('Yahoo: verificando', '');
+  const {start,end} = getWeekRange(weekOffset);
 
   document.getElementById('weekRange').textContent = `${prettyDate(start)} – ${prettyDate(end)}`;
 
-  const season = start.getFullYear();
-
-  await loadOffenseStrength(season);
+  await loadOffenseStrength(start.getFullYear());
 
   const rotations = await loadRecentRotations(start);
 
-  const url = `${API}/schedule?sportId=1&startDate=${fmtDate(start)}&endDate=${fmtDate(end)}&hydrate=probablePitcher,team`;
-  const data = await fetchJSON(url);
+  const data = await fetchJSON(
+    `${API}/schedule?sportId=1&startDate=${fmtDate(start)}&endDate=${fmtDate(end)}&hydrate=probablePitcher,team`
+  );
 
   const pitchers = {};
   const byDay = {};
@@ -1287,13 +1370,8 @@ async function loadWeek(){
         restDays:null
       } : null;
 
-      if(!homePP && homeTeamId){
-        homePP = projectStarterForTeam(homeTeamId, gameDate, rotations);
-      }
-
-      if(!awayPP && awayTeamId){
-        awayPP = projectStarterForTeam(awayTeamId, gameDate, rotations);
-      }
+      if(!homePP && homeTeamId) homePP = projectStarterForTeam(homeTeamId, gameDate, rotations);
+      if(!awayPP && awayTeamId) awayPP = projectStarterForTeam(awayTeamId, gameDate, rotations);
 
       byDay[dStr].push({
         date:gameDate,
@@ -1313,47 +1391,31 @@ async function loadWeek(){
         homeRest:homePP?.restDays ?? null
       });
 
-      if(homePP?.id){
-        pitchers[homePP.id] = pitchers[homePP.id] || {
-          name:homePP.name,
-          teamId:homePP.teamId,
-          teamName:homePP.teamName,
+      function addPitcher(pp, oppId, oppName, isHome){
+        if(!pp?.id) return;
+
+        pitchers[pp.id] = pitchers[pp.id] || {
+          name:pp.name,
+          teamId:pp.teamId,
+          teamName:pp.teamName,
           starts:[]
         };
 
-        pitchers[homePP.id].starts.push({
+        pitchers[pp.id].starts.push({
           date:gameDate,
-          oppId:awayTeamId,
-          oppName:away?.team?.name,
-          home:true,
-          projected:homePP.projected,
-          confidence:homePP.confidence,
-          restDays:homePP.restDays
+          oppId,
+          oppName,
+          home:isHome,
+          projected:pp.projected,
+          confidence:pp.confidence,
+          restDays:pp.restDays
         });
 
-        markRotationStart(homeTeamId, homePP.id, gameDate, rotations);
+        markRotationStart(pp.teamId, pp.id, gameDate, rotations);
       }
 
-      if(awayPP?.id){
-        pitchers[awayPP.id] = pitchers[awayPP.id] || {
-          name:awayPP.name,
-          teamId:awayPP.teamId,
-          teamName:awayPP.teamName,
-          starts:[]
-        };
-
-        pitchers[awayPP.id].starts.push({
-          date:gameDate,
-          oppId:homeTeamId,
-          oppName:home?.team?.name,
-          home:false,
-          projected:awayPP.projected,
-          confidence:awayPP.confidence,
-          restDays:awayPP.restDays
-        });
-
-        markRotationStart(awayTeamId, awayPP.id, gameDate, rotations);
-      }
+      addPitcher(homePP, awayTeamId, away?.team?.name, true);
+      addPitcher(awayPP, homeTeamId, home?.team?.name, false);
     });
   });
 
@@ -1361,8 +1423,10 @@ async function loadWeek(){
 
   renderTwoStart();
   renderMatchups();
+  loadYahooAvailabilityForWeek();
 }
 
+/* SCORING */
 function calculateScore(p){
   let score = 70;
 
@@ -1387,7 +1451,12 @@ function calculateScore(p){
     }
   });
 
+  const y = yahooFor(p.name);
   const own = ownedFor(p.name);
+
+  if(y?.status === 'AVAILABLE') score += 5;
+  if(y?.status === 'WAIVERS') score += 2;
+  if(y?.status === 'OWNED') score -= 4;
 
   if(own !== null){
     if(own < 40) score += 4;
@@ -1399,35 +1468,41 @@ function calculateScore(p){
 
 function actionFor(p, score){
   const own = ownedFor(p.name);
-  const projectedLow = p.starts.some(s=>s.projected && s.confidence === 'Baja');
+  const y = yahooFor(p.name);
+  const lowProjection = p.starts.some(s=>s.projected && s.confidence === 'Baja');
 
-  if(score >= 84) return { action:'START', cls:'START', reason:'Alta prioridad' };
+  if(score >= 84) return { action:'START', cls:'START', reason:'Elite play' };
+
+  if(score >= 74 && y?.status === 'AVAILABLE'){
+    return { action:'STREAM', cls:'STREAM', reason:'Disponible + upside' };
+  }
 
   if(score >= 74 && own !== null && own <= 60){
     return { action:'STREAM', cls:'STREAM', reason:'Buen waiver target' };
   }
 
-  if(score >= 68 && !projectedLow){
+  if(score >= 68 && !lowProjection){
     return { action:'WATCHLIST', cls:'WATCHLIST', reason:'Monitorear confirmación' };
   }
 
   return { action:'AVOID', cls:'AVOID', reason:'Riesgo alto' };
 }
 
-function overallColor(p){
-  const score = calculateScore(p);
+function cardColor(score){
   if(score >= 80) return 'green';
   if(score >= 68) return 'yellow';
   return 'red';
 }
 
+/* RENDER */
 function updateKpis(twoStarters){
   const confirmed = twoStarters.filter(p=>p.starts.every(s=>!s.projected)).length;
   const projected = twoStarters.filter(p=>p.starts.some(s=>s.projected)).length;
   const streams = twoStarters.filter(p=>{
-    const own = ownedFor(p.name);
     const score = calculateScore(p);
-    return own !== null && own <= 60 && score >= 70;
+    const y = yahooFor(p.name);
+    const own = ownedFor(p.name);
+    return score >= 70 && (y?.status === 'AVAILABLE' || (own !== null && own <= 60));
   }).length;
 
   document.getElementById('kpiTwo').textContent = twoStarters.length || '--';
@@ -1468,7 +1543,7 @@ function renderTwoStart(){
     grid.innerHTML = `
       <div class="state" style="grid-column:1/-1">
         <h3>No hay resultados</h3>
-        <p>No hay pitchers que cumplan este filtro. Prueba cambiar el filtro de Yahoo Owned o la semana.</p>
+        <p>No hay pitchers que cumplan este filtro. Cambia semana, filtro o revisa más tarde.</p>
       </div>
     `;
     return;
@@ -1477,9 +1552,8 @@ function renderTwoStart(){
   grid.innerHTML = twoStarters.map((p,index)=>{
     const score = calculateScore(p);
     const action = actionFor(p, score);
-    const color = overallColor(p);
+    const color = cardColor(score);
     const hasProjected = p.starts.some(s=>s.projected);
-    const own = ownedFor(p.name);
 
     const startsHtml = p.starts.sort((a,b)=>a.date-b.date).map(s=>{
       const r = rateMatchup(s.oppId);
@@ -1489,22 +1563,25 @@ function renderTwoStart(){
         : 'CONFIRMED';
 
       const statusColor = s.projected ? 'var(--gold)' : 'var(--green)';
+      const ratingClass = r.key === 'green' ? 'rGreen' : r.key === 'red' ? 'rRed' : 'rGold';
 
       return `
         <div class="start">
           <div class="day">${h(day)}</div>
-
           <div class="opp">
             ${s.home ? '🏠 vs' : '✈️ @'} ${h(s.oppName)}
             <small style="color:${statusColor}">${h(status)}</small>
           </div>
-
-          <div class="rating ${r.key === 'green' ? 'rGreen' : r.key === 'red' ? 'rRed' : 'rYellow'}">
-            ${h(r.label)}
-          </div>
+          <div class="rating ${ratingClass}">${h(r.label)}</div>
         </div>
       `;
     }).join('');
+
+    const actionClass =
+      action.cls === 'START' ? 'bGreen' :
+      action.cls === 'STREAM' ? 'bBlue' :
+      action.cls === 'AVOID' ? 'bRed' :
+      'bGold';
 
     return `
       <div class="card ${color}">
@@ -1517,7 +1594,7 @@ function renderTwoStart(){
 
           <div class="scoreBox">
             <div class="score">${score}</div>
-            <div class="scoreText">DIQ Score</div>
+            <div class="scoreLabel">DIQ Score</div>
           </div>
         </div>
 
@@ -1526,11 +1603,12 @@ function renderTwoStart(){
             ${hasProjected ? '2X · PROJECTED' : '2X · CONFIRMED'}
           </span>
 
-          <span class="badge ${action.cls === 'START' ? 'bGreen' : action.cls === 'STREAM' ? 'bBlue' : action.cls === 'AVOID' ? 'bRed' : 'bGold'}">
+          <span class="badge ${actionClass}">
             ${h(action.action)}
           </span>
 
-          ${own !== null ? `<span class="badge bBlue">Yahoo ${h(own)}%</span>` : ''}
+          ${yahooBadgeHtml(p.name)}
+          ${yahooOwnedHtml(p.name)}
         </div>
 
         <div class="starts">${startsHtml}</div>
@@ -1553,6 +1631,7 @@ function renderMatchups(){
   cont.style.display = 'block';
 
   const days = Object.keys(weekData.byDay).sort();
+
   let html = '';
 
   days.forEach(dStr=>{
@@ -1573,14 +1652,16 @@ function renderMatchups(){
         }
 
         const r = rateMatchup(oppId);
-        const col = r.key === 'green' ? 'var(--green)' : r.key === 'red' ? 'var(--red)' : 'var(--yellow)';
+        const col = r.key === 'green' ? 'var(--green)' : r.key === 'red' ? 'var(--red)' : 'var(--gold)';
         const status = projected ? `PROJECTED ${confidence ? '(' + confidence + ')' : ''}${rest !== null ? ' · ' + rest + 'd' : ''}` : 'CONFIRMED';
+        const y = yahooFor(name);
         const own = ownedFor(name);
 
         return `
           <span class="dot" style="background:${col}"></span>
           ${h(name)}
           <span style="color:${projected ? 'var(--gold)' : 'var(--green)'};font-weight:900">· ${h(status)}</span>
+          ${y?.status ? `<span style="color:var(--cyan);font-weight:900">· ${h(y.status)}</span>` : ''}
           ${own !== null ? `<span style="color:var(--blue);font-weight:900">· Yahoo ${h(own)}%</span>` : ''}
         `;
       };
@@ -1613,6 +1694,7 @@ function renderMatchups(){
   `;
 }
 
+/* UI */
 function showTab(which){
   document.getElementById('tab-two').classList.toggle('active', which === 'two');
   document.getElementById('tab-match').classList.toggle('active', which === 'match');
@@ -1623,21 +1705,53 @@ function showTab(which){
   document.getElementById('panel-owned').style.display = which === 'owned' ? 'block' : 'none';
 }
 
-function showError(msg){
-  document.getElementById('twoState').style.display = 'block';
-  document.getElementById('twoState').innerHTML = `
-    <h3>No se pudieron cargar los datos</h3>
-    <p>${h(msg)}</p>
-    <button class="btn gold" onclick="reloadWeek()">Reintentar</button>
-  `;
+function setOwnedFilter(value, btn){
+  ownedFilter = value;
+  document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTwoStart();
 }
 
-hydrateOwnedBox();
+function resetLoading(){
+  document.getElementById('twoState').style.display = 'block';
+  document.getElementById('twoState').innerHTML = `
+    <div class="spin"></div>
+    <h3>Cargando inteligencia</h3>
+    <p>Buscando calendario MLB, probables confirmados, rotaciones recientes y oportunidades fantasy.</p>
+  `;
 
-loadWeek().catch(e=>{
-  console.error(e);
-  showError('Revisa conexión o espera unos segundos. Los datos vienen directo de MLB.');
-});
+  document.getElementById('twoContent').style.display = 'none';
+  document.getElementById('matchState').style.display = 'block';
+  document.getElementById('matchContent').style.display = 'none';
+}
+
+async function reloadWeek(){
+  resetLoading();
+
+  try{
+    await loadWeek();
+  }catch(e){
+    console.error(e);
+    document.getElementById('twoState').innerHTML = `
+      <h3>No se pudieron cargar datos</h3>
+      <p>${h(e.message || 'Error inesperado')}</p>
+      <button class="btn gold" onclick="reloadWeek()">Reintentar</button>
+    `;
+  }
+}
+
+function changeWeek(delta){
+  weekOffset += delta;
+  reloadWeek();
+}
+
+function goCurrentWeek(){
+  weekOffset = 0;
+  reloadWeek();
+}
+
+hydrateManualBox();
+reloadWeek();
 </script>
 
 </body>
