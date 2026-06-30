@@ -11,7 +11,6 @@
 :root{
   --bg:#050713;
   --panel:#0B1020;
-  --panel2:#111A2E;
   --card:#111A2E;
   --card2:#16213B;
   --line:rgba(255,255,255,.10);
@@ -28,7 +27,6 @@
   --blue:#4EA8FF;
   --cyan:#38E8FF;
   --purple:#A78BFA;
-  --orange:#FB8500;
 
   --greenSoft:rgba(45,255,136,.13);
   --redSoft:rgba(255,77,109,.13);
@@ -65,7 +63,7 @@ body::before{
   position:fixed;
   inset:0;
   pointer-events:none;
-  opacity:.18;
+  opacity:.15;
   background-image:
     linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
@@ -107,7 +105,6 @@ button,input,textarea{
   right:-160px;
   top:-150px;
   background:radial-gradient(circle, rgba(255,209,102,.26), transparent 68%);
-  filter:blur(2px);
 }
 
 .heroTop{
@@ -134,7 +131,6 @@ button,input,textarea{
   font-size:12px;
   font-weight:900;
   letter-spacing:.6px;
-  box-shadow:0 0 25px rgba(255,209,102,.10);
 }
 
 .brand{
@@ -177,14 +173,12 @@ button,input,textarea{
   font-weight:900;
   font-size:13px;
   transition:.16s ease;
-  backdrop-filter:blur(10px);
 }
 
 .btn:hover{
   transform:translateY(-2px);
   border-color:rgba(255,209,102,.6);
   color:var(--gold);
-  box-shadow:0 13px 30px rgba(0,0,0,.22);
 }
 
 .btn.gold{
@@ -241,8 +235,15 @@ button,input,textarea{
   box-shadow:0 0 0 5px rgba(255,209,102,.12);
 }
 
-.pulse.ok{background:var(--green);box-shadow:0 0 0 5px rgba(45,255,136,.12)}
-.pulse.bad{background:var(--red);box-shadow:0 0 0 5px rgba(255,77,109,.12)}
+.pulse.ok{
+  background:var(--green);
+  box-shadow:0 0 0 5px rgba(45,255,136,.12);
+}
+
+.pulse.bad{
+  background:var(--red);
+  box-shadow:0 0 0 5px rgba(255,77,109,.12);
+}
 
 /* KPIS */
 .kpis{
@@ -259,7 +260,6 @@ button,input,textarea{
   border-radius:20px;
   padding:16px;
   background:rgba(0,0,0,.20);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
 }
 
 .kpiNum{
@@ -435,7 +435,7 @@ button,input,textarea{
   gap:15px;
 }
 
-/* CARD */
+/* CARDS */
 .card{
   position:relative;
   overflow:hidden;
@@ -665,7 +665,6 @@ button,input,textarea{
   padding:13px 14px;
   margin-bottom:9px;
   background:rgba(17,26,46,.82);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .side{
@@ -713,7 +712,7 @@ button,input,textarea{
   display:inline-block;
 }
 
-/* OWNED / NOTES */
+/* PANEL */
 .panel{
   margin-top:22px;
   border:1px solid var(--line);
@@ -775,7 +774,6 @@ footer{
   font-size:12px;
 }
 
-/* MOBILE */
 @media(max-width:780px){
   .brand{font-size:42px}
   .kpis{grid-template-columns:repeat(2,1fr)}
@@ -802,12 +800,11 @@ footer{
       <div>
         <div class="kicker">⚾ Fantasy Pitcher Intelligence</div>
 
-        <!-- CAMBIA EL NOMBRE AQUÍ SI QUIERES -->
         <div class="brand">DIAMOND<span>IQ</span> ELITE</div>
 
         <div class="subtitle">
           Plataforma premium para identificar two-start pitchers, streamers, matchups favorables y proyecciones de rotación.
-          Usa probables confirmados de MLB, lógica de rotación reciente y conexión Yahoo cuando el API esté autorizado.
+          Usa probables confirmados de MLB, lógica de rotación reciente, watchlist personal y disponibilidad manual de Yahoo.
         </div>
       </div>
 
@@ -826,7 +823,7 @@ footer{
 
       <div class="yahooState" id="yahooState">
         <span class="pulse"></span>
-        Yahoo: verificando
+        Yahoo: manual / pendiente permiso
       </div>
 
       <button class="btn" onclick="reloadWeek()">Actualizar data</button>
@@ -849,8 +846,8 @@ footer{
       </div>
 
       <div class="kpi">
-        <div class="kpiNum" id="kpiStream">--</div>
-        <div class="kpiLabel">Stream targets</div>
+        <div class="kpiNum" id="kpiWatch">--</div>
+        <div class="kpiLabel">Watchlist</div>
       </div>
     </div>
   </section>
@@ -858,6 +855,7 @@ footer{
   <div class="tabs">
     <button class="tab active" id="tab-two" onclick="showTab('two')">🔥 Two-Start Board</button>
     <button class="tab" id="tab-match" onclick="showTab('match')">📅 Matchups</button>
+    <button class="tab" id="tab-watch" onclick="showTab('watch')">⭐ My Watchlist</button>
     <button class="tab" id="tab-owned" onclick="showTab('owned')">📊 Manual Yahoo</button>
   </div>
 
@@ -902,6 +900,19 @@ footer{
     <div id="matchContent" style="display:none"></div>
   </div>
 
+  <div id="panel-watch" style="display:none">
+    <div class="sectionHead">
+      <div>
+        <h2>My Watchlist</h2>
+        <p>Pitchers que marcaste para monitorear antes del lineup lock.</p>
+      </div>
+
+      <button class="btn" onclick="clearWatchlist()">Clear Watchlist</button>
+    </div>
+
+    <div class="grid" id="watchGrid"></div>
+  </div>
+
   <div id="panel-owned" style="display:none">
     <div class="panel">
       <h2>Manual Yahoo Board</h2>
@@ -923,8 +934,7 @@ Brayan Bello, AVAILABLE, 55"></textarea>
       </div>
 
       <div class="note">
-        Tip: Cuando Yahoo Fantasy API esté autorizado, el sistema intentará usar datos automáticos. Si Yahoo bloquea permisos,
-        esta tabla manual mantiene el website funcional.
+        Tip: Cuando Yahoo Fantasy API esté autorizado, el sistema puede usar datos automáticos. Por ahora esta tabla manual mantiene la web funcional.
       </div>
     </div>
   </div>
@@ -949,6 +959,7 @@ let weekOffset = 0;
 let ownedFilter = 'all';
 let manualYahoo = loadManualYahoo();
 let yahooMap = {};
+let watchlist = loadWatchlist();
 
 function h(value){
   return String(value ?? '')
@@ -1012,6 +1023,62 @@ function normalizeName(name){
     .trim();
 }
 
+/* WATCHLIST */
+function loadWatchlist(){
+  try{
+    return JSON.parse(localStorage.getItem('diamondiq_watchlist') || '{}');
+  }catch(e){
+    return {};
+  }
+}
+
+function saveWatchlist(){
+  localStorage.setItem('diamondiq_watchlist', JSON.stringify(watchlist));
+  updateWatchKpi();
+}
+
+function isWatchlisted(name){
+  return Boolean(watchlist[normalizeName(name)]);
+}
+
+function toggleWatchlist(player){
+  const key = normalizeName(player.name);
+
+  if(watchlist[key]){
+    delete watchlist[key];
+  }else{
+    watchlist[key] = {
+      name: player.name,
+      teamName: player.teamName,
+      addedAt: new Date().toISOString()
+    };
+  }
+
+  saveWatchlist();
+  renderTwoStart();
+  renderWatchlist();
+}
+
+function removeFromWatchlist(name){
+  delete watchlist[normalizeName(name)];
+  saveWatchlist();
+  renderTwoStart();
+  renderWatchlist();
+}
+
+function clearWatchlist(){
+  if(!confirm('¿Seguro que quieres borrar toda la watchlist?')) return;
+  watchlist = {};
+  saveWatchlist();
+  renderTwoStart();
+  renderWatchlist();
+}
+
+function updateWatchKpi(){
+  const el = document.getElementById('kpiWatch');
+  if(el) el.textContent = Object.keys(watchlist).length || '--';
+}
+
 /* MANUAL YAHOO */
 function loadManualYahoo(){
   try{
@@ -1048,6 +1115,7 @@ function saveManualYahoo(){
 
   renderTwoStart();
   renderMatchups();
+  renderWatchlist();
 }
 
 function clearManualYahoo(){
@@ -1057,11 +1125,12 @@ function clearManualYahoo(){
   alert('Manual Yahoo borrado');
   renderTwoStart();
   renderMatchups();
+  renderWatchlist();
 }
 
 function hydrateManualBox(){
   const lines = Object.entries(manualYahoo).map(([key,val])=>{
-    return `${key}, ${val.status || 'UNKNOWN'}, ${val.percentOwned ?? ''}`;
+    return `${val.name || key}, ${val.status || 'UNKNOWN'}, ${val.percentOwned ?? ''}`;
   });
   document.getElementById('ownedInput').value = lines.join('\n');
 }
@@ -1134,6 +1203,7 @@ async function loadYahooAvailabilityForWeek(){
 
     renderTwoStart();
     renderMatchups();
+    renderWatchlist();
 
   }catch(e){
     console.warn('Yahoo auto unavailable:', e.message);
@@ -1147,7 +1217,7 @@ function setYahooState(text, mode){
   el.innerHTML = `<span class="pulse ${cls}"></span>${h(text)}`;
 }
 
-/* MLB OFFENSE */
+/* MLB */
 async function loadOffenseStrength(season){
   teamRecords = {};
 
@@ -1198,7 +1268,7 @@ function rateMatchup(oppId){
   return { key:'gold', label:'Parejo', score:0 };
 }
 
-/* ROTATIONS */
+/* ROTATION PROJECTION */
 async function loadRecentRotations(weekStart){
   const histStart = addDays(weekStart, -35);
   const histEnd = addDays(weekStart, -1);
@@ -1322,7 +1392,6 @@ async function loadWeek(){
   document.getElementById('weekRange').textContent = `${prettyDate(start)} – ${prettyDate(end)}`;
 
   await loadOffenseStrength(start.getFullYear());
-
   const rotations = await loadRecentRotations(start);
 
   const data = await fetchJSON(
@@ -1423,6 +1492,7 @@ async function loadWeek(){
 
   renderTwoStart();
   renderMatchups();
+  renderWatchlist();
   loadYahooAvailabilityForWeek();
 }
 
@@ -1457,6 +1527,7 @@ function calculateScore(p){
   if(y?.status === 'AVAILABLE') score += 5;
   if(y?.status === 'WAIVERS') score += 2;
   if(y?.status === 'OWNED') score -= 4;
+  if(isWatchlisted(p.name)) score += 1;
 
   if(own !== null){
     if(own < 40) score += 4;
@@ -1494,23 +1565,18 @@ function cardColor(score){
   return 'red';
 }
 
-/* RENDER */
+/* RENDER KPIS */
 function updateKpis(twoStarters){
   const confirmed = twoStarters.filter(p=>p.starts.every(s=>!s.projected)).length;
   const projected = twoStarters.filter(p=>p.starts.some(s=>s.projected)).length;
-  const streams = twoStarters.filter(p=>{
-    const score = calculateScore(p);
-    const y = yahooFor(p.name);
-    const own = ownedFor(p.name);
-    return score >= 70 && (y?.status === 'AVAILABLE' || (own !== null && own <= 60));
-  }).length;
 
   document.getElementById('kpiTwo').textContent = twoStarters.length || '--';
   document.getElementById('kpiConfirmed').textContent = confirmed || '--';
   document.getElementById('kpiProjected').textContent = projected || '--';
-  document.getElementById('kpiStream').textContent = streams || '--';
+  updateWatchKpi();
 }
 
+/* RENDER TWO START */
 function renderTwoStart(){
   if(!weekData) return;
 
@@ -1554,6 +1620,7 @@ function renderTwoStart(){
     const action = actionFor(p, score);
     const color = cardColor(score);
     const hasProjected = p.starts.some(s=>s.projected);
+    const watched = isWatchlisted(p.name);
 
     const startsHtml = p.starts.sort((a,b)=>a.date-b.date).map(s=>{
       const r = rateMatchup(s.oppId);
@@ -1607,6 +1674,7 @@ function renderTwoStart(){
             ${h(action.action)}
           </span>
 
+          ${watched ? '<span class="badge bPurple">WATCHLISTED</span>' : ''}
           ${yahooBadgeHtml(p.name)}
           ${yahooOwnedHtml(p.name)}
         </div>
@@ -1614,7 +1682,16 @@ function renderTwoStart(){
         <div class="starts">${startsHtml}</div>
 
         <div class="cardFoot">
-          <div class="take ${h(action.cls)}">${h(action.action)}</div>
+          <div>
+            <div class="take ${h(action.cls)}">${h(action.action)}</div>
+            <button class="btn" style="margin-top:8px;padding:8px 10px;font-size:11px" onclick='toggleWatchlist(${JSON.stringify({
+              name:p.name,
+              teamName:p.teamName
+            })})'>
+              ${watched ? '✓ WATCHLISTED' : '+ WATCHLIST'}
+            </button>
+          </div>
+
           <div class="reason">${h(action.reason)}</div>
         </div>
       </div>
@@ -1622,6 +1699,66 @@ function renderTwoStart(){
   }).join('');
 }
 
+/* RENDER WATCHLIST */
+function renderWatchlist(){
+  const grid = document.getElementById('watchGrid');
+  if(!grid) return;
+
+  const items = Object.values(watchlist);
+  updateWatchKpi();
+
+  if(!items.length){
+    grid.innerHTML = `
+      <div class="state" style="grid-column:1/-1">
+        <h3>Watchlist vacía</h3>
+        <p>Marca pitchers con el botón + WATCHLIST para guardarlos aquí.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = items.map((item,index)=>{
+    let livePlayer = null;
+
+    if(weekData){
+      livePlayer = Object.values(weekData.pitchers).find(p => normalizeName(p.name) === normalizeName(item.name));
+    }
+
+    const score = livePlayer ? calculateScore(livePlayer) : '--';
+    const y = yahooFor(item.name);
+
+    return `
+      <div class="card yellow">
+        <div class="cardTop">
+          <div>
+            <div class="rank">#${index + 1}</div>
+            <div class="name">${h(item.name)}</div>
+            <div class="team">${h(item.teamName || 'Watchlist Player')}</div>
+          </div>
+
+          <div class="scoreBox">
+            <div class="score">${h(score)}</div>
+            <div class="scoreLabel">DIQ Score</div>
+          </div>
+        </div>
+
+        <div class="badges">
+          <span class="badge bPurple">WATCHLIST</span>
+          ${livePlayer && livePlayer.starts?.length >= 2 ? '<span class="badge bGold">2X THIS WEEK</span>' : ''}
+          ${yahooBadgeHtml(item.name)}
+          ${yahooOwnedHtml(item.name)}
+        </div>
+
+        <div class="cardFoot">
+          <div class="take WATCHLIST">MONITOR</div>
+          <button class="btn" onclick="removeFromWatchlist('${h(item.name)}')">Remove</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* RENDER MATCHUPS */
 function renderMatchups(){
   if(!weekData) return;
 
@@ -1661,6 +1798,7 @@ function renderMatchups(){
           <span class="dot" style="background:${col}"></span>
           ${h(name)}
           <span style="color:${projected ? 'var(--gold)' : 'var(--green)'};font-weight:900">· ${h(status)}</span>
+          ${isWatchlisted(name) ? `<span style="color:var(--purple);font-weight:900">· WATCHLIST</span>` : ''}
           ${y?.status ? `<span style="color:var(--cyan);font-weight:900">· ${h(y.status)}</span>` : ''}
           ${own !== null ? `<span style="color:var(--blue);font-weight:900">· Yahoo ${h(own)}%</span>` : ''}
         `;
@@ -1698,11 +1836,15 @@ function renderMatchups(){
 function showTab(which){
   document.getElementById('tab-two').classList.toggle('active', which === 'two');
   document.getElementById('tab-match').classList.toggle('active', which === 'match');
+  document.getElementById('tab-watch').classList.toggle('active', which === 'watch');
   document.getElementById('tab-owned').classList.toggle('active', which === 'owned');
 
   document.getElementById('panel-two').style.display = which === 'two' ? 'block' : 'none';
   document.getElementById('panel-match').style.display = which === 'match' ? 'block' : 'none';
+  document.getElementById('panel-watch').style.display = which === 'watch' ? 'block' : 'none';
   document.getElementById('panel-owned').style.display = which === 'owned' ? 'block' : 'none';
+
+  if(which === 'watch') renderWatchlist();
 }
 
 function setOwnedFilter(value, btn){
@@ -1751,6 +1893,7 @@ function goCurrentWeek(){
 }
 
 hydrateManualBox();
+updateWatchKpi();
 reloadWeek();
 </script>
 
